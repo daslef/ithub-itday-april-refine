@@ -16,7 +16,7 @@ const siteConfig = {
   title: "Refine",
   tagline: "Build your React-based CRUD applications, without constraints",
   url: "https://refine.dev",
-  baseUrl: "/",
+  baseUrl: "/ithub-itday-april-refine/",
   projectName: "ithub-itday-april-refine",
   organizationName: "daslef",
   trailingSlash: true,
