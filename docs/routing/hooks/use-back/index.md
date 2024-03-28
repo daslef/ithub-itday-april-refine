@@ -2,7 +2,7 @@
 title: useBack
 ---
 
-`useBack` is a hook that leverages the `back` method of the [`routerProvider`][routerprovider] to perform the "go back" operation in the history stack.
+`useBack` is a hook that leverages the `back` method of the `routerProvider` to perform the "go back" operation in the history stack.
 
 ## Usage
 
@@ -15,5 +15,3 @@ const MyComponent = () => {
   return <Button onClick={() => back()}>Go Back</Button>;
 };
 ```
-
-[routerprovider]: /docs/routing/router-provider

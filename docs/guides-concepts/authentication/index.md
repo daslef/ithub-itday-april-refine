@@ -211,7 +211,7 @@ export const authProvider: AuthProvider = {
 
 ## Router Integrations <GuideBadge id="guides-concepts/routing/" />
 
-Refine provides a automatic routing system to redirect users to the desired page after the authentication process. To use this feature, you need to pass [`routerProvider`](/docs/routing/router-provider) to the `<Refine />` component.
+Refine provides a automatic routing system to redirect users to the desired page after the authentication process. To use this feature, you need to pass `routerProvider` to the `<Refine />` component.
 
 Once you provide `routerProvider`, Refine will automatically redirect users to the desired page on following auth provider methods:
 

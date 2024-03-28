@@ -1154,33 +1154,6 @@ const authProvider: AuthProvider = {
 
 </details>
 
-## Legacy Auth Provider
-
-Refine's v4 release is backward compatible and supports legacy auth provider implementations until v5.
-
-If you want to use a legacy auth provider, you can pass them to the `<Refine />` component using the `legacyAuthProvider` prop.
-
-[Refer to the Migration Guide for more information. &#8594](/docs/migration-guide/auth-provider/)
-
-```tsx
-import { LegacyAuthProvider, Refine } from "@refinedev/core";
-
-const legacyAuthProvider: LegacyAuthProvider = {
-  /* --- */
-};
-
-const App = () => {
-  return (
-    <Refine
-      // ---
-      legacyAuthProvider={legacyAuthProvider}
-    >
-      {/* --- */}
-    </Refine>
-  );
-};
-```
-
 ## FAQ
 
 ### How can I create an auth provider?

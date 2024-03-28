@@ -2,7 +2,7 @@
 title: useNavigation
 ---
 
-`useNavigation` is a hook that provides methods to navigate the app. Internally, it uses the `go` method of the [`routerProvider`][routerprovider].
+`useNavigation` is a hook that provides methods to navigate the app. Internally, it uses the `go` method of the `routerProvider`.
 
 This hook is a legacy hook and is not recommended, despite not being deprecated. You should use your router libraries' hooks and methods instead when dealing with the custom navigations.
 
@@ -104,7 +104,7 @@ You can also give a `type` property as a third parameter to the `clone` method.
 
 ### push
 
-This method pushes a new entry onto the history stack. It uses the `push` method of the `useHistory` from the [`routerProvider`][routerprovider].
+This method pushes a new entry onto the history stack. It uses the `push` method of the `useHistory` from the `routerProvider`.
 
 ```tsx
 import { useNavigation } from "@refinedev/core";
@@ -118,7 +118,7 @@ push("custom-page"); // It navigates to the `/custom-page` page
 
 ### replace
 
-This method replaces the current entry on the history stack. It uses the `replace` method of the `useHistory` from the [`routerProvider`][routerprovider].
+This method replaces the current entry on the history stack. It uses the `replace` method of the `useHistory` from the `routerProvider`.
 
 ```tsx
 import { useNavigation } from "@refinedev/core";
@@ -132,7 +132,7 @@ replace("custom-page"); // It navigates to the `/custom-page` page
 
 ### goBack
 
-This method navigates to the previous page. It uses the `goBack` method of the `useHistory` from the [`routerProvider`][routerprovider].
+This method navigates to the previous page. It uses the `goBack` method of the `useHistory` from the `routerProvider`.
 
 ```tsx
 import { useNavigation } from "@refinedev/core";
@@ -229,5 +229,4 @@ cloneUrl("posts", "1"); // It returns the `/posts/clone/1` URL
 - [`type BaseKey`][basekey]
 - `type HistoryType = "push" | "replace";`
 
-[routerprovider]: /docs/routing/router-provider
 [basekey]: /docs/core/interface-references#basekey

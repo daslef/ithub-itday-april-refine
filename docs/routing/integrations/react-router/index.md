@@ -2,6 +2,8 @@
 title: React Router v6
 ---
 
+Refine provides a simple interface from the `routerProvider` prop to infer the resource from route, pass, parse and sync the query parameters and handle navigation operations. This provider and its properties are optional but recommended to get the most out of Refine.
+
 Refine provides router bindings and utilities for [React Router v6](https://reactrouter.com/). It is built on top of the `react-router-dom` package. This package will provide easy integration between Refine and **react-router-dom** for both existing projects and new projects.
 
 <InstallPackagesCommand args="@refinedev/react-router-v6 react-router-dom"/>
@@ -9,16 +11,6 @@ Refine provides router bindings and utilities for [React Router v6](https://reac
 We recommend using `create refine-app` to initialize your Refine projects. It gives you a good boilerplate to start with using React Router v6.
 
 <CreateRefineAppCommand args="-p refine-react my-refine-app" />
-
-[Refer to the Router Provider documentation for detailed information. &#8594][routerprovider]
-
-:::simple Legacy Router
-
-`@refinedev/react-router-v6` also exports the legacy router provider and it will be available until the next major version of Refine. It is recommended to use the new router provider instead of the legacy one.
-
-If you are using the legacy router provider, it can be imported from `@refinedev/react-router-v6/legacy` and passed to the `legacyRouterProvider` prop of the `Refine` component.
-
-:::
 
 ## Usage
 
@@ -30,7 +22,7 @@ You can define your routes the way you want, then pass the `routerProvider` prop
 
 We'll pass the `routerProvider` prop to the `Refine` component to instruct Refine on how to communicate with the router. We'll also define our resources and their action paths, this will inform Refine to use these paths when generating the breadcrumbs, menus, handling redirections and inferring the current resource and action.
 
-```tsx title=App.tsx
+```jsx title=App.jsx
 import { Refine } from "@refinedev/core";
 import dataProvider from "@refinedev/simple-rest";
 // highlight-start
@@ -91,7 +83,7 @@ Additionally, we'll use the [`<Outlet>`](https://reactrouter.com/en/main/compone
 
 We will also need to create a `/login` route to handle the redirection when the user is not authenticated. We can use the `AuthPage` components from Refine's UI packages with `type="login"` prop to render the login page.
 
-```tsx title=App.tsx
+```jsx title=App.jsx
 // highlight-next-line
 import { Refine, Authenticated } from "@refinedev/core";
 import dataProvider from "@refinedev/simple-rest";
@@ -177,7 +169,7 @@ When using layouts in your application, you can use the same approach as the aut
 
 In the below example, we'll wrap our resource routes with the `Layout` component from `@refinedev/antd` and render the routes inside the `<Outlet>` component.
 
-```tsx title=App.tsx
+```jsx title=App.jsx
 import { Refine, Authenticated } from "@refinedev/core";
 import dataProvider from "@refinedev/simple-rest";
 import routerProvider from "@refinedev/react-router-v6";
@@ -256,7 +248,7 @@ If you want to protect your routes with [Access Control Provider](/docs/authoriz
 
 `CanAccess` component will infer resource name and action based on the current route and handle the **access control** from your Access Control Provider for you.
 
-```tsx title=App.tsx
+```jsx title=App.jsx
 // highlight-next-line
 import { Refine, Authenticated, CanAccess } from "@refinedev/core";
 import dataProvider from "@refinedev/simple-rest";
@@ -331,7 +323,7 @@ const App = () => {
 
 If you don't want to wrap your whole application with `CanAccess`, it's also possible to wrap certain routes individually.
 
-```tsx title=App.tsx
+```jsx title=App.jsx
 <Routes>
   <Route
     element={
@@ -378,7 +370,7 @@ You may also want to render an error page when the user tries to access a route 
 
 We'll place this inside the authenticated routes so that the unauthorized users will be redirected to the login page when they try to access a route that doesn't exist.
 
-```tsx title=App.tsx
+```jsx title=App.jsx
 import { Refine, Authenticated } from "@refinedev/core";
 import dataProvider from "@refinedev/simple-rest";
 import routerProvider from "@refinedev/react-router-v6";
@@ -457,7 +449,7 @@ We can achieve this by using the [`<NavigateToResource>`](#navigatetoresource) c
 
 We also want this route to be rendered only when the user is authenticated. We can achieve this by placing our `Route` inside the authenticated routes.
 
-```tsx title=App.tsx
+```jsx title=App.jsx
 import { Refine, Authenticated } from "@refinedev/core";
 import dataProvider from "@refinedev/simple-rest";
 // highlight-next-line
@@ -541,7 +533,7 @@ Refine supports route parameters defined with `:param` syntax. You can use these
 
 A basic component that extends the `Navigate` component from **react-router-dom** to navigate to a resource page. It is useful when you want to navigate to a resource page at the index route of your app.
 
-```tsx
+```jsx
 
 const App = () => {
     return (
@@ -579,7 +571,7 @@ This component enables the `warnWhenUnsavedChanges` feature of Refine. It will s
 
 Place this component inside the `<Refine>` components children to enable this feature.
 
-```tsx
+```jsx
 const App = () => {
   return (
     <BrowserRouter>
@@ -609,7 +601,7 @@ const App = () => {
 
 It will redirect to the given path and keep the current location in `to` query parameter to redirect back when needed. In some cases you may not want to use the `<Authenticated>` component's `redirectOnFail` prop to redirect and have a catch-all route to redirect to the desired page. This is useful when handling the 404 pages with authentication.
 
-```tsx
+```jsx
 import { Refine } from "@refinedev/core";
 import routerProvider, { CatchAllNavigate } from "@refinedev/react-router-v6";
 import { AuthPage } from "@refinedev/antd";
@@ -659,7 +651,7 @@ The default title generation rules are as follows:
 - clone : `#{id} Clone Post | Refine`
 - default : `Refine`
 
-```tsx
+```jsx
 const App = () => {
   return (
     <BrowserRouter>
@@ -687,7 +679,7 @@ const App = () => {
 
 Inside the handler function, you can dynamically generate the document title based on the provided properties and any additional logic required. The function should return the generated title.
 
-```tsx
+```jsx
 const customTitleHandler = ({ resource, action, params }) => {
   let title = "Custom default"; // Default title
 
@@ -708,7 +700,7 @@ const customTitleHandler = ({ resource, action, params }) => {
 
 This hook allows you to set the document title for the current page. It can be used in any component that is a child of the `<Refine>` component.
 
-```tsx
+```jsx
 import { useDocumentTitle } from "@refinedev/react-router-v6";
 
 const PostList = () => {
@@ -734,7 +726,7 @@ const PostList = () => {
 
 This hook also returns a function that can be used to set the document title dynamically.
 
-```tsx
+```jsx
 import { useDocumentTitle } from "@refinedev/react-router-v6";
 
 const PostList = () => {
@@ -1155,7 +1147,7 @@ We will render the `ErrorPage` component for both authenticated and not authenti
 
 The difference from the previous example is in the wrapper of the `*` route. Now we will redirect the unauthenticated users to the `/login` route and show the `ErrorPage` component for authenticated users only.
 
-```tsx
+```jsx
 <Route
   element={
     <Authenticated fallback={<CatchAllNavigate to="/login" />}>
@@ -1187,101 +1179,4 @@ We can also omit the `fallback` property and let the default redirect flow handl
 
 This means we will look for the `redirectTo` property in the `authProvider`'s `check` method. If it's defined, `<Authenticated>` component will redirect the user to the `redirectTo` route.
 
-### `RefineRoutes` Component
-
-This component is available but not recommended to use. While this works for the simple cases, we encourage you to define your routes using the `Route` components to have more control and flexibility over them.
-
-This component can be used to create routes for your resources by using the `resources` prop. It will only take effect if the action properties in the resource definitions are assigned to components or objects with `component` property.
-
-It will create the routes and pass it as a `JSX.Element[]` to the `children` function. You can use this to wrap your routes with other components like `Authenticated` or `Layout`.
-
-```tsx title=App.tsx
-import { Refine } from "@refinedev/core";
-import dataProvider from "@refinedev/simple-rest";
-// highlight-start
-import routerProvider, { RefineRoutes } from "@refinedev/react-router-v6";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-// highlight-end
-
-import { PostList, PostCreate } from "pages/posts";
-import { CategoryList, CategoryShow } from "pages/categories";
-
-import { Layout } from "components/Layout";
-import { ErrorComponent } from "components/Error";
-
-const App = () => {
-    return (
-        <BrowserRouter>
-            <Refine
-                dataProvider={dataProvider}
-                // highlight-next-line
-                routerProvider={routerProvider}
-                resources={[
-                    {
-                        name: "posts",
-                        // highlight-start
-                        list: PostList,
-                        create: PostCreate,
-                        // highlight-end
-                    },
-                    {
-                        name: "categories",
-                        // highlight-start
-                        list: CategoryList,
-                        show: {
-                            component: CategoryShow,
-                            path: "/categories/:id/details", // Notice that we can also define the path here
-                        },
-                        // highlight-end
-                    }
-                ]}
-            >
-                {/* highlight-start */}
-                <RefineRoutes>
-                    {(routes) => (
-                        <Routes>
-                            <Route
-                                element={(
-                                    <Layout>
-                                        <Outlet />
-                                    </Layout>
-                                )}
-                            >
-                                <Route index element={<NavigateToResource />} />
-                                {routes}
-                                <Route path="*" element={<ErrorComponent />} />
-                            </Route>
-                        </Routes>
-                    )}
-                </RefineRoutes>
-                {/* highlight-end */}
-        </BrowserRouter>
-    )
-}
-```
-
-We've defined our resource actions using components to let the `RefineRoutes` render them. We can also define the path for each action. If we don't define the path, the `RefineRoutes` will use the default paths for the actions.
-
-[Refer to "Understanding the Resources" section of our tutorial for detailed information. &#8594][resources]
-
-💡 We also defined the `show` action's path as `/categories/:id/details` which will override the default path.
-
-The `index` route is defined with the `NavigateToResource` component which will redirect the user to the list page of the first defined resource.
-
-We also added a catch-all route which will render the `ErrorComponent` for the routes that are not defined.
-
-When components are used to define the resource actions, default paths will be used. You can override the default paths by assigning an object with `component` and `path` properties to the action properties.
-
-Default paths are:
-
-- `list`: `/resources`
-- `create`: `/resources/create`
-- `edit`: `/resources/edit/:id`
-- `show`: `/resources/show/:id`
-
-[routerprovider]: /docs/routing/router-provider
 [resources]: /docs/guides-concepts/general-concepts/#resource-concept
-
-```
-
-```

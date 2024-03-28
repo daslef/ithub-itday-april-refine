@@ -592,10 +592,6 @@
       "to": "/docs/notification/notification-provider"
     },
     {
-      "from": "/docs/api-reference/core/providers/router-provider",
-      "to": "/docs/routing/router-provider"
-    },
-    {
       "from": "/docs/api-reference/core/components/auth/authenticated",
       "to": "/docs/authentication/components/authenticated"
     },
@@ -980,16 +976,8 @@
       "to": "/docs/ui-integrations/ant-design/theming"
     },
     {
-      "from": "/docs/packages",
-      "to": "/docs/packages/list-of-packages"
-    },
-    {
       "from": "/docs/packages/documentation/routers",
       "to": "/docs/guides-concepts/routing"
-    },
-    {
-      "from": "/docs/packages/documentation/data-providers/graphql",
-      "to": "/docs/data/packages/graphql"
     },
     {
       "from": "/docs/packages/documentation/data-providers/simple-rest",
@@ -998,10 +986,6 @@
     {
       "from": "/docs/packages/documentation/data-providers/supabase",
       "to": "/docs/data/packages/supabase"
-    },
-    {
-      "from": "/docs/packages/documentation/inferencer",
-      "to": "/docs/packages/inferencer"
     },
     {
       "from": "/docs/packages/documentation/routers/react-router-v6",
@@ -1030,10 +1014,6 @@
     {
       "from": "/docs/core/providers/notification-provider",
       "to": "/docs/notification/notification-provider"
-    },
-    {
-      "from": "/docs/core/providers/router-provider",
-      "to": "/docs/routing/router-provider"
     },
     {
       "from": "/docs/core/components/authenticated",
@@ -1218,10 +1198,6 @@
     {
       "from": "/docs/router-integrations/react-router",
       "to": "/docs/routing/integrations/react-router"
-    },
-    {
-      "from": "/docs/packages/data-providers/graphql",
-      "to": "/docs/data/packages/graphql"
     },
     {
       "from": "/docs/packages/data-providers/simple-rest",

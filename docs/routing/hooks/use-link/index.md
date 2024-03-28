@@ -2,7 +2,7 @@
 title: useLink
 ---
 
-`useLink` is a hook that leverages the `Link` property of the [`routerProvider`][routerprovider] to create links compatible with the user's router library.
+`useLink` is a hook that leverages the `Link` property of the `routerProvider` to create links compatible with the user's router library.
 
 :::simple Good to know
 
@@ -29,5 +29,3 @@ const MyComponent = () => {
 ### to
 
 This is the path that the link will navigate to. It should be a string.
-
-[routerprovider]: /docs/routing/router-provider

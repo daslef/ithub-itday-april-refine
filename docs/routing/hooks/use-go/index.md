@@ -2,7 +2,7 @@
 title: useGo
 ---
 
-`useGo` is a hook that leverages the `go` method of the [`routerProvider`][routerprovider] to perform navigation operations.
+`useGo` is a hook that leverages the `go` method of the `routerProvider`to perform navigation operations.
 
 ## Usage
 
@@ -117,5 +117,4 @@ The `options.keepHash` parameter is a boolean that determines whether the curren
 
 `useGo` does not return any value except for the `path` type, which returns the navigation path for the given config without mutating the history stack.
 
-[routerprovider]: /docs/routing/router-provider
 [basekey]: /docs/core/interface-references#basekey

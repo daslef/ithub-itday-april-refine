@@ -2,7 +2,7 @@
 title: useParsed
 ---
 
-`useParsed` is a hook that leverages the `parse` method of the [`routerProvider`][routerprovider] to access the URL and query parameters along with the inferred `resource`, `action` and `id` from the URL.
+`useParsed` is a hook that leverages the `parse` method of the `routerProvider` to access the URL and query parameters along with the inferred `resource`, `action` and `id` from the URL.
 
 ## Usage
 
@@ -69,5 +69,3 @@ This is the page size that is parsed from the URL. It will be `undefined` if the
 ### params
 
 This is the object that contains all the parameters that are parsed from the URL. It will be an empty object if there is no parameter in the URL. `params` object contains both the URL parameters and the query parameters.
-
-[routerprovider]: /docs/routing/router-provider
