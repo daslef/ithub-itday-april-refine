@@ -73,6 +73,14 @@ module.exports = {
         "data/data-provider/index",
         {
           type: "category",
+          label: "Packages",
+          items: [
+            "data/packages/simple-rest/index",
+            "data/packages/supabase/index",
+          ],
+        },
+        {
+          type: "category",
           collapsed: false,
           label: "Hooks",
           items: [
@@ -96,19 +104,6 @@ module.exports = {
             "data/hooks/use-data-provider/index",
             "data/hooks/use-api-url/index",
           ],
-        },
-        {
-          type: "category",
-          label: "Packages",
-          items: [
-            "data/packages/simple-rest/index",
-            "data/packages/supabase/index",
-          ],
-        },
-        {
-          type: "category",
-          label: "Supabase Example",
-          items: ["examples/data-provider/supabase"],
         },
       ],
     },
@@ -188,15 +183,6 @@ module.exports = {
           label: "Hooks",
           items: ["authorization/hooks/use-can/index"],
         },
-        {
-          type: "category",
-          label: "Examples",
-          items: [
-            "examples/access-control/casbin",
-            "examples/access-control/cerbos",
-            "examples/access-control/permify",
-          ],
-        },
       ],
     },
     // Realtime
@@ -254,11 +240,7 @@ module.exports = {
             "i18n/hooks/use-translate/index",
           ],
         },
-        {
-          type: "category",
-          label: "Examples",
-          items: ["examples/i18n/i18n-react"],
-        },
+        "examples/i18n/i18n-react"
       ],
     },
     {
@@ -384,8 +366,6 @@ module.exports = {
         "guides-concepts/deployment/index",
         "packages/cli/index",
         "further-readings/testing",
-        "further-readings/comparison",
-        "further-readings/license",
       ],
     },
   ],

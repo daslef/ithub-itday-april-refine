@@ -18,26 +18,26 @@ export default function UsageReactRouterDom() {
       }}
       startRoute="/products"
       files={{
-        "/App.tsx": {
+        "/App.jsx": {
           code: AppTsxCode,
           active: true,
         },
-        "/pages/products/index.tsx": {
+        "/pages/products/index.jsx": {
           code: ProductsTsxCode,
         },
-        "/pages/products/list.tsx": {
+        "/pages/products/list.jsx": {
           code: ListTsxCode,
         },
-        "/pages/products/show.tsx": {
+        "/pages/products/show.jsx": {
           code: ShowTsxCode,
         },
-        "/pages/products/edit.tsx": {
+        "/pages/products/edit.jsx": {
           code: EditTsxCode,
         },
-        "/pages/products/create.tsx": {
+        "/pages/products/create.jsx": {
           code: CreateTsxCode,
         },
-        "/auth-provider.tsx": {
+        "/auth-provider.jsx": {
           code: AuthProviderTsxCode,
           hidden: true,
         },
@@ -49,18 +49,18 @@ export default function UsageReactRouterDom() {
 const AuthProviderTsxCode = /* jsx */ `
 const authProvider = {
     login: async ({ username, password }) => {
-      (window as any).authenticated = true;
+      window.authenticated = true;
       return { success: true };
     },
     check: async () => {
       // auto login at first time
-      if (typeof (window as any).authenticated === "undefined") {
-        (window as any).authenticated = true;
+      if (window.authenticated === "undefined") {
+        window.authenticated = true;
       }
-      return { authenticated: Boolean((window as any).authenticated) };
+      return { authenticated: Boolean(window.authenticated) };
     },
     logout: async () => {
-      (window as any).authenticated = false;
+      window.authenticated = false;
       return { success: true };
     },
     register: async () => {

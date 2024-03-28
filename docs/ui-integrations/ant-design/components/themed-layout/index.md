@@ -1,6 +1,6 @@
 ---
 title: <ThemedLayout />
-description: <ThemedLayoutV2> component from Refine, defines the overall structure and layout of a web page.
+description: Компонент <ThemedLayoutV2>, определяющий верхнеуровневные структуру и макет приложения.
 swizzle: true
 source: packages/antd/src/components/themedLayoutV2/index.tsx
 ---
@@ -30,21 +30,21 @@ const authProvider = {
 };
 ```
 
-`<ThemedLayoutV2>` component uses the [`<Layout>`][antd-layout] and [`<Sider>`][antd-sider] components from the Ant Design library to define the layout and structure of a web page. It includes customizable components for the header, sidebar, title, footer, and off-layout area, which can be replaced or customized as needed.
+`<ThemedLayoutV2>` использует компоненты [`<Layout>`][antd-layout] и [`<Sider>`][antd-sider] из библиотеки Ant Design для задания макета и структуры веб-страницы. Включает в себя хедер, боковую панель, заголовок и футер, которые могут быть заменены или кастомизированы при необходимости.
 
-By using `<ThemedLayoutV2>`, developers can create a consistent look and feel across multiple pages or sections of a website, while also improving code maintainability and reusability. The customizable sections of `<ThemedLayoutV2>` include:
+С использованием `<ThemedLayoutV2>` разработчики могут достичь согласованного внешнего вида и пользовательского опыта для всех страниц приложения. К настраиваемым элементам `<ThemedLayoutV2>` относятся:
 
-- [`<ThemedHeaderV2>`][themed-header]: displayed at the top of the page and can display the user's name and avatar.
-- [`<ThemedSiderV2>`][themed-sider]: displayed on the left side of the page and can display menu items.
-- [`<ThemedTitleV2>`][themed-title]: displayed at the top of [`<ThemedSiderV2>`][themed-sider] and includes an icon and text.
-- `<Footer>`: displayed at the bottom of the page.
-- `<OffLayoutArea>`: rendered outside of the main layout component and can be placed anywhere on the page while still being part of the overall layout.
+- [`<ThemedHeaderV2>`][themed-header]: расположен наверху страницы, может содержать имя пользователя и его аватар.
+- [`<ThemedSiderV2>`][themed-sider]: расположен слева страницы, отображает меню навигации.
+- [`<ThemedTitleV2>`][themed-title]: расположен наверху компонента [`<ThemedSiderV2>`][themed-sider], содержит лого и текст.
+- `<Footer>`: расположен внизу страницы.
+- `<OffLayoutArea>`: зона вне основного макета, расположение можно настроить.
 
-## Usage
+## Использование
 
-We'll show what default `<ThemedLayoutV2>` looks like in the following example.
+По умолчанию `<ThemedLayoutV2>` выглядит следующим образом:
 
-```tsx live previewHeight=600px hideCode url=http://localhost:3000/samples
+```jsx live previewHeight=600px hideCode url=http://localhost:3000/samples
 setInitialRoutes(["/samples"]);
 
 // visible-block-start
@@ -64,7 +64,7 @@ import { authProvider } from "./authProvider";
 
 const API_URL = "https://api.fake-rest.refine.dev";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <BrowserRouter>
       <ConfigProvider theme={RefineThemes.Blue}>
@@ -102,15 +102,11 @@ const App: React.FC = () => {
 render(<App />);
 ```
 
-`<ThemedLayoutV2>` is designed to be responsive. In the live-preview, it appears in tablet mode and uses [`<Drawer>`][antd-drawer]. On larger screens, it will use [`<Sider>`][antd-sider].
+`<ThemedLayoutV2>` адаптивен по умолчанию: например, мобильная версия использует компонент [`<Drawer>`][antd-drawer], десктопная - [`<Sider>`][antd-sider].
 
-Example of above showing how to use `<ThemedLayoutV2>` with [`React Router v6`](/docs/packages/list-of-packages). You can see these examples for other routers:
+Пример использования с [React Router v6](https://github.com/refinedev/refine/blob/master/examples/auth-antd/src/App.tsx#L186)
 
-- [React Router v6](https://github.com/refinedev/refine/blob/master/examples/auth-antd/src/App.tsx#L186)
-- [Next.js](https://github.com/refinedev/refine/blob/master/examples/with-nextjs/src/app/layout.tsx#L35)
-- [Remix](https://github.com/refinedev/refine/blob/master/examples/with-remix-auth/app/routes/_protected.tsx)
-
-## Props
+## Пропсы
 
 ### Sider
 

@@ -1,11 +1,11 @@
 import React from "react";
 import { Sandpack } from "@site/src/components/sandpack";
 
-export default function BasicViews() {
+export default function Usage() {
   return (
     <Sandpack
       showNavigator
-      initialPercentage={40}
+      previewOnly
       dependencies={{
         "@refinedev/antd": "latest",
         "@refinedev/core": "latest",
@@ -17,38 +17,75 @@ export default function BasicViews() {
       }}
       startRoute="/products"
       files={{
-        "/App.tsx": {
+        "/App.jsx": {
           code: AppTsxCode,
-          hidden: true,
-        },
-        "/pages/products/list.tsx": {
-          code: ListTsxCode,
           active: true,
         },
-        "/pages/products/show.tsx": {
+        "/pages/products/list.jsx": {
+          code: ListTsxCode,
+        },
+        "/pages/products/show.jsx": {
           code: ShowTsxCode,
         },
-        "/pages/products/edit.tsx": {
+        "/pages/products/edit.jsx": {
           code: EditTsxCode,
         },
-        "/pages/products/create.tsx": {
+        "/pages/products/create.jsx": {
           code: CreateTsxCode,
+        },
+        "/auth-provider.jsx": {
+          code: AuthProviderTsxCode,
+          hidden: true,
         },
       }}
     />
   );
 }
 
+const AuthProviderTsxCode = /* jsx */ `
+const authProvider = {
+    login: async ({ username, password }) => {
+      window.authenticated = true;
+      return { success: true };
+    },
+    check: async () => {
+      // auto login at first time
+      if (window.authenticated === "undefined") {
+        window.authenticated = true;
+      }
+      return { authenticated: Boolean(window.authenticated) };
+    },
+    logout: async () => {
+      window.authenticated = false;
+      return { success: true };
+    },
+    register: async () => {
+      return { success: true };
+    },
+    forgotPassword: async () => {
+      return { success: true };
+    },
+    resetPassword: async () => {
+      return { success: true };
+    },
+    getIdentity: async () => ({ id: 1, name: "John Doe", avatar: "https://i.pravatar.cc/300"})
+};
+
+export default authProvider;
+`.trim();
+
 const AppTsxCode = /* jsx */ `
 import React from "react";
 
-import { Refine } from "@refinedev/core";
+import { Refine, Authenticated } from "@refinedev/core";
 import dataProvider from "@refinedev/simple-rest";
 import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
 import { BrowserRouter, Route, Routes, Outlet, Navigate } from "react-router-dom";
 
-import { ErrorComponent, RefineThemes, ThemedLayoutV2, useNotificationProvider } from "@refinedev/antd";
+import { ErrorComponent, RefineThemes, ThemedLayoutV2, useNotificationProvider, AuthPage } from "@refinedev/antd";
 import { App as AntdApp, ConfigProvider } from "antd";
+
+import authProvider from "./auth-provider";
 
 import "@refinedev/antd/dist/reset.css";
 
@@ -65,6 +102,7 @@ export default function App() {
           <Refine
             routerProvider={routerProvider}
             dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
+            authProvider={authProvider}
             notificationProvider={useNotificationProvider}
             resources={[
               {
@@ -78,21 +116,43 @@ export default function App() {
             options={{ syncWithLocation: true }}
           >
             <Routes>
+              <Route element={<Authenticated fallback={<Navigate to="/login" />}><Outlet /></Authenticated>}>
                 <Route
-                    element={
+                  element={
                     <ThemedLayoutV2>
-                        <Outlet />
+                      <Outlet />
                     </ThemedLayoutV2>
-                    }
+                  }
                 >
-                    <Route path="/products" element={<Outlet />}>
-                        <Route index element={<ProductList />} />
-                        <Route path="create" element={<ProductCreate />} />
-                        <Route path=":id" element={<ProductShow />} />
-                        <Route path=":id/edit" element={<ProductEdit />} />
-                    </Route>
-                    <Route path="*" element={<ErrorComponent />} />
+                  <Route path="/products" element={<Outlet />}>
+                      <Route index element={<ProductList />} />
+                      <Route path="create" element={<ProductCreate />} />
+                      <Route path=":id" element={<ProductShow />} />
+                      <Route path=":id/edit" element={<ProductEdit />} />
+                  </Route>
+                  <Route path="*" element={<ErrorComponent />} />
                 </Route>
+              </Route>
+              <Route element={<Authenticated fallback={<Outlet />}><NavigateToResource resource="products" /></Authenticated>}>
+                <Route
+                  path="/login"
+                  element={(
+                    <AuthPage
+                      type="login"
+                      formProps={{
+                        initialValues: {
+                          email: "demo@refine.dev",
+                          password: "demodemo",
+                        },
+                      }}
+                    />
+                  )}
+                />
+                <Route path="/register" element={<AuthPage type="register" />} />
+                <Route path="/forgot-password" element={<AuthPage type="forgotPassword" />} />
+                <Route path="/reset-password" element={<AuthPage type="resetPassword" />} />
+                <Route path="*" element={<ErrorComponent />} />
+              </Route>
             </Routes>
           </Refine>
         </AntdApp>
@@ -104,6 +164,7 @@ export default function App() {
 
 const ListTsxCode = /* jsx */ `
 import { List, ShowButton, EditButton, useTable } from "@refinedev/antd";
+import { BaseRecord } from "@refinedev/core";
 import { Space, Table } from "antd";
 import React from "react";
 
@@ -171,11 +232,11 @@ import { Edit, useForm } from "@refinedev/antd";
 const { Title } = Typography;
 const { TextArea } = Input;
 
-export const ProductEdit: React.FC = () => {
-  const { formProps, saveButtonProps, formLoading } = useForm();
+export const ProductEdit = () => {
+  const { formProps, saveButtonProps } = useForm();
 
   return (
-    <Edit saveButtonProps={saveButtonProps} isLoading={formLoading}>
+    <Edit saveButtonProps={saveButtonProps}>
       <Form {...formProps} layout="vertical">
           <Form.Item
               label="Name"
@@ -236,10 +297,10 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 export const ProductCreate = () => {
-  const { formProps, saveButtonProps, formLoading } = useForm();
+  const { formProps, saveButtonProps } = useForm();
 
   return (
-    <Create saveButtonProps={saveButtonProps} isLoading={formLoading}>
+    <Create saveButtonProps={saveButtonProps}>
       <Form {...formProps} layout="vertical">
         <Form.Item
             label="Name"

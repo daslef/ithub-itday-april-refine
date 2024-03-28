@@ -15,24 +15,9 @@ To check if a desired access will be granted, the `accessControlProvider` should
 
 :::
 
-```ts
-export interface IAccessControlContext {
-  can?: ({ resource, action, params }: CanParams) => Promise<CanResponse>;
-  options?: {
-    buttons?: {
-      enableAccessControl?: boolean;
-      hideIfUnauthorized?: boolean;
-    };
-    queryOptions?: UseQueryOptions<CanReturnType>;
-  };
-}
-
-const accessControlProvider: IAccessControlContext = {
-  can: async ({
-    resource,
-    action,
-    params,
-  }: CanParams): Promise<CanResponse> => {
+```js
+const accessControlProvider = {
+  can: async ({ resource, action, params }) => {
     return { can: true };
   },
   options: {
@@ -53,8 +38,8 @@ By default, `enableAccessControl` is **true**, `hideIfUnauthorized` is **false**
 
 ## Usage
 
-```tsx
-const App: React.FC = () => {
+```jsx
+const App = () => {
   return (
     <Refine
       // other providers and props
@@ -90,12 +75,6 @@ const App: React.FC = () => {
 
 Providing `accessControlProvider` to the `<Refine />` component **won't enforce** access control by itself; you will need to wrap protected routes with the `<CanAccess />` component.
 
-Refer to one of the following documentations, based on your preferred router:
-
-- [React Router Access Control](/docs/packages/list-of-packages#usage-with-access-control-providers)
-- [NextJS Router Access Control](/docs/packages/list-of-packages#access-control)
-- [Remix Router Access Control](/docs/packages/list-of-packages#access-control)
-
 :::
 
 ### Meta Access
@@ -104,7 +83,7 @@ In the `can` method, you'll have access to the `resource` object you passed to t
 
 In the example below, the `can` function receives the `resource`([ResourceProps][iresourceitem]) object you pass to the `<Refine/>` component, which allows you to use Attribute Based Access Control (ABAC), which allows you to grant permissions based on the value of a field in the resource object.
 
-```tsx
+```jsx
 export const accessControlProvider = {
   can: async ({ resource, action, params }) => {
     const resourceName = params?.resource?.name;
@@ -136,7 +115,7 @@ Refine provides a hook and a component to use the `can` method from the `accessC
 
 `useCan` uses the `can` for the query function for **react-query**'s `useQuery`. It takes the parameters that `can` takes, can be configured with `queryOptions` of `useQuery` and returns the result of `useQuery`.
 
-```tsx
+```jsx
 const { data } = useCan({
   resource: "resource-you-ask-for-access",
   action: "action-type-on-resource",
@@ -148,20 +127,11 @@ const { data } = useCan({
 });
 ```
 
-```ts
-const useCan: ({
-    action,
-    resource,
-    params,
-    queryOptions,
-}: CanParams) => UseQueryResult<CanReturnType*>
-```
-
 ### `<CanAccess />`
 
 `<CanAccess />` is a wrapper component that uses `useCan` to check for access control. It takes the parameters that `can` method takes and also a `fallback`. If access control returns true, it renders its children; otherwise, it renders `fallback`, if it was provided.
 
-```tsx
+```jsx
 <CanAccess
   resource="posts"
   action="edit"
@@ -241,11 +211,6 @@ export const MyPage = () => {
 :::simple
 If you want to hide buttons instead of disabling them, you can pass `hideIfUnauthorized: true` to the `options` of the `accessControlProvider`
 :::
-
-## Examples
-
-This example is for **Casbin** access control provider. You can check our other access control provider, [**Cerbos**](/docs/examples/access-control/cerbos/) as well.
-<CodeSandboxExample path="access-control-casbin" />
 
 [iresourceitem]: /docs/core/interface-references#resourceprops
 [basekey]: /docs/core/interface-references#basekey

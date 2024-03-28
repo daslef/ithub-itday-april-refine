@@ -1297,83 +1297,6 @@ render(
 
 Thanks to `refine-supabase` data provider, we can now start creating new records for the Supabase Database by just filling the form.
 
-### Social Logins
-
-We'll show how to add Google Login option to the app.
-
-Social login feature can be activated by setting `provider` property of the `<AuthPage>` component.
-
-```tsx title="src/App.tsx"
-//highlight-start
-import { AuthPage } from "@refinedev/antd";
-import { GoogleOutlined } from "@ant-design/icons";
-//highlight-end
-
-const App: React.FC = () => {
-    return (
-        <Refine>
-            <Routes>
-                <Route
-                    path="/login"
-                    element={
-                        <AuthPage
-                            type="login"
-                            {/* highlight-start */}
-                            providers={[
-                                {
-                                    name: "google",
-                                    label: "Sign in with Google",
-                                    icon:
-                                        <GoogleOutlined
-                                            style={{
-                                                fontSize: 18,
-                                                lineHeight: 0,
-                                            }}
-                                        />
-                                    ),
-                                },
-                            ]}
-                            {/* highlight-end */}
-                        />
-                    }
-                />
-            </Routes>
-            {/* ... */}
-        </Refine>
-    );
-};
-
-export default App;
-```
-
-This will add a new Google login button to the login page. After the user successfully logs in, the app will redirect back to the app.
-
-### Enable Google Auth on Supabase
-
-Head over to app.supabase.com and sign in to your Supabase account. Next, go to Authentication -> Settings to configure the Auth providers.
-
-You will find the Google Auth option in the Auth providers section; enable it and set your Google Credentials.
-
-[Refer to Supabase docs for more information about Credentials &#8594](https://supabase.com/docs/guides/auth/auth-google#create-your-google-credentials)
-
-<img src="https://refine.ams3.cdn.digitaloceanspaces.com/website/static/img/guides-and-concepts/data-provider/supabase/supabase-config.png" className="rounded" alt="supabaseConfig" />
-
-Here is the result:
-
-<img src="https://refine.ams3.cdn.digitaloceanspaces.com/website/static/img/guides-and-concepts/data-provider/supabase/social-login-min.gif" className="border border-gray-200 rounded" alt="socialLogin" />
-
-## Let's recap what we have done so far
-
-So far, we have implemented the followings:
-
-- We have reviewed Supabase Client and data provider concepts. We've seen benefits of using Refine and how it can handle complex setups for us.
-- We have talked about the `authProvider` concept and how it works with Supabase Auth API. We also see the advantages of Refine's built-in authentication support.
-- We have added CRUD pages to make the app interact with Supabase API. We've seen how the `resources` property works and how it connects the pages with the API.
-- We have seen how the [`Authentication`](/docs/packages/list-of-packages#usage-with-authentication) component works and how it overrides the default login page with the `AuthPage` component. We've seen how `AuthPage` component uses `authProvider` methods internally.
-- We have seen how authorization handling in Refine app by understanding the logic behind of `authProvider`, and `<AuthPage>` component.
-
-**Refine provides solutions for critical parts of the complete CRUD app requirements. It saves development time and effort by providing ready-to-use components and features.**
-
 ## Supabase Real Time Support
 
 Refine has a built-in support for [Supabase Real Time](https://supabase.com/docs/guides/realtime). It means that when you create, update, or delete a record, the changes will be reflected in the app in real-time.
@@ -1418,17 +1341,6 @@ For live features to work automatically, we set `liveMode: "auto"` in the option
 ### Let see how real-time feature works in the app
 
 <img src="https://refine.ams3.cdn.digitaloceanspaces.com/website/static/img/guides-and-concepts/data-provider/supabase/real-time-min.gif" className="border border-gray-200 rounded" alt="realTime" />
-
-:::tip
-
-Refine offers out-of-the-box live provider support:
-
-- **Ably** &#8594 [Source Code](https://github.com/refinedev/refine/blob/master/packages/ably/src/index.ts) - [Demo](https://codesandbox.io/embed/github/refinedev/refine/tree/master/examples/live-provider-ably/?view=preview&theme=dark&codemirror=1)
-- **Supabase** &#8594 [Source Code](https://github.com/refinedev/refine/blob/master/packages/supabase/src/index.ts#L187)
-- **Appwrite** &#8594 [Source Code](https://github.com/refinedev/refine/blob/master/packages/appwrite/src/index.ts#L252)
-- **Hasura** &#8594 [Source Code](https://github.com/refinedev/refine/blob/master/packages/hasura/src/liveProvider/index.ts#L16)
-
-:::
 
 ## Using `meta` to pass values to data provider
 

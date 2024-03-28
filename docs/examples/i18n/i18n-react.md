@@ -1,6 +1,6 @@
 ---
 id: i18n-react
-title: React
+title: Example
 example-tags: [i18n]
 ---
 

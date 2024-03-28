@@ -1,223 +1,113 @@
 import React from "react";
 import { Sandpack } from "@site/src/components/sandpack";
 
-export default function UsageRemix() {
+export default function BasicViews() {
   return (
     <Sandpack
       showNavigator
-      hidePreview
-      showFiles
+      initialPercentage={40}
       dependencies={{
         "@refinedev/antd": "latest",
         "@refinedev/core": "latest",
         "@refinedev/simple-rest": "latest",
-        "@refinedev/remix-router": "latest",
+        "@refinedev/react-router-v6": "latest",
+        "react-router-dom": "latest",
+        "react-router": "latest",
         antd: "^5.0.5",
       }}
       startRoute="/products"
       files={{
-        "/app/root.tsx": {
-          code: RootTsxCode,
+        "/App.jsx": {
+          code: AppTsxCode,
+          hidden: true,
+        },
+        "/pages/products/list.jsx": {
+          code: ListTsxCode,
           active: true,
         },
-        "/app/routes/_protected.tsx": {
-          code: ProtectedTsxCode,
-        },
-        "/app/routes/_protected.products._index.tsx": {
-          code: ListTsxCode,
-        },
-        "/app/routes/_protected.products.$id.tsx": {
+        "/pages/products/show.jsx": {
           code: ShowTsxCode,
         },
-        "/app/routes/_protected.products.$id.edit.tsx": {
+        "/pages/products/edit.jsx": {
           code: EditTsxCode,
         },
-        "/app/routes/_protected.products.create.tsx": {
+        "/pages/products/create.jsx": {
           code: CreateTsxCode,
-        },
-        "/app/routes/_auth.tsx": {
-          code: AuthTsxCode,
-        },
-        "/app/routes/_auth.login.tsx": {
-          code: LoginTsxCode,
-        },
-        "/app/auth-provider.tsx": {
-          code: AuthProviderTsxCode,
-          hidden: true,
         },
       }}
     />
   );
 }
 
-const AuthProviderTsxCode = /* jsx */ `
-const authProvider = {
-    login: async ({ username, password }) => {
-      (window as any).authenticated = true;
-      return { success: true };
-    },
-    check: async () => {
-      // auto login at first time
-      if (typeof (window as any).authenticated === "undefined") {
-        (window as any).authenticated = true;
-      }
-      return { authenticated: Boolean((window as any).authenticated) };
-    },
-    logout: async () => {
-      (window as any).authenticated = false;
-      return { success: true };
-    },
-    register: async () => {
-      return { success: true };
-    },
-    forgotPassword: async () => {
-      return { success: true };
-    },
-    resetPassword: async () => {
-      return { success: true };
-    },
-    getIdentity: async () => ({ id: 1, name: "John Doe", avatar: "https://i.pravatar.cc/300"})
-};
-
-export default authProvider;
-`.trim();
-
-const RootTsxCode = /* jsx */ `
+const AppTsxCode = /* jsx */ `
 import React from "react";
 
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
-
 import { Refine } from "@refinedev/core";
-import routerProvider from "@refinedev/remix-router";
 import dataProvider from "@refinedev/simple-rest";
+import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
+import { BrowserRouter, Route, Routes, Outlet, Navigate } from "react-router-dom";
 
-import { useNotificationProvider, RefineThemes } from "@refinedev/antd";
-import { ConfigProvider, App as AntdApp } from "antd";
+import { ErrorComponent, RefineThemes, ThemedLayoutV2, useNotificationProvider } from "@refinedev/antd";
+import { App as AntdApp, ConfigProvider } from "antd";
 
-import resetStyle from "@refinedev/antd/dist/reset.css";
+import "@refinedev/antd/dist/reset.css";
 
-import authProvider from "./auth-provider";
+import { ProductList } from "./pages/products/list";
+import { ProductShow } from "./pages/products/show";
+import { ProductEdit } from "./pages/products/edit";
+import { ProductCreate } from "./pages/products/create";
 
 export default function App() {
   return (
-    <html lang="en">
-      <head>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <ConfigProvider theme={RefineThemes.Blue}>
-          <AntdApp>
-            <Refine
-              routerProvider={routerProvider}
-              dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
-              authProvider={authProvider}
-              notificationProvider={useNotificationProvider}
-              resources={[
-                {
-                  name: "products",
-                  list: "/products",
-                  show: "/products/:id",
-                  edit: "/products/:id/edit",
-                  create: "/products/create",
-                },
-              ]}
-              options={{ syncWithLocation: true }}
-            >
-              <Outlet />
-            </Refine>
-          </AntdApp>
-        </ConfigProvider>
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-      </body>
-    </html>
+    <BrowserRouter>
+      <ConfigProvider theme={RefineThemes.Blue}>
+        <AntdApp>
+          <Refine
+            routerProvider={routerProvider}
+            dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
+            notificationProvider={useNotificationProvider}
+            resources={[
+              {
+                name: "products",
+                list: "/products",
+                show: "/products/:id",
+                edit: "/products/:id/edit",
+                create: "/products/create"
+              }
+            ]}
+            options={{ syncWithLocation: true }}
+          >
+            <Routes>
+                <Route
+                    element={
+                    <ThemedLayoutV2>
+                        <Outlet />
+                    </ThemedLayoutV2>
+                    }
+                >
+                    <Route path="/products" element={<Outlet />}>
+                        <Route index element={<ProductList />} />
+                        <Route path="create" element={<ProductCreate />} />
+                        <Route path=":id" element={<ProductShow />} />
+                        <Route path=":id/edit" element={<ProductEdit />} />
+                    </Route>
+                    <Route path="*" element={<ErrorComponent />} />
+                </Route>
+            </Routes>
+          </Refine>
+        </AntdApp>
+      </ConfigProvider>
+    </BrowserRouter>
   );
-}
-`.trim();
-
-const ProtectedTsxCode = /* jsx */ `
-import { ThemedLayoutV2 } from "@refinedev/antd";
-import { Outlet } from "@remix-run/react";
-import { LoaderFunctionArgs, redirect } from "@remix-run/node";
-
-import authProvider from "../auth-provider";
-
-export default function AuthenticatedLayout() {
-    // \`<ThemedLayoutV2>\` is only applied to the authenticated users
-    return (
-        <ThemedLayoutV2>
-            <Outlet />
-        </ThemedLayoutV2>
-    );
-}
-
-/**
- * We're checking if the current session is authenticated.
- * If not, we're redirecting the user to the login page.
- * This is applied for all routes that are nested under this layout (_protected).
- */
-export async function loader({ request }: LoaderFunctionArgs) {
-    const { authenticated, redirectTo } = await authProvider.check(request);
-
-    if (!authenticated) {
-        throw redirect(redirectTo ?? "/login");
-    }
-
-    return {};
-}
-`.trim();
-
-const AuthTsxCode = /* jsx */ `
-import { Outlet } from "@remix-run/react";
-import { LoaderFunctionArgs, redirect } from "@remix-run/node";
-
-import { authProvider } from "~/authProvider";
-
-export default function AuthLayout() {
-    // no layout is applied for the auth routes
-    return <Outlet />;
-}
-
-/**
- * If the current session is authenticated, we're redirecting the user to the home page.
- * Alternatively, we could also use the \`Authenticated\` component inside the \`AuthLayout\` to handle the redirect.
- * But, server-side redirects are more performant.
- */
-export async function loader({ request }: LoaderFunctionArgs) {
-    const { authenticated, redirectTo } = await authProvider.check(request);
-
-    if (authenticated) {
-        throw redirect(redirectTo ?? "/");
-    }
-
-    return {};
-}
-`.trim();
-
-const LoginTsxCode = /* jsx */ `
-import { AuthPage } from "@refinedev/antd";
-
-export default function LoginPage() {
-  return <AuthPage type="login" />;
-}
-
+};
 `.trim();
 
 const ListTsxCode = /* jsx */ `
-import React from "react";
 import { List, ShowButton, EditButton, useTable } from "@refinedev/antd";
 import { Space, Table } from "antd";
+import React from "react";
 
-export default function ProductList() {
+export const ProductList = () => {
   const { tableProps } = useTable();
 
   return (
@@ -243,14 +133,14 @@ export default function ProductList() {
 `.trim();
 
 const ShowTsxCode = /* jsx */ `
-import React from "react";
-import { useShow } from "@refinedev/core";
 import { MarkdownField, NumberField, Show, TextField } from "@refinedev/antd";
+import { useShow } from "@refinedev/core";
 import { Typography } from "antd";
+import React from "react";
 
 const { Title } = Typography;
 
-export default function ProductShow() {
+export const ProductShow = () => {
   const { queryResult } = useShow();
   const { data, isLoading } = queryResult;
 
@@ -281,7 +171,7 @@ import { Edit, useForm } from "@refinedev/antd";
 const { Title } = Typography;
 const { TextArea } = Input;
 
-export default function ProductEdit() {
+export const ProductEdit = () => {
   const { formProps, saveButtonProps, formLoading } = useForm();
 
   return (
@@ -345,7 +235,7 @@ import { Create, useForm } from "@refinedev/antd";
 const { Title } = Typography;
 const { TextArea } = Input;
 
-export default function ProductCreate() {
+export const ProductCreate = () => {
   const { formProps, saveButtonProps, formLoading } = useForm();
 
   return (

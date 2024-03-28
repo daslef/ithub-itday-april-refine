@@ -197,10 +197,6 @@
       "to": "/docs/authorization/access-control-provider"
     },
     {
-      "from": "/docs/advanced-tutorials/data-provider/graphql/",
-      "to": "/docs/data/packages/graphql"
-    },
-    {
       "from": "/docs/advanced-tutorials/data-provider/supabase/",
       "to": "/docs/data/packages/supabase"
     },
@@ -544,16 +540,8 @@
       "to": "/docs/guides-concepts/forms"
     },
     {
-      "from": "/docs/comparison",
-      "to": "/docs/further-readings/comparison"
-    },
-    {
       "from": "/docs/testing",
       "to": "/docs/further-readings/testing"
-    },
-    {
-      "from": "/docs/license",
-      "to": "/docs/further-readings/license"
     },
     {
       "from": "/docs/api-reference/core",

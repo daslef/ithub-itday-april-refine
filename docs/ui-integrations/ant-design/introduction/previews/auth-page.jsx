@@ -18,28 +18,28 @@ export default function AuthPage() {
       }}
       startRoute="/login"
       files={{
-        "/App.tsx": {
+        "/App.jsx": {
           code: AppTsxCode,
           hidden: true,
         },
-        "/pages/products.tsx": {
+        "/pages/products.jsx": {
           code: ListTsxCode,
           hidden: true,
         },
-        "/pages/login.tsx": {
+        "/pages/login.jsx": {
           code: LoginTsxCode,
           active: true,
         },
-        "/pages/register.tsx": {
+        "/pages/register.jsx": {
           code: RegisterTsxCode,
         },
-        "/pages/forgot-password.tsx": {
+        "/pages/forgot-password.jsx": {
           code: ForgotPasswordTsxCode,
         },
-        "/pages/reset-password.tsx": {
+        "/pages/reset-password.jsx": {
           code: ResetPasswordTsxCode,
         },
-        "/auth-provider.tsx": {
+        "/auth-provider.jsx": {
           code: AuthProviderTsxCode,
           hidden: true,
         },
@@ -51,14 +51,14 @@ export default function AuthPage() {
 const AuthProviderTsxCode = /* jsx */ `
 const authProvider = {
     login: async ({ username, password }) => {
-      (window as any).authenticated = true;
+      window.authenticated = true;
       return { success: true };
     },
     check: async () => {
-      return { authenticated: Boolean((window as any).authenticated) };
+      return { authenticated: Boolean(window.authenticated) };
     },
     logout: async () => {
-      (window as any).authenticated = false;
+      window.authenticated = false;
       return { success: true };
     },
     register: async () => {

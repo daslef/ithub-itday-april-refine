@@ -10,6 +10,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "types": ["@types/gtag.js"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "allowJs": true
   }
 }

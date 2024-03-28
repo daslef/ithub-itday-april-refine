@@ -187,27 +187,6 @@ type OpenNotificationParams = {
 };
 ```
 
-### MetaQuery
-
-```tsx
-type MetaQuery = {
-  queryContext?: Omit<QueryFunctionContext, "meta">;
-  [key: string]: any;
-} & QueryBuilderOptions &
-  GraphQLQueryOptions;
-```
-
-### GraphQLQueryOptions
-
-```tsx
-import type { DocumentNode } from "graphql";
-
-type GraphQLQueryOptions = {
-  gqlQuery?: DocumentNode;
-  gqlMutation?: DocumentNode;
-};
-```
-
 ### QueryFunctionContext
 
 Context to be passed to the query function. Refer to [Query Function Context](https://tanstack.com/query/v4/docs/guides/query-functions#queryfunctioncontext) for more information.
