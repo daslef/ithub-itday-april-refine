@@ -57,7 +57,6 @@ They are pluggable, which means you can use the **built-in providers** or **crea
 - **I18n Provider**: Enables i18n features such as rendering translated menu items, button texts, table columns, page titles, and more.
 - **Live Provider**: Enables real-time updates to your application. For example, when a user creates a new record, other users can see the new record in the list page without refreshing the page.
 - **Router Provider**: Matches routes to resources, enables navigation features like breadcrumbs, automatic redirections after CRUD operations, rendering menu items.
-- **Audit Log Provider**: Handles sending Audit Logs for CRUD operations.
 
 ## Hook Concept
 
@@ -294,7 +293,7 @@ For example if user isn't authorized to see `orders` resource, it will be hidden
 Or if the current user isn't authorized to delete a product, the delete button will be disabled or hidden automatically.
 
 ```tsx title=my-page.tsx
-import { DeleteButton } from "@refinedev/antd"; // or @refinedev/mui, @refinedev/chakra-ui, @refinedev/mantine
+import { DeleteButton } from "@refinedev/antd";
 
 export const MyPage = () => {
   return (
@@ -461,7 +460,7 @@ For example, we are in the list page of `products` resource, we have `List` layo
 With **router provider** current resource information will be inferred from the current URL.
 
 ```tsx title=products.tsx
-import { List, CreateButton } from "@refinedev/antd"; // or @refinedev/mui, @refinedev/chakra-ui, @refinedev/mantine
+import { List, CreateButton } from "@refinedev/antd";
 
 export const ProductsListPage = () => {
   return (
@@ -500,57 +499,14 @@ export const ShowPage = () => {
 
 Another example is `useTable` hook. While it can infer **resource**, **pagination**, **filters**, and **sorters** parameters from the current route, it can also update the current route if any of these parameters changes.
 
-### Audit Log Provider <GuideBadge id="guides-concepts/audit-logs" />
-
-Audit Log Provider centralizes retrieving audit logs in Refine applications.
-
-It can be useful to show previous changes to your resources.
-
-```tsx title="App.tsx"
-import { AuditLogProvider, Refine } from "@refinedev/core";
-
-const auditLogProvider: AuditLogProvider = {
-  get: async (params) => {
-    const { resource, meta, action, author, metaData } = params;
-
-    const response = await fetch(
-      `https://example.com/api/audit-logs/${resource}/${meta.id}`,
-      {
-        method: "GET",
-      },
-    );
-
-    const data = await response.json();
-
-    return data;
-  },
-};
-
-export const App = () => {
-  return <Refine auditLogProvider={auditLogProvider}>{/* ... */}</Refine>;
-};
-```
-
-#### Hooks
-
-You can use `useLogList` hook to retrieve audit logs for your resources in your components. It uses `AuditLogProvider`'s `get` method under the hood.
-
-```tsx
-import { useLogList } from "@refinedev/core";
-
-const productsAuditLogResults = useLogList({
-  resource: "products",
-});
-```
-
 ## UI Integrations <GuideBadge id="guides-concepts/ui-libraries" />
 
 While Refine itself is headless, it offers UI Integrations for popular UI libraries:
 
 - [Ant Design](/docs/ui-integrations/ant-design/introduction)
-- [Material UI](/docs/ui-integrations/material-ui/introduction)
-- [Chakra UI](/docs/ui-integrations/chakra-ui/introduction)
-- [Mantine](/docs/ui-integrations/mantine/introduction)
+- Material UI
+- Chakra UI
+- Mantine
 
 These integrations use `@refinedev/core` under the hood, becomes a bridge between the UI library and the Refine framework.
 
@@ -570,17 +526,9 @@ import { AntdLayout } from './layout/antd';
 
 Refine provides a set of hooks to handle form state, validation, submission, autosave, and more. These hooks seamlessly integrate with popular UI libraries, making it easier to use their form components.
 
-- [React Hook Form](https://react-hook-form.com/) (for Headless, Material UI, Chakra UI) - [Documentation](/docs/packages/list-of-packages) - [Example](/examples/form/react-hook-form/useForm.md)
-- [Ant Design Form](https://ant.design/components/form/#header) - [Documentation](/docs/ui-integrations/ant-design/hooks/use-form) - [Example](/examples/form/antd/useForm.md)
-- [Mantine Form](https://mantine.dev/form/use-form) - [Documentation](/docs/ui-integrations/mantine/hooks/use-form) - [Example](/examples/form/mantine/useForm.md)
-
 ### Tables <GuideBadge id="guides-concepts/tables" />
 
 Refine offers seamless integration with several popular UI libraries, simplifying the use of their table component features such as pagination, sorting, filtering, and more.
-
-- [TanStack Table](https://react-table.tanstack.com/) (for Headless, Chakra UI, Mantine) - [Documentation](/docs/packages/list-of-packages) - [Example](/docs/examples/table/tanstack-table/basic-tanstack-table/)
-- [Ant Design Table](https://ant.design/components/table/#header) - [Documentation](/docs/ui-integrations/ant-design/hooks/use-table) - [Example](/examples/table/antd/useTable.md)
-- [Material UI DataGrid](https://mui.com/x/react-data-grid/) - [Documentation](/docs/ui-integrations/material-ui/hooks/use-data-grid) - [Example](/examples/table/mui/useDataGrid.md)
 
 ### Layout
 
@@ -619,14 +567,6 @@ While the button itself is imported from underlying UI package, Refine adds some
 Common authentication pages like `Login`, `Register`, `Forgot Password`, `Reset Password` are integrated with `AuthProvider` automatically.
 
 <Tabs wrapContent={false}>
-
-<TabItem value="Headless">
-
-import { HeadlessAuth } from './auth-pages/headless';
-
-<HeadlessAuth/>
-
-</TabItem>
 
 <TabItem value="Ant Design">
 
@@ -785,7 +725,7 @@ Keys are used to identify and cache server responses for queries and mutations. 
 
 :::simple Structural Order of Keys
 
-- Refine's query keys are structured to go from general to specific. At the outmost level, the key contains the information about the operation type (It can be `"auth"`, `"data"`, `"audit"` or `"access"`).
+- Refine's query keys are structured to go from general to specific. At the outmost level, the key contains the information about the operation type (It can be `"auth"`, `"data"` or `"access"`).
 
 - If it's the `"data"` type, the next level contains the information about the data provider it uses.
 

@@ -7,11 +7,7 @@
     "build:plugins": "sucrase ./plugins -d ./plugins --transforms typescript,imports && npx prettier --write ./plugins",
     "clear": "docusaurus clear",
     "deploy": "DISABLE_DOCGEN=true docusaurus deploy",
-    "dev": "docusaurus start",
-    "dev:blog": "DISABLE_DOCS=true LIVE_PREVIEW_URL=https://next.live-previews.refine.dev/preview npm run dev:lean",
-    "dev:docs": "DISABLE_BLOG=true npm run dev:lean",
-    "dev:lean": "DISABLE_DOCGEN=true DISABLE_VERSIONING=true DISABLE_EXAMPLES=true DISABLE_CHECKLISTS=true npm run dev",
-    "docusaurus": "docusaurus",
+    "dev": "DISABLE_DOCGEN=true DISABLE_VERSIONING=true DISABLE_EXAMPLES=true DISABLE_CHECKLISTS=true docusaurus start",
     "serve": "docusaurus serve",
     "swizzle": "docusaurus swizzle",
     "test": "jest --passWithNoTests --runInBand"

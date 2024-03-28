@@ -1,6 +1,7 @@
 ---
 id: handling-filters
 title: Handling Filters
+sidebar_label: Handling Filters
 ---
 
 **Refine** expects an array of type `CrudFilters` to filter results based on some field’s values. So you can use more than one filter. Even the `or` operator can be used to combine multiple filters.

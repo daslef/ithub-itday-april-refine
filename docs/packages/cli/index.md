@@ -187,7 +187,6 @@ Empty Provider methods are created for to easily implement and connect to your d
  ◯ Access Control - Manage user permissions & roles
  ◯ Notification provider - Display in-app alerts and messages
  ◯ I18n provider - Support multiple languages and locales
- ◯ Audit Log provider - Display audit logs for your resources
 ```
 
 ```bash
@@ -195,7 +194,6 @@ Empty Provider methods are created for to easily implement and connect to your d
 > npm run refine add provider data
 > npm run refine add provider live
 > npm run refine add provider access-control
-> npm run refine add provider audit-log
 > npm run refine add provider i18n
 > npm run refine add provider notification
 ```

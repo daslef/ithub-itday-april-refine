@@ -3,13 +3,7 @@ title: Tables
 ---
 
 import BaseAntdTableExample from "./example/antd.tsx";
-import BaseTanStackTable from "./example/tanstack-table";
-import BaseCoreExample from "./example/core";
-import BaseMaterialUITable from "./example/material-ui";
-import BaseMantineTable from "./example/mantine";
-import BaseChakraUITable from "./example/chakra-ui";
 import SearchAntdTableExample from "./example/search-antd.tsx";
-import SearchMaterialUI from "./example/search-material-ui.tsx";
 import Relationship from "./example/relationship";
 import Pagination from "./example/pagination";
 import Filtering from "./example/filtering";
@@ -21,61 +15,17 @@ Tables are essential in data-intensive applications, serving as the primary way 
 
 [`useTable`][use-table-core] allows us to fetch data according to the sorter, filter, and pagination states. Under the hood, it uses [`useList`][use-list] for the fetch. Its designed to be headless, but Refine offers seamless integration with several popular UI libraries, simplifying the use of their table components.
 
-- [TanStack Table](https://react-table.tanstack.com/) (for Headless, Chakra UI, Mantine) - [Documentation](/docs/packages/list-of-packages)) - [Example](/docs/examples/table/tanstack-table/basic-tanstack-table/)
-- [Ant Design Table](https://ant.design/components/table/#header) - [Documentation](/docs/ui-integrations/ant-design/hooks/use-table) - [Example](/examples/table/antd/useTable.md)
-- [Material UI DataGrid](https://mui.com/x/react-data-grid/) - [Documentation](/docs/ui-integrations/material-ui/hooks/use-data-grid) - [Example](/examples/table/mui/useDataGrid.md)
-
 ## Basic Usage
 
 The usage of the `useTable` hooks may slightly differ between UI libraries, however, the core functionality of `useTable` hook in [`@refinedev/core`][use-table-core] stays consistent in all implementations. The `useTable` hook in Refine's core is the foundation of all the other `useTable` implementations.
 
 <Tabs wrapContent={false}>
 
-<TabItem value="core" label="Refine's Core">
-
-<BaseCoreExample />
-
-[Check out Refine's `useTable` reference page to learn more about the usage and see it in action.][use-table-core]
-
-</TabItem>
-
-<TabItem value="tanstack-table" label="TanStack Table">
-
-<BaseTanStackTable />
-
-[Check out TanStack Table's `useTable` reference page to learn more about the usage and see it in action.](/docs/packages/list-of-packages#installation)
-
-</TabItem>
-
 <TabItem value="ant-design" label="Ant Design">
 
 <BaseAntdTableExample />
 
 [Check out Ant Design's `useTable` reference page to learn more about the usage and see it in action.](/docs/ui-integrations/ant-design/hooks/use-table)
-
-</TabItem>
-
-<TabItem value="material-ui" label="Material UI">
-
-<BaseMaterialUITable />
-
-[Check out Material UI's `useDataGrid` reference page to learn more about the usage and see it in action.](/docs/ui-integrations/material-ui/hooks/use-data-grid)
-
-</TabItem>
-
-<TabItem value="mantine" label={(<span><span className="block">Mantine</span><small className="block">TanStack Table</small></span>)}>
-
-<BaseMantineTable />
-
-[Check out TanStack Table's `useTable` reference page to learn more about the usage and see it in action.](/docs/packages/list-of-packages#installation)
-
-</TabItem>
-
-<TabItem value="chakra-ui" label={(<span><span className="block">Chakra UI</span><small className="block">TanStack Table</small></span>)}>
-
-<BaseChakraUITable />
-
-[Check out TanStack Table's `useTable` reference page to learn more about the usage and see it in action.](/docs/packages/list-of-packages#installation)
 
 </TabItem>
 
@@ -138,7 +88,6 @@ You can change the sorters state by using the `setSorters` function. Every chang
 For example we can fetch product with the name that contains the search value.
 
 <Tabs wrapContent={false}>
-
 <TabItem value="ant-design" label="Ant Design">
 
 <SearchAntdTableExample />
@@ -146,15 +95,6 @@ For example we can fetch product with the name that contains the search value.
 [Check out Ant Design's `useTable` reference page to learn more about the usage and see it in action.](/docs/ui-integrations/ant-design/hooks/use-table)
 
 </TabItem>
-
-<TabItem value="material-ui" label="Material UI">
-
-<SearchMaterialUI />
-
-[Check out Material UI's `useDataGrid` reference page to learn more about the usage and see it in action.](/docs/ui-integrations/material-ui/hooks/use-data-grid)
-
-</TabItem>
-
 </Tabs>
 
 ## Integrating with Routers

@@ -10,24 +10,6 @@ While this integration is not coupled with the UI integrations, it will be a wis
 
 Refine let's you set a notification API by providing the `notificationProvider` property to the `<Refine />` component. `notificationProvider` is an object with close and open methods. Refine uses these methods to show and hide notifications. These methods can be called from anywhere in the application with `useNotification` hook.
 
-An `notificationProvider` must include `open` and `close` methods with the following types:
-
-```ts
-interface NotificationProvider {
-  open: (params: OpenNotificationParams) => void;
-  close: (key: string) => void;
-}
-
-interface OpenNotificationParams {
-  key?: string;
-  message: string;
-  type: "success" | "error" | "progress";
-  description?: string;
-  cancelMutation?: () => void;
-  undoableTimeout?: number;
-}
-```
-
 Once you provide the notification provider, Refine seamlessly integrate with [data hooks](/docs/guides-concepts/data-fetching/#data-hooks) to displays user-friendly notifications for various data-related actions, ensuring a clear and informative user experience. This includes:
 
 - **Form Submission**: Whether a [form](/docs/data/hooks/use-form/) is successfully submitted or encounters errors, Refine will display the appropriate notification to keep the user informed.
@@ -42,7 +24,6 @@ Using of the prebuilt notification providers are optional and can be customized,
 As an example, we'll demonstrate how to open and close notifications using the `useNotification` hook. However, in most cases, you won't need to do this, as Refine typically manages notifications for you automatically.
 
 <Tabs wrapContent={false}>
-
 <TabItem default value="antd" label="Ant Design">
 
 import NotificationAntd from "./notifications-antd";
@@ -50,7 +31,6 @@ import NotificationAntd from "./notifications-antd";
 <NotificationAntd />
 
 </TabItem>
-
 </Tabs>
 
 ### Undoable
@@ -59,7 +39,7 @@ Refine also supports undoable notification.
 
 You can trigger an undoable notification by setting the `type` to `progress`. After timeout, the notification will be closed automatically. If the user clicks the undo button, the `cancelMutation` callback will be called.
 
-```tsx
+```jsx
 const { open } = useNotification();
 
 open?.({
@@ -74,7 +54,7 @@ open?.({
 
 Mutation hooks such as `useUpdate`, `useDelete` and `useForm` supports undoable notifications. It can be used for canceling the mutation.
 
-```ts
+```js
 import { useForm } from "@refinedev/core";
 
 // automatically cancel the mutation when undo button is clicked

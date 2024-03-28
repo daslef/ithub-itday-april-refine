@@ -16,103 +16,15 @@ This means that the `useForm` hook will handle all of the data fetching and muta
 
 The usage of the `useForm` hooks may slightly differ between libraries, the core functionality is provided by the `@refinedev/core`'s `useForm` hook and is the same across all implementations. Refine's core has the `useForm` hook which is the foundation of all the other extensions and `useForm` implementations in the other helper libraries.
 
-To learn more about the usage and see `useForm` in action, check out the reference pages for each library:
-
 <Tabs smallTabs>
-<TabItem value="core" label="Refine's Core">
-
-```tsx title="edit.tsx"
-import { useForm } from "@refinedev/core";
-
-const EditPage = () => {
-  const { queryResult, formLoading, onFinish } = useForm<
-    IProduct,
-    HttpError,
-    FormValues
-  >({
-    resource: "products",
-    action: "edit",
-    id: 123,
-  });
-
-  const record = queryResult.data?.data;
-
-  const onSubmit = (event) => {
-    const data = Object.fromEntries(new FormData(event.target).entries());
-
-    onFinish(data);
-  };
-
-  return (
-    <form onSubmit={onSubmit}>
-      <label>
-        Name:
-        <input defaultValue={record?.name} />
-      </label>
-      <label>
-        Material:
-        <input defaultValue={record?.material} />
-      </label>
-      <button type="submit">Submit</button>
-    </form>
-  );
-};
-```
-
-[Check out Core's `useForm` reference page to learn more about the usage and see it in action.](/docs/data/hooks/use-form/)
-
-</TabItem>
-<TabItem value="hook-form" label="React Hook Form" default>
-
-```tsx title="edit.tsx"
-import { useForm } from "@refinedev/react-hook-form";
-
-const EditPage = () => {
-  const {
-    refineCore: { onFinish, formLoading, queryResult },
-    register,
-    handleSubmit,
-    formState: { errors },
-    saveButtonProps,
-  } = useForm<IProduct, HttpError, FormValues>({
-    refineCoreProps: {
-      resource: "products",
-      action: "edit",
-      id: 123,
-    },
-  });
-
-  return (
-    <form onSubmit={handleSubmit(onFinish)}>
-      <label>
-        Name:
-        <input {...register("name")} />
-      </label>
-      <label>
-        Material:
-        <input {...register("material")} />
-      </label>
-      <button type="submit">Submit</button>
-    </form>
-  );
-};
-```
-
-[Check out React Hook Form's `useForm` reference page to learn more about the usage and see it in action.](/docs/packages/list-of-packages)
-
-</TabItem>
 <TabItem value="antd" label="Ant Design">
 
-```tsx title="edit.tsx"
+```jsx title="edit.jsx"
 import { useForm, Edit } from "@refinedev/antd";
 import { Form, Input } from "antd";
 
 const EditPage = () => {
-  const { formProps, saveButtonProps, queryResult } = useForm<
-    IProduct,
-    HttpError,
-    FormValues
-  >({
+  const { formProps, saveButtonProps, queryResult } = useForm({
     resource: "products",
     action: "edit",
     id: 123,
@@ -136,162 +48,13 @@ const EditPage = () => {
 [Check out Ant Design Form's `useForm` reference page to learn more about the usage and see it in action.](/docs/ui-integrations/ant-design/hooks/use-form)
 
 </TabItem>
-<TabItem value="mantine" label="Mantine">
-
-```tsx title="edit.tsx"
-import { useForm, Edit } from "@refinedev/mantine";
-import { TextInput } from "@mantine/core";
-
-const EditPage = () => {
-  const {
-    refineCore: { onFinish, formLoading, queryResult },
-    register,
-    handleSubmit,
-    formState: { errors },
-    saveButtonProps,
-  } = useForm<IProduct, HttpError, FormValues>({
-    refineCoreProps: {
-      resource: "products",
-      action: "edit",
-      id: 123,
-    },
-    initialValues: {
-      name: "",
-      material: "",
-    },
-  });
-
-  return (
-    <Edit saveButtonProps={saveButtonProps}>
-      <form>
-        <TextInput
-          mt={8}
-          label="Name"
-          placeholder="Name"
-          {...getInputProps("name")}
-        />
-        <TextInput
-          mt={8}
-          label="Material"
-          placeholder="Material"
-          {...getInputProps("material")}
-        />
-      </form>
-    </Edit>
-  );
-};
-```
-
-[Check out Mantine Form's `useForm` reference page to learn more about the usage and see it in action.](/docs/ui-integrations/mantine/hooks/use-form)
-
-</TabItem>
-<TabItem value="material-ui" label={(<span><span className="block">Material UI</span><small className="block">React Hook Form</small></span>)}>
-
-```tsx title="edit.tsx"
-import { HttpError } from "@refinedev/core";
-import { Edit } from "@refinedev/mui";
-import { useForm } from "@refinedev/react-hook-form";
-import { Button, Box, TextField } from "@mui/material";
-
-const EditPage = () => {
-  const {
-    refineCore: { onFinish, formLoading, queryResult },
-    register,
-    handleSubmit,
-    saveButtonProps,
-  } = useForm<IProduct, HttpError, FormValues>({
-    refineCoreProps: {
-      resource: "products",
-      action: "edit",
-      id: 123,
-    },
-  });
-
-  return (
-    <Edit saveButtonProps={saveButtonProps}>
-      <Box component="form">
-        <TextField
-          {...register("name", {
-            required: "This field is required",
-          })}
-          name="name"
-          label="Name"
-        />
-        <TextField
-          {...register("material", {
-            required: "This field is required",
-          })}
-          name="material"
-          label="Material"
-        />
-      </Box>
-    </Edit>
-  );
-};
-```
-
-[Check out React Hook Form's `useForm` reference page to learn more about the usage and see it in action.](/docs/packages/list-of-packages)
-
-</TabItem>
-<TabItem value="chakra-ui" label={(<span><span className="block">Chakra UI</span><small className="block">React Hook Form</small></span>)}>
-
-```tsx title="edit.tsx"
-import { HttpError } from "@refinedev/core";
-import { Edit } from "@refinedev/chakra-ui";
-import { useForm } from "@refinedev/react-hook-form";
-import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
-
-const EditPage = () => {
-  const {
-    refineCore: { onFinish, formLoading, queryResult },
-    register,
-    handleSubmit,
-    saveButtonProps,
-  } = useForm<IProduct, HttpError, FormValues>({
-    refineCoreProps: {
-      resource: "products",
-      action: "edit",
-      id: 123,
-    },
-  });
-
-  return (
-    <Edit saveButtonProps={saveButtonProps}>
-      <form>
-        <FormControl mb="3">
-          <FormLabel>Name</FormLabel>
-          <Input
-            id="name"
-            type="text"
-            {...register("name", { required: "Name is required" })}
-          />
-        </FormControl>
-        <FormControl mb="3">
-          <FormLabel>Material</FormLabel>
-          <Input
-            id="material"
-            type="text"
-            {...register("material", {
-              required: "Material is required",
-            })}
-          />
-        </FormControl>
-      </form>
-    </Edit>
-  );
-};
-```
-
-[Check out React Hook Form's `useForm` reference page to learn more about the usage and see it in action.](/docs/packages/list-of-packages)
-
-</TabItem>
 </Tabs>
 
 ## Integration with Routers
 
 If a router integration is made, in most of the cases this enables Refine to infer the `resource`, `action` and `id` from the current route and provide them to `useForm` hook. In most of the cases, this will prevent the need of passing explicit `resource`, `action` and `id` props to the hooks including `useForm`.
 
-```tsx
+```jsx
 import { useForm } from "@refinedev/core";
 
 useForm({
@@ -322,7 +85,7 @@ useForm({
 
 Refine's `useForm` hooks have a built-in feature to prevent the user from losing the unsaved changes via a confirmation dialog when changing the route/leaving the page. To enable this feature, you need to use the [`<UnsavedChangesNotifier />`](/docs/guides-concepts/routing/#useform) components from the router package of the library you are using and set the `warnWhenUnsavedChanges` prop to `true`.
 
-```tsx
+```jsx
 import { Refine, useForm } from "@refinedev/core";
 
 useForm({
@@ -335,7 +98,7 @@ useForm({
 <Tabs wrapContent={false}>
 <TabItem value="react-router" label="React Router v6">
 
-```tsx title="app.tsx"
+```jsx title="app.jsx"
 import { Refine } from "@refinedev/core";
 import {
   routerProvider,
@@ -361,92 +124,6 @@ const App = () => (
     </Refine>
   </BrowserRouter>
 );
-```
-
-Check out the [`UnsavedChangesNotifier` section of the React Router integration documentation](/docs/packages/list-of-packages#unsavedchangesnotifier) for more information.
-
-</TabItem>
-<TabItem value="next-js" label="Next.js">
-
-```tsx title="_app.tsx"
-import type { AppProps } from "next/app";
-import { Refine } from "@refinedev/core";
-import {
-  routerProvider,
-  UnsavedChangesNotifier,
-} from "@refinedev/nextjs-router/pages";
-
-export default function App({ Component, pageProps }) {
-  return (
-    <Refine
-      // ...
-      routerProvider={routerProvider}
-      options={{
-        // highlight-next-line
-        warnWhenUnsavedChanges: true,
-      }}
-    >
-      <Component {...pageProps} />
-      {/* highlight-start */}
-      {/* The `UnsavedChangesNotifier` component should be placed under <Refine /> component. */}
-      <UnsavedChangesNotifier />
-      {/* highlight-end */}
-    </Refine>
-  );
-}
-```
-
-Check out the [`UnsavedChangesNotifier` section of the React Router integration documentation](/docs/packages/list-of-packages#unsavedchangesnotifier) for more information.
-
-</TabItem>
-<TabItem value="remix" label="Remix">
-
-```tsx title="app/root.tsx"
-import type { MetaFunction } from "@remix-run/node";
-
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
-
-import { Refine } from "@refinedev/core";
-
-// highlight-next-line
-import routerProvider, {
-  UnsavedChangesNotifier,
-} from "@refinedev/remix-router";
-
-export default function App() {
-  return (
-    <html lang="en">
-      <head>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <Refine
-          // ...
-          routerProvider={routerProvider}
-          options={{
-            // highlight-next-line
-            warnWhenUnsavedChanges: true,
-          }}
-        >
-          <Outlet />
-          {/* highlight-next-line */}
-          <UnsavedChangesNotifier />
-        </Refine>
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-      </body>
-    </html>
-  );
-}
 ```
 
 Check out the [`UnsavedChangesNotifier` section of the React Router integration documentation](/docs/packages/list-of-packages#unsavedchangesnotifier) for more information.
@@ -480,8 +157,6 @@ You can find more information and usage examples on following `useSelect` docume
 
 - [Headless](/docs/core/hooks/use-select)
 - [Ant Design Select](/docs/ui-integrations/ant-design/hooks/use-select/)
-- [Material UI Autocomplete](/docs/ui-integrations/material-ui/hooks/use-auto-complete/)
-- [Mantine Select](/docs/ui-integrations/mantine/hooks/use-select/)
 
 In the following example, we will add a `category` field to the `products` resource. This field will be a select input populated with categories using the `useSelect` hook.
 
@@ -499,22 +174,6 @@ import UseSelectHeadless from "./use-select-headless";
 import UseSelectAntd from "./use-select-antd";
 
 <UseSelectAntd />
-
-</TabItem>
-
-<TabItem value="material-ui" label="Material UI">
-
-import UseSelectMaterialUI from "./use-select-material-ui";
-
-<UseSelectMaterialUI />
-
-</TabItem>
-
-<TabItem value="mantine" label="Mantine">
-
-import UseSelectMantine from "./use-select-mantine";
-
-<UseSelectMantine />
 
 </TabItem>
 
@@ -617,123 +276,13 @@ Optimistic updates are only available in `optimistic` and `undoable` mutation mo
 
 By default, Refine's mutations will use the provided form data/values to update the existing records in the query cache. This update process includes the `list`, `many` and `detail` queries related to the record and the resource.
 
-### Custom Optimistic Updates
-
-In some cases such as the data being submitted is slightly different from the data being fetched in the structural level, you may want to customize the optimistic updates. To do that, you can use the `optimisticUpdateMap` prop of the `useForm` to determine how the query cache will be updated for each query set.
-
-`optimisticUpdateMap` prop also lets you disable the optimistic updates for a specific query set by passing `false` to the corresponding key.
-
-```tsx
-useForm({
-  resource: "posts",
-  id: 1,
-  mutationMode: "optimistic",
-  optimisticUpdateMap: {
-    list: (
-      previous, // Previous query data
-      variables, // Variables used in the query
-      id, // Record id
-    ) => {
-      // update the `previous` data using the `variables` and `id`, then return it
-    },
-    many: (
-      previous, // Previous query data
-      variables, // Variables used in the query
-      id, // Record id
-    ) => {
-      // update the `previous` data using the `variables` and `id`, then return it
-    },
-    detail: (
-      previous, // Previous query data
-      variables, // Variables used in the query
-    ) => {
-      // update the `previous` data using the `variables`, then return it
-    },
-  },
-});
-```
-
-## Server Side Validation <GlobalConfigBadge id="core/refine-component/#disableserversidevalidation" />
-
-Server-side form validation is a technique used to validate form data on the server before processing it. Unlike client-side validation, which is performed in the user's browser using JavaScript, server-side validation occurs on the server-side code, typically in the backend of the application.
-
-Refine supports server-side validation out-of-the-box in all `useForm` derivatives. To handle server-side validation, the data providers needs to be correctly set up to return the errors in form submissions with a specific format. After this, Refine's `useForm` will propagate the errors to the respective form fields.
-
-```ts
-import { HttpError } from "@refinedev/core";
-
-const error: HttpError = {
-  message: "An error occurred while updating the record.",
-  statusCode: 400,
-  // the errors field is required for server-side validation.
-  // when the errors field is set, useForm will automatically display the error messages in the form with the corresponding fields.
-  errors: {
-    title: ["Title is required"],
-    content: {
-      key: "form.error.content",
-      message: "Content is required.",
-    },
-    tags: true,
-  },
-};
-```
-
-[Check out `HttpError` interface for more information about the error format.](/docs/core/interface-references#httperror)
-
-Examples below demonstrates the server-side validation and error propagation:
-
-<Tabs smallTabs wrapContent={false}>
-<TabItem value="core" label="Refine's Core">
-
-import ServerSideValidationCore from "./server-side-validation-core.tsx";
-
-<ServerSideValidationCore />
-
-</TabItem>
-<TabItem value="hook-form" label="React Hook Form">
-
-import ServerSideValidationReactHookForm from "./server-side-validation-react-hook-form.tsx";
-
-<ServerSideValidationReactHookForm />
-
-</TabItem>
-<TabItem default value="antd" label="Ant Design">
-
-import ServerSideValidationAntd from "./server-side-validation-antd.tsx";
-
-<ServerSideValidationAntd />
-
-</TabItem>
-<TabItem value="mantine" label="Mantine">
-
-import ServerSideValidationMantine from "./server-side-validation-mantine.tsx";
-
-<ServerSideValidationMantine />
-
-</TabItem>
-<TabItem value="material-ui" label={(<span><span className="block">Material UI</span><small className="block">React Hook Form</small></span>)}>
-
-import ServerSideValidationMui from "./server-side-validation-mui.tsx";
-
-<ServerSideValidationMui />
-
-</TabItem>
-<TabItem value="chakra-ui" label={(<span><span className="block">Chakra UI</span><small className="block">React Hook Form</small></span>)}>
-
-import ServerSideValidationChakraUi from "./server-side-validation-chakra-ui.tsx";
-
-<ServerSideValidationChakraUi />
-
-</TabItem>
-</Tabs>
-
 ## Notifications <GuideBadge id="notification/notification-provider" />
 
 When forms are submitted, it is a good practice to notify the user about the result of the submission. `useForm` handles this for you, when the mutation succeeds or fails it will show a notification to the user with a proper message. This behavior can be customized or disabled using the `successNotification` and `errorNotification` props.
 
 These props accepts both a function that returns the configuration or a static configuration, this means you'll be able to use the response of the mutation to customize the notification message.
 
-```tsx title="Default Notification Values"
+```jsx title="Default Notification Values"
 useForm({
   // If not passed explicitly, these default values will be used. Default values can also be customized via i18n.
   successNotification: (data, values, resource) => {
@@ -766,7 +315,7 @@ In many forms, it is a good practice to save the form data automatically as the 
 
 While `@refinedev/core`'s `useForm` packs this feature, the auto save is not triggered automatically. In the extensions of the `useForm` hook in the other libraries, the auto save is handled internally and is triggered automatically.
 
-```tsx title="edit.tsx"
+```jsx title="edit.jsx"
 import { useForm } from "@refinedev/core";
 
 const { autoSaveProps } = useForm({
@@ -782,7 +331,7 @@ const { autoSaveProps } = useForm({
 
 Refine's core and ui integrations are shipped with an [`<AutoSaveIndicator />`](/docs/core/components/auto-save-indicator) component that can be used to show a visual indicator to the user when the auto save is triggered. The `autoSaveProps` value from the `useForm`'s return value can be passed to the `<AutoSaveIndicator />` to show the auto save status to the user. It will automatically show the loading, success and error states to the user.
 
-```tsx title="edit.tsx"
+```jsx title="edit.jsx"
 import { AutoSaveIndicator } from "@refinedev/core";
 
 const { autoSaveProps } = useForm({
@@ -806,189 +355,12 @@ return (
 
 In some cases, you might want to change the data before submitting it to the backend. For example, you might want to add a `full_name` field to the form data of a user resource by combining the `first_name` and `last_name` fields. While the `useForm` from the `@refinedev/core` has the natural support for this, the `useForm` derivatives from the other libraries of Refine has a different approach.
 
-Each of these form implementations have a way to modify the data before submission with a slightly different approach. To learn more about how to modify the data before submission, check out the usage examples of each library:
-
 <Tabs>
-<TabItem value="react-hook-form" label="React Hook Form" default>
-
-To learn more about how to modify the data before submission, check out the [Using `useForm` of `@refinedev/react-hook-form`](/docs/packages/list-of-packages##how-can-i-change-the-form-data-before-submitting-it-to-the-api) reference page.
-
-<Tabs>
-<TabItem value="headless" label="Headless">
-
-```tsx title="edit.tsx"
-import { useForm } from "@refinedev/react-hook-form";
-import { FieldValues } from "react-hook-form";
-
-const EditPage = () => {
-  const {
-    refineCore: { onFinish },
-    register,
-    handleSubmit,
-  } = useForm();
-
-  // highlight-start
-  const onFinishHandler = (data: FieldValues) => {
-    onFinish({
-      fullName: `${data.name} ${data.surname}`,
-    });
-  };
-  // highlight-end
-
-  return (
-    // highlight-next-line
-    <form onSubmit={handleSubmit(onFinishHandler)}>
-      <label>
-        Name:
-        <input {...register("name")} />
-      </label>
-      <label>
-        Surname:
-        <input {...register("surname")} />
-      </label>
-      <button type="submit">Submit</button>
-    </form>
-  );
-};
-```
-
-</TabItem>
-<TabItem value="material-ui" label="With Material UI">
-
-```tsx title="edit.tsx"
-import { HttpError } from "@refinedev/core";
-import { Create } from "@refinedev/mui";
-import { useForm } from "@refinedev/react-hook-form";
-import { Button, Box, TextField } from "@mui/material";
-
-type FormValues = {
-  name: string;
-  surname: string;
-};
-
-export const UserCreate: React.FC = () => {
-  const {
-    saveButtonProps,
-    refineCore: { onFinish },
-    handleSubmit,
-  } = useForm<FormValues, HttpError, FormValues>();
-
-  const handleSubmitPostCreate = (values: FormValues) => {
-    const { name, surname } = values;
-    const fullName = `${name} ${surname}`;
-    onFinish({
-      ...value,
-      fullName,
-    });
-  };
-
-  return (
-    <Create
-      saveButtonProps={{
-        ...saveButtonProps,
-        onClick: handleSubmit(handleSubmitForm),
-      }}
-    >
-      <Box component="form">
-        <TextField
-          {...register("name", {
-            required: "This field is required",
-          })}
-          name="name"
-          label="Name"
-          error={!!errors.name}
-          helperText={errors.name?.message}
-        />
-        <TextField
-          {...register("surname", {
-            required: "This field is required",
-          })}
-          name="surname"
-          label="Surname"
-          error={!!errors.surname}
-          helperText={errors.surname?.message}
-        />
-      </Box>
-    </Create>
-  );
-};
-```
-
-Check out the [`<Create />`](/docs/ui-integrations/material-ui/components/basic-views/create#savebuttonprops) component and [`saveButtonProps`](/docs/packages/list-of-packages#savebuttonprops) prop to learn more about their usage.
-
-</TabItem>
-<TabItem value="chakra-ui" label="With Chakra UI">
-
-```tsx title="edit.tsx"
-import { HttpError } from "@refinedev/core";
-import { Create } from "@refinedev/chakra-ui";
-import { useForm } from "@refinedev/react-hook-form";
-import { FormControl, FormLabel, Input, Button } from "@chakra-ui/react";
-
-type FormValues = {
-  name: string;
-  surname: string;
-};
-
-export const UserCreate: React.FC = () => {
-  const {
-    saveButtonProps,
-    refineCore: { onFinish },
-    handleSubmit,
-  } = useForm<FormValues, HttpError, FormValues>();
-
-  const handleSubmitPostCreate = (values: FormValues) => {
-    const { name, surname } = values;
-    const fullName = `${name} ${surname}`;
-    onFinish({
-      ...value,
-      fullName,
-    });
-  };
-
-  return (
-    <Create
-      saveButtonProps={{
-        ...saveButtonProps,
-        onClick: handleSubmit(handleSubmitForm),
-      }}
-    >
-      <form>
-        <FormControl mb="3">
-          <FormLabel>Name</FormLabel>
-          <Input
-            id="name"
-            type="text"
-            {...register("name", { required: "Name is required" })}
-          />
-        </FormControl>
-        <FormControl mb="3">
-          <FormLabel>Surname</FormLabel>
-          <Input
-            id="surname"
-            type="text"
-            {...register("surname", {
-              required: "Surname is required",
-            })}
-          />
-        </FormControl>
-      </form>
-    </Create>
-  );
-};
-```
-
-Check out the [`<Create />`](/docs/ui-integrations/chakra-ui/components/basic-views/create#savebuttonprops) component and [`saveButtonProps`](/docs/packages/list-of-packages#savebuttonprops) prop to learn more about their usage.
-
-</TabItem>
-</Tabs>
-
-</TabItem>
 <TabItem value="antd" label="Ant Design">
 
 To learn more about how to modify the data before submission, check out the [Using `useForm` of `@refinedev/antd`](/docs/ui-integrations/ant-design/hooks/use-form#how-can-i-change-the-form-data-before-submitting-it-to-the-api) reference page.
 
-```tsx title="edit.tsx"
+```jsx title="edit.jsx"
 import { useForm, Create } from "@refinedev/antd";
 import { Form, Input } from "antd";
 
@@ -1019,57 +391,4 @@ const EditPage = () => {
 ```
 
 </TabItem>
-<TabItem value="mantine" label="Mantine">
-
-To learn more about how to modify the data before submission, check out the [Using `useForm` of `@refinedev/mantine`](/docs/ui-integrations/mantine/hooks/use-form#how-can-i-change-the-form-data-before-submitting-it-to-the-api) reference page.
-
-```tsx title="edit.tsx"
-import { useForm, Create } from "@refinedev/mantine";
-import { TextInput } from "@mantine/core";
-
-const CreatePage = () => {
-  const { saveButtonProps, getInputProps } = useForm({
-    initialValues: {
-      name: "",
-      surname: "",
-    },
-    // highlight-start
-    transformValues: (values) => ({
-      fullName: `${values.name} ${values.surname}`,
-    }),
-    // highlight-end
-  });
-
-  return (
-    <Create saveButtonProps={saveButtonProps}>
-      <form>
-        <TextInput
-          mt={8}
-          label="Name"
-          placeholder="Name"
-          {...getInputProps("name")}
-        />
-        <TextInput
-          mt={8}
-          label="Surname"
-          placeholder="Surname"
-          {...getInputProps("surname")}
-        />
-      </form>
-    </Create>
-  );
-};
-```
-
-</TabItem>
 </Tabs>
-
-## Save and Continue
-
-In many cases, you may want to redirect the user to the edit page of the record after creating it. This is especially useful in cases where the user needs to fill a long form and you don't want to lose the data in case of an unexpected event.
-
-In the example below, we'll create multiple options for the user to choose from after creating a record. The user will be able to choose between redirecting to the list page, edit page or staying in the create page in order to continue creating records.
-
-import SaveAndContinue from "./save-and-continue";
-
-<SaveAndContinue />

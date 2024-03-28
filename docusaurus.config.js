@@ -9,7 +9,6 @@ require("dotenv").config();
 
 const redirectJson = require("./redirects.json");
 const tutorialData = require("./tutorial-units");
-const thumbsUpDownFeedbackWidget = require("./plugins/thumbs-up-down-feedback-widget");
 
 /** @type {import('@docusaurus/types/src/index').DocusaurusConfig} */
 const siteConfig = {
@@ -34,13 +33,6 @@ const siteConfig = {
             "https://github.com/refinedev/refine/tree/master/documentation",
           showLastUpdateAuthor: false,
           showLastUpdateTime: false,
-          disableVersioning: true,
-          versions: {
-            current: {
-              label: "4.xx.xx",
-            },
-          },
-          lastVersion: "current",
           admonitions: {
             tag: ":::",
             keywords: [
@@ -192,24 +184,7 @@ const siteConfig = {
         alt: "refine",
         src: "img/refine_logo.png",
       },
-      items: [
-        { to: "blog", label: "Blog", position: "left" },
-        {
-          type: "docsVersionDropdown",
-          position: "right",
-          dropdownActiveClassDisabled: true,
-        },
-        {
-          href: "https://github.com/refinedev/refine",
-          position: "right",
-          className: "header-icon-link header-github-link",
-        },
-        {
-          href: "https://discord.gg/refine",
-          position: "right",
-          className: "header-icon-link header-discord-link",
-        },
-      ],
+      items: [],
     },
     footer: {
       logo: {
@@ -267,14 +242,6 @@ const siteConfig = {
               href: "https://reddit.com/r/refine",
               label: "reddit",
             },
-            {
-              href: "https://twitter.com/refine_dev",
-              label: "twitter",
-            },
-            {
-              href: "https://www.linkedin.com/company/refine-dev",
-              label: "linkedin",
-            },
           ],
         },
       ],
@@ -314,7 +281,7 @@ const siteConfig = {
             syntax: "typescript",
             tsx: true,
           },
-          target: "es2018",
+          target: "es2017",
         },
         module: {
           type: isServer ? "commonjs" : "es6",

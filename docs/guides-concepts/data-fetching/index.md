@@ -65,136 +65,6 @@ Refine treats data and state in a structured and efficient manner, providing dev
 
 7. **Realtime Updates**: Allowing your application to reflect changes in data as they occur.
 
-## Meta usage <GuideBadge id="guides-concepts/general-concepts#meta" />
-
-[`meta`][meta] is a special property that can be used to pass additional information to your data provider methods through data hooks like `useOne`, `useList`, `useForm` from anywhere across your application.
-
-The capabilities of `meta` properties depend on your data provider's implementation. While some may use additional features through `meta`, others may not use them or follow a different approach.
-
-Here are some examples of `meta` usage:
-
-- Passing additional headers or parameters to the request.
-- Generate GraphQL queries.
-- Multi-tenancy support (passing the tenant id to the request).
-
-In the example below, we are passing `meta.foo` property to the `useOne` hook. Then, we are using this property to pass additional headers to the request.
-
-```tsx
-import { DataProvider, useOne } from "@refinedev/core";
-
-useOne({
-    resource: "products",
-    id: 1,
-    meta: {
-        foo: "bar",
-    },
-});
-
-export const dataProvider = (apiUrl: string): DataProvider => ({
-    getOne: async ({ resource, id, meta }) => {
-        const response = await fetch(`${apiUrl}/${resource}/${id}`, {
-            headers: {
-                "x-foo": meta.foo,
-            },
-        });
-
-        const data = await response.json();
-
-        return {
-            data,
-        };
-    },
-    ...
-});
-```
-
-## GraphQL
-
-Refine's `meta` property has `gqlQuery` and `gqlMutation` fields, which accepts **GraphQL** operation as `graphql`'s [`DocumentNode`](https://graphql.org/graphql-js/type/#documentnode) type.
-
-You can use these fields to pass **GraphQL** queries or mutations to your data provider methods through data hooks like `useOne`, `useList`, `useForm` from anywhere across your application.
-
-Easiest way to generate GraphQL queries is to use [graphql-tag](https://www.npmjs.com/package/graphql-tag) package.
-
-```tsx
-import gql from "graphql-tag";
-import { useOne, useUpdate } from "@refinedev/core";
-
-const GET_PRODUCT_QUERY = gql`
-  query GetProduct($id: ID!) {
-    product(id: $id) {
-      id
-      title
-      category {
-        title
-      }
-    }
-  }
-`;
-
-useOne({
-  resource: "products",
-  id: 1,
-  meta: {
-    gqlQuery: GET_PRODUCT_QUERY,
-  },
-});
-
-const UPDATE_PRODUCT_MUTATION = gql`
-  mutation UpdateOneProduct($id: ID!, $input: UpdateOneProductInput!) {
-    updateOneProduct(id: $id, input: $input) {
-      id
-      title
-      category {
-        title
-      }
-    }
-  }
-`;
-
-const { mutate } = useUpdate();
-
-mutate({
-  resource: "products",
-  id: 1,
-  values: {
-    title: "New Title",
-  },
-  meta: {
-    gqlMutation: UPDATE_PRODUCT_MUTATION,
-  },
-});
-```
-
-:::simple
-
-**Nest.js Query** data provider implements full support for `gqlQuery` and `gqlMutation` fields.
-
-See [Nest.js Query Docs](/docs/data/packages/nestjs-query) for more information.
-
-:::
-
-Also, you can check Refine's built-in [GraphQL data providers](#supported-data-providers) to handle communication with your GraphQL APIs or use them as a starting point.
-
-## Multiple Data Providers
-
-Using multiple data providers in Refine allows you to work with various APIs or data sources in a single application. You might use different data providers for different parts of your app.
-
-Each data provider can have its own configuration, making it easier to manage complex data scenarios within a single application.
-This flexibility is handy when dealing with various data structures and APIs.
-
-For example, we want to fetch:
-
-- `products` from `https://api.finefoods.refine.dev`
-- `user` from `https://api.fake-rest.refine.dev`.
-
-As you can see the example below:
-
-- We are defining multiple data providers in `App.tsx`.
-- Using `dataProviderName` field to specify which data provider to use in data hooks in `home-page.tsx`.
-
-<MultipleDataProvider />
-
 ## Handling errors
 
 Refine expects errors to be extended from [HttpError](/docs/core/interface-references#httperror). We believe that having consistent error interface makes it easier to handle errors coming from your API.
@@ -348,7 +218,7 @@ For instance, products can have many categories, and categories can have many pr
 
 In this case, we can use the `useMany` hook to fetch the categories of a product and the `useMany` hook to fetch the products of a category.
 
-```tsx
+```jsx
 import { DataProvider, useMany } from "@refinedev/core";
 
 const { data: productCategories } = useList({
@@ -371,20 +241,6 @@ const { data: categories } = useMany({
   },
 });
 ```
-
-## Authentication <GuideBadge id="guides-concepts/authentication/" />
-
-Imagine you want to fetch a data from a protected API. To do this, you will first need to obtain your authentication token and you will need to send this token with every request.
-
-In Refine we handle [authentication](/docs/guides-concepts/authentication/) with [Auth Provider](/docs/authentication/auth-provider/). To get token from the API, we will use the `authProvider.login` method. Then, we will use [`<Authenticated />`](/docs/authentication/components/authenticated) component to to render the appropriate components.
-
-After obtaining the token, we'll use Axios interceptors to include the token in the headers of all requests.
-
-<Authentication />
-
-## TanStack Query `QueryClient`
-
-To modify the [`QueryClient`](https://tanstack.com/query/latest/docs/react/reference/QueryClient) instance, you can use the `reactQuery` prop of the [`<Refine />`](/docs/core/refine-component) component.
 
 ## `dataProvider` interface
 

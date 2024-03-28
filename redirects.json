@@ -17,14 +17,6 @@
       "to": "/docs/authorization/hooks/use-can"
     },
     {
-      "from": "/docs/core/hooks/audit-log/useLog/",
-      "to": "/docs/audit-logs/hooks/use-log"
-    },
-    {
-      "from": "/docs/core/hooks/audit-log/useLogList/",
-      "to": "/docs/audit-logs/hooks/use-log-list"
-    },
-    {
       "from": "/docs/core/hooks/auth/useAuthenticated/",
       "to": "/docs/authentication/hooks/use-is-authenticated"
     },
@@ -213,28 +205,12 @@
       "to": "/docs/data/packages/supabase"
     },
     {
-      "from": "/docs/guides-and-concepts/access-control/",
-      "to": "/docs/advanced-tutorials/access-control/"
-    },
-    {
-      "from": "/docs/guides-and-concepts/auth/auth0/",
-      "to": "/docs/advanced-tutorials/auth/auth0/"
-    },
-    {
       "from": "/docs/guides-and-concepts/custom-layout/",
       "to": "/docs/advanced-tutorials/custom-layout/"
     },
     {
       "from": "/docs/guides-and-concepts/custom-pages/",
       "to": "/docs/guides-concepts/routing"
-    },
-    {
-      "from": "/docs/guides-and-concepts/data-provider/handling-filters/",
-      "to": "/docs/advanced-tutorials/data-provider/handling-filters/"
-    },
-    {
-      "from": "/docs/guides-and-concepts/forms/custom-form-validation/",
-      "to": "/docs/advanced-tutorials/forms/custom-form-validation/"
     },
     {
       "from": "/docs/guides-and-concepts/forms/save-and-continue/",
@@ -249,36 +225,8 @@
       "to": "/docs/guides-concepts/import-export/"
     },
     {
-      "from": "/docs/guides-and-concepts/multi-level-menu/",
-      "to": "/docs/advanced-tutorials/multi-level-menu/"
-    },
-    {
-      "from": "/docs/guides-and-concepts/mutation-mode/",
-      "to": "/docs/advanced-tutorials/mutation-mode/"
-    },
-    {
       "from": "/docs/guides-and-concepts/real-time/",
       "to": "/docs/advanced-tutorials/real-time/"
-    },
-    {
-      "from": "/docs/guides-and-concepts/search/",
-      "to": "/docs/advanced-tutorials/search/"
-    },
-    {
-      "from": "/docs/guides-and-concepts/search/list-search/",
-      "to": "/docs/advanced-tutorials/search/list-search/"
-    },
-    {
-      "from": "/docs/guides-and-concepts/search/table-search/",
-      "to": "/docs/advanced-tutorials/search/table-search/"
-    },
-    {
-      "from": "/docs/guides-and-concepts/upload/base64-upload/",
-      "to": "/docs/advanced-tutorials/upload/base64-upload/"
-    },
-    {
-      "from": "/docs/guides-and-concepts/upload/multipart-upload/",
-      "to": "/docs/advanced-tutorials/upload/multipart-upload/"
     },
     {
       "from": "/docs/ui-frameworks/antd/components/antd-auth-page/",
@@ -596,10 +544,6 @@
       "to": "/docs/guides-concepts/forms"
     },
     {
-      "from": "/docs/faq",
-      "to": "/docs/guides-concepts/faq"
-    },
-    {
       "from": "/docs/comparison",
       "to": "/docs/further-readings/comparison"
     },
@@ -630,10 +574,6 @@
     {
       "from": "/docs/api-reference/core/providers/auth-provider",
       "to": "/docs/authentication/auth-provider"
-    },
-    {
-      "from": "/docs/api-reference/core/providers/audit-log-provider",
-      "to": "/docs/audit-logs/audit-log-provider"
     },
     {
       "from": "/docs/api-reference/core/providers/data-provider",
@@ -710,14 +650,6 @@
     {
       "from": "/docs/api-reference/core/hooks/authentication/useUpdatePassword",
       "to": "/docs/authentication/hooks/use-update-password"
-    },
-    {
-      "from": "/docs/api-reference/core/hooks/audit-log/useLog",
-      "to": "/docs/audit-logs/hooks/use-log"
-    },
-    {
-      "from": "/docs/api-reference/core/hooks/audit-log/useLogList",
-      "to": "/docs/audit-logs/hooks/use-log-list"
     },
     {
       "from": "/docs/api-reference/core/hooks/useBreadcrumb",
@@ -1084,10 +1016,6 @@
       "to": "/docs/authorization/access-control-provider"
     },
     {
-      "from": "/docs/core/providers/audit-log-provider",
-      "to": "/docs/audit-logs/audit-log-provider"
-    },
-    {
       "from": "/docs/core/providers/data-provider",
       "to": "/docs/data/data-provider"
     },
@@ -1234,14 +1162,6 @@
     {
       "from": "/docs/core/hooks/data/use-data-provider",
       "to": "/docs/data/hooks/use-data-provider"
-    },
-    {
-      "from": "/docs/core/hooks/audit-log/use-log",
-      "to": "/docs/audit-logs/hooks/use-log"
-    },
-    {
-      "from": "/docs/core/hooks/audit-log/use-log-list",
-      "to": "/docs/audit-logs/hooks/use-log-list"
     },
     {
       "from": "/docs/core/hooks/realtime/use-publish",

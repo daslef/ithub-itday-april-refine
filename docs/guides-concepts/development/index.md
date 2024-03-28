@@ -180,7 +180,7 @@ Refine packages provide data providers, UI frameworks, and components that make 
 This command will help you add new resources and providers to your app. It will take care of the boilerplate code for you and provide a good starting point for you to implement your own pages and providers.
 
 ```bash
-npm run refine add <auth, live, data, access-control, notification, i18n, audit-log, resource>
+npm run refine add <auth, live, data, access-control, notification, i18n, resource>
 ```
 
 :::simple Options
@@ -192,7 +192,6 @@ npm run refine add <auth, live, data, access-control, notification, i18n, audit-
 - `access-control`: To create a new access control provider.
 - `notification`: To create a new notification provider.
 - `i18n`: To create a new i18n provider.
-- `audit-log`: To create a new audit log provider.
 
 :::
 

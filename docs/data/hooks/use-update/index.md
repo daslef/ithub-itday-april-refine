@@ -39,12 +39,6 @@ When the `useUpdate` mutation runs successfully, it will invalidate the followin
 
 > For more information, refer to the [query invalidation documentation&#8594](https://tanstack.com/query/v4/docs/react/guides/query-invalidation)
 
-## Audit Logs
-
-> This feature is only available if you use a [Audit Log Provider](/docs/audit-logs/audit-log-provider).
-
-When the `useUpdate` mutation runs successfully, it will call the `log` method from `auditLogProvider` with some parameters such as `resource`, `action`, `data`, `previousData` etc. It is useful when you want to log the changes to the database.
-
 ## Properties
 
 ### mutationOptions

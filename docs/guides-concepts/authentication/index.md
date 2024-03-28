@@ -12,14 +12,7 @@ import AuthProviderExamplesLinks from "@site/src/partials/auth-provider/auth-pro
 
 Authentication is the process of verifying the identity of a user or client. It's a critical component of security, ensuring that only authorized users can access certain features or data within the application. Whether you are building a complex **enterprise-level** application or a simple CRUD interface, Refine's authentication system provides the necessary infrastructure to protect your pages and ensure that users interact with your application in a secure and controlled manner.
 
-Refine's **flexible architecture** allows you to easily implement various authentication strategies:
-
-- [Google](https://developers.google.com/identity/protocols/oauth2)
-- [Amazon Cognito](https://aws.amazon.com/cognito/)
-- [Okta](https://www.okta.com/) (Included in [Refine's Enterprise Edition](/docs/enterprise-edition/okta))
-- [Auth0](https://auth0.com/)
-
-You can implement your own authentication system or use one of the [supported auth providers](#supported-auth-providers).
+Refine's **flexible architecture** allows you to easily implement various authentication strategies. You can implement your own authentication system or use one of the [supported auth providers](#supported-auth-providers).
 
 > [To learn more about how to create auth provider, check out the tutorial page.][create-auth-provider-tutorial]
 

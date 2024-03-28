@@ -4,28 +4,17 @@ title: Routing
 
 Routing is essential for any CRUD application. Refine's headless architecture allows you to use any router solution, without being locked into a specific router/framework.
 
-Refine also offers built-in router integrations for the most popular frameworks such as **React Router**, **Next.js** and **Remix**.
-
-These integrations makes it easier to use Refine with these frameworks and offers a lot of benefits such as:
+Refine also offers built-in router integrations for the most popular frameworks. These integrations makes it easier to use Refine with these frameworks and offers a lot of benefits such as:
 
 - Automatic parameter detection in hooks/components.
 - Automatic redirections after mutation or authentication.
 - Set of utility components & hooks which can be used to navigate between pages/routes.
 
-Since Refine is router agnostic, you are responsible for creating your own routes.
-
-If you are using **React Router**, you'll be defining your routes under the `Routes` component.<br />
-If you are using **Next.js**, you'll be defining your routes in the `pages` or `app` directory.<br />
-If you are using **Remix**, you'll be defining your routes in the `app/routes` directory.
-
 ## Router Integrations
 
 To integrate a router provider with Refine, all you need to do is to import the router integration of your choice and pass it to the `<Refine />`'s `routerProvider` prop.
 
-<Tabs>
-<TabItem value="react-router-v6" label="React Router v6" default>
-
-```tsx title="App.tsx"
+```jsx title="App.jsx"
 import { BrowserRouter, Routes } from "react-router-dom";
 // highlight-next-line
 import routerProvider from "@refinedev/react-router-v6";
@@ -40,13 +29,6 @@ const App = () => (
 );
 ```
 
-[Check out React Router documentation for detailed information](/docs/packages/list-of-packages)
-
-</TabItem>
-</Tabs>
-
-Once you passed router provider to `<Refine />` component, you can use all the features of Refine in a same way, regardless of your application's framework/router.
-
 ## Relationship Between Resources and Routes <GuideBadge id="guides-concepts/general-concepts" />
 
 Refine can infer current `resource`, `action` and it's `id` from the **current route** based on your **resource definitions**.
@@ -55,7 +37,7 @@ This eliminates the need of passing these parameters to the components/hooks man
 
 All you have to do is to define your resource and their routes.
 
-```tsx
+```jsx
 <Refine
   resources={[
     {
@@ -70,9 +52,7 @@ All you have to do is to define your resource and their routes.
 />
 ```
 
-You can see how we omit **resource** and **id** parameters for `useList`, and `useShow` hooks in the examples below.
-
-#### React Router
+You can see how we omit **resource** and **id** parameters for `useList`, and `useShow` hooks in the example below.
 
 import { ReactRouterResourceAndRoutesUsage } from "./react-router/resource-and-routes-usage";
 
@@ -91,10 +71,7 @@ import { ReactRouterUseFormUsage } from "./react-router/use-form-usage";
 
 Additionally, router integrations exposes an `<UnsavedChangesNotifier />` component which can be used to notify the user about unsaved changes before navigating away from the current page. This component provides this feature which can be enabled by setting `warnWhenUnsavedChanges` to `true` in `useForm` hooks.
 
-<Tabs wrapContent={false}>
-<TabItem value="react-router" label="React Router v6">
-
-```tsx title="app.tsx"
+```jsx title="app.jsx"
 import { Refine } from "@refinedev/core";
 import {
   routerProvider,
@@ -122,18 +99,13 @@ const App = () => (
 );
 ```
 
-Check out the [`UnsavedChangesNotifier` section of the React Router integration documentation](/docs/packages/list-of-packages#unsavedchangesnotifier) for more information.
-
-</TabItem>
-</Tabs>
-
 ### useTable <GuideBadge id="guides-concepts/tables/#integrating-with-routers" />
 
 `useTable` can synchronize it's parameters (filters, pagination, sorting) with the current route.
 
 To enable synchronization, you need to pass `syncWithLocation: true` to `<Refine />` component's `options` prop.
 
-```tsx
+```jsx
 <Refine {...} options={{ syncWithLocation: true }}>
 
 ```
@@ -153,7 +125,7 @@ And we want to filter products by `category.id` and sort them by `id` in `asc` o
 
 We can pass these parameters to `useTable` hook as follows:
 
-```ts
+```js
 const { ... } = useTable(
     {
         current: 1,
@@ -166,7 +138,7 @@ const { ... } = useTable(
 
 `useTable` will automatically update the route to:
 
-```tsx title=http://localhost:3000/my-products
+```jsx title=http://localhost:3000/my-products
 // removed-line
 /my-products
 
@@ -176,7 +148,7 @@ const { ... } = useTable(
 
 And you will see a list of products, already **filtered**, **sorted** and **paginated** automatically based on the query parameters of the **current route**.
 
-```ts
+```js
 const { tableQueryResult, current, pageSize, filters, sorters } = useTable();
 
 console.log(tableQueryResult.data.data); // [{...}, {...}]
@@ -187,11 +159,7 @@ console.log(filters); // [{ field: "category.id", operator: "eq", value: "1" }]
 console.log(sorters); // [{ field: "id", order: "asc" }]
 ```
 
-Check the examples below to see how you can use `useTable` with router integration.
-
-Notice how `components/products/list.tsx` is the same, regardless of the router integration.
-
-#### React Router
+Check the example below to see how you can use `useTable` with router integration.
 
 import { ReactRouterUseTableUsage } from "./react-router/use-table-usage";
 
@@ -203,7 +171,7 @@ import { ReactRouterUseTableUsage } from "./react-router/use-table-usage";
 
 It can also sync it's parameters with the current route.
 
-```tsx
+```jsx
 const { ... } = useModalForm({ syncWithLocation: true })
 ```
 
@@ -301,6 +269,6 @@ These implementations will be provided via `routerProvider` which expects an obj
 - `parse`: A function that returns a function that parses the current route and returns an object.
 - `Link`: A React component that accepts a `to` prop and renders a component that handles the navigation to the given `to` prop.
 
-While all these methods are optional, if you're working on creating a custom router integration, you'll be able to incrementally add more features and adopt more of Refine's features by implementing more of these methods.
+While all these methods are optional, if you're working on creating a custom router integration, you'll be able to incrementally add more features and adopt more of Refine's features by izmplementing more of these methods.
 
 To learn more about the `routerProvider` interface, check out the [`Router Provider` section of the Core API Reference](/docs/routing/router-provider).

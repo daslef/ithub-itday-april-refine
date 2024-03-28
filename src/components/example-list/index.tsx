@@ -31,7 +31,6 @@ const priorityTags = [
   "mantine",
   "headless",
   "auth-provider",
-  "audit-log-provider",
   "data-provider",
   "live-provider",
   "notification-provider",
