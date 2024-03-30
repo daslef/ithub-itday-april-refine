@@ -4,17 +4,9 @@ description: <AutoSaveIndicator> component shows `autoSave` status on edit actio
 source: packages/antd/src/components/autoSaveIndicator/index.tsx
 ---
 
-`<AutoSaveIndicator>` component from Refine for **Ant Design** can be used to communicate auto-save status to the user.
+Компонент `<AutoSaveIndicator>` для **Ant Design** может быть использован для информирования пользователя о статусе автосохранения.
 
-:::simple Good to know
-
-This component is an extended version of the [`<AutoSaveIndicator>`](/docs/core/components/auto-save-indicator) component from Refine's core package. It provides a set of elements which align with Ant Design's components and styling.
-
-:::
-
-## Usage
-
-```tsx
+```jsx
 import { AutoSaveIndicator, useForm } from "@refinedev/antd";
 
 const MyComponent = () => {
@@ -37,8 +29,12 @@ const MyComponent = () => {
 };
 ```
 
-## API Reference
-
-### Properties
+### Свойства
 
 <PropsTable module="@refinedev/antd/AutoSaveIndicator" />
+
+:::simple Good to know
+
+Компонент является расширением над базовым компонентом[`<AutoSaveIndicator>`](/docs/core/components/auto-save-indicator) от Refine. Для дополнительной информации и примеров использования обратитесь по ссылке выше.
+
+:::

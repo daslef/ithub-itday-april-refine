@@ -329,10 +329,6 @@
       "to": "/docs/ui-integrations/ant-design/components/fields/url-field"
     },
     {
-      "from": "/docs/ui-frameworks/antd/components/filter-dropdown/",
-      "to": "/docs/ui-integrations/ant-design/components/filter-dropdown"
-    },
-    {
       "from": "/docs/ui-frameworks/antd/components/inputs/custom-inputs/",
       "to": "/docs/ui-integrations/ant-design/hooks/use-form"
     },
@@ -902,10 +898,6 @@
     {
       "from": "/docs/api-reference/antd/components/fields/url",
       "to": "/docs/ui-integrations/ant-design/components/fields/url-field"
-    },
-    {
-      "from": "/docs/api-reference/antd/components/filter-dropdown",
-      "to": "/docs/ui-integrations/ant-design/components/filter-dropdown"
     },
     {
       "from": "/docs/api-reference/antd/components/antd-auto-save-indicator",

@@ -110,15 +110,15 @@ render(<App />);
 
 ### Sider
 
-In `<ThemedLayoutV2>`, the sidebar section is rendered using the [`<ThemedSiderV2>`][themed-sider] component by default. This component is specifically designed to generate menu items based on the resources defined in [`<Refine>`][refine-component] components, using the [`useMenu`][use-menu] hook. However, if desired, it's possible to replace the default [`<ThemedSiderV2>`][themed-sider] component by passing a custom component to the `Sider` prop.
+При использовании `<ThemedLayoutV2>` за боковую панель по умолчанию отвечает компонент [`<ThemedSiderV2>`][themed-sider]. Меню на боковой панели генерируется автоматически на основе ресурсов, определенных в компоненте [`<Refine>`][refine-component], и хука [`useMenu`][use-menu]. Однако при необходимости компонент [`<ThemedSiderV2>`][themed-sider] можно заменить на кастомный, передав его в проп `Sider`.
 
-```tsx
+```jsx
 import { Refine } from "@refinedev/core";
 import { ThemedLayoutV2 } from "@refinedev/antd";
 
 import { CustomSider } from "./CustomSider";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Refine
     // ...
@@ -134,17 +134,15 @@ const App: React.FC = () => {
 };
 ```
 
-Also, you can customize the default [`<ThemedSiderV2>`][themed-sider] component either by using its props or with the [swizzle](#customizing-with-swizzle) feature.
+Еще один способ кастомизировать компонент [`<ThemedSiderV2>`][themed-sider] - использовать пропсы `render` и `Title`:
 
-Here is an example of how to customize the default [`<ThemedSiderV2>`][themed-sider] component using the `render` and `Title` prop:
-
-```tsx
+```jsx
 import { Refine } from "@refinedev/core";
 import { ThemedLayoutV2, ThemedSiderV2 } from "@refinedev/antd";
 
 import { CustomTitle } from "./CustomTitle";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Refine
     // ...
@@ -174,13 +172,13 @@ const App: React.FC = () => {
 };
 ```
 
-Also, you can make the sidebar fixed by passing the `fixed` property, which is optional and `false` by default. You can see the usage as follows:
+Из более простых модификаций - можно зафиксировать боковую панель через проп `fixed`:
 
-```tsx
+```jsx
 import { Refine } from "@refinedev/core";
 import { ThemedLayoutV2, ThemedSiderV2 } from "@refinedev/antd";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Refine
     // ...
@@ -197,15 +195,15 @@ const App: React.FC = () => {
 };
 ```
 
-#### Sider Props
+#### Пропсы компонента Sider
 
-| Prop                 | Type                                          | Description                                                                       |
-| -------------------- | --------------------------------------------- | --------------------------------------------------------------------------------- |
-| [`Title`](#title)    | `React.FC`                                    | Component to render at the top                                                    |
-| `render`             | [`SiderRenderFunction`](#siderrenderfunction) | Function to render the menu items and other elements inside the `<ThemedSiderV2>` |
-| `meta`               | `Record<string,any>`                          | Meta data to use when creating routes for the menu items                          |
-| `fixed`              | `boolean`                                     | Whether the sider is fixed or not                                                 |
-| `activeItemDisabled` | `boolean`                                     | Whether clicking on an active sider item should reload the page                   |
+| Prop                 | Type                                          | Description                                                                 |
+| -------------------- | --------------------------------------------- | --------------------------------------------------------------------------- |
+| [`Title`](#title)    | `React.FC`                                    | Компонент для отрисовки в верхней части                                     |
+| `render`             | [`SiderRenderFunction`](#siderrenderfunction) | Функция для отрисовки меню и иных элементов внутри `<ThemedSiderV2>`        |
+| `meta`               | `Record<string,any>`                          | Мета-данные для расчета адресов ссылок для пунктов меню                     |
+| `fixed`              | `boolean`                                     | Зафиксирована ли боковая панель                                             |
+| `activeItemDisabled` | `boolean`                                     | Должен ли щелчек по элементам боковой панели вызывать перезагрузку страницы |
 
 ```tsx
 type SiderRenderFunction = (props: {
@@ -218,12 +216,13 @@ type SiderRenderFunction = (props: {
 
 ### initialSiderCollapsed
 
-This prop is used to set the initial collapsed state of the [`<ThemedSiderV2>`][themed-sider] component.
+Этот проп используется для задания изначального состояния боковой панели
+[`<ThemedSiderV2>`][themed-sider].
 
-- `true`: The [`<ThemedSiderV2>`][themed-sider] component will be collapsed by default.
-- `false`: The [`<ThemedSiderV2>`][themed-sider] component will be expanded by default.
+- `true`: [`<ThemedSiderV2>`][themed-sider] изначально будет свернут.
+- `false`: [`<ThemedSiderV2>`][themed-sider] изначально будет открыт.
 
-```tsx
+```jsx
 <ThemedLayoutV2
   // highlight-next-line
   initialSiderCollapsed={true}
@@ -234,9 +233,9 @@ This prop is used to set the initial collapsed state of the [`<ThemedSiderV2>`][
 
 ### Header
 
-In `<ThemedLayoutV2>`, the header section is rendered using the [`<ThemedHeaderV2>`][themed-header] component by default. It uses [`useGetIdentity`](/docs/authentication/hooks/use-get-identity) hook to display the user's name and avatar on the right side of the header. However, if desired, it's possible to replace the default [`<ThemedHeaderV2>`][themed-header] component by passing a custom component to the `Header` prop.
+В `<ThemedLayoutV2>` блок хедера по умолчанию отрисовывается компонентом [`<ThemedHeaderV2>`][themed-header]. Он использует хук [`useGetIdentity`](/docs/authentication/hooks/use-get-identity) для получения имени пользователя и его аватара в правой части хедера. Компонент [`<ThemedHeaderV2>`][themed-header] может быть заменен на иной, если передать его в проп `Header`.
 
-Here is an example of how to replace the default [`<ThemedHeaderV2>`][themed-header] component:
+Пример использования кастомного хедера вместо компонента [`<ThemedHeaderV2>`][themed-header]:
 
 ```tsx
 import { Refine } from "@refinedev/core";
@@ -263,7 +262,7 @@ const App: React.FC = () => {
 
 You can also make it sticky using the `sticky` property:
 
-```tsx
+```jsx
 import { Refine } from "@refinedev/core";
 import {
   ThemedLayoutV2,
@@ -271,7 +270,7 @@ import {
   ThemedHeaderV2,
 } from "@refinedev/antd";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Refine
     // ...
@@ -290,11 +289,9 @@ const App: React.FC = () => {
 
 ### Title
 
-In `<ThemedLayoutV2>`, the title section is rendered using the [`<ThemedTitleV2>`][themed-title] component by default. However, if desired, it's possible to replace the default [`<ThemedTitleV2>`][themed-title] component by passing a custom component to the `Title` prop.
+В `<ThemedLayoutV2>` секция заголовка по умолчанию рендерится с использованием компонента [`<ThemedTitleV2>`][themed-title]. Однако, при желании, можно заменить [`<ThemedTitleV2>`][themed-title] на иной компонент, передав его в проп `Title`.
 
-Here is an example of how to replace the default [`<ThemedTitleV2>`][themed-title] component:
-
-```tsx
+```jsx
 import { Refine } from "@refinedev/core";
 // highlight-next-line
 import { ThemedLayoutV2, ThemedTitleV2 } from "@refinedev/antd";
@@ -302,7 +299,7 @@ import { ThemedLayoutV2, ThemedTitleV2 } from "@refinedev/antd";
 // highlight-next-line
 import { MyLargeIcon, MySmallIcon } from "./MyIcon";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Refine
     // ...
@@ -328,11 +325,9 @@ const App: React.FC = () => {
 
 ### Footer
 
-The footer section of the layout is displayed at the bottom of the page. Refine doesn't provide a default footer component. However, you can pass a custom component to the `Footer` prop to display a footer section.
+Refine не предлагает готовых компонентов для футера, но при желании вы можете передать кастомный компонент в проп `Footer`.
 
-Here is an example of how to display a footer section:
-
-```tsx live previewHeight=600px hideCode url=http://localhost:3000/samples
+```jsx live previewHeight=600px hideCode url=http://localhost:3000/samples
 setInitialRoutes(["/samples"]);
 
 // visible-block-start
@@ -352,7 +347,7 @@ import { authProvider } from "./authProvider";
 
 const API_URL = "https://api.fake-rest.refine.dev";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <BrowserRouter>
       <ConfigProvider theme={RefineThemes.Blue}>
@@ -404,12 +399,12 @@ const App: React.FC = () => {
 render(<App />);
 ```
 
-```tsx
+```jsx
 import { Refine } from "@refinedev/core";
 import { ThemedLayoutV2 } from "@refinedev/antd";
 import { Layout } from "antd";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Refine
     // ...
@@ -437,11 +432,9 @@ const App: React.FC = () => {
 
 ### OffLayoutArea
 
-Used to component is rendered outside of the main layout component, allowing it to be placed anywhere on the page while still being part of the overall layout .Refine doesn't provide a default off-layout area component. However, you can pass a custom component to the `OffLayoutArea` prop to display a custom off-layout area.
+Используется для отрисовки компонентов за пределами основного макета. Компоненты, переданные в этот проп, можно расположить в любом месте страницы, в том числе используя нестандартное позиционирование.
 
-Here is an example of how to display a custom off-layout area:
-
-```tsx live previewHeight=600px hideCode url=http://localhost:3000/samples
+```jsx live previewHeight=600px hideCode url=http://localhost:3000/samples
 setInitialRoutes(["/samples"]);
 
 // visible-block-start
@@ -461,7 +454,7 @@ import { authProvider } from "./authProvider";
 
 const API_URL = "https://api.fake-rest.refine.dev";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <BrowserRouter>
       <ConfigProvider theme={RefineThemes.Blue}>
@@ -515,12 +508,12 @@ const App: React.FC = () => {
 render(<App />);
 ```
 
-```tsx
+```jsx
 import { Refine } from "@refinedev/core";
 import { ThemedLayoutV2 } from "@refinedev/antd";
 import { Button } from "antd";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Refine
     // ...
@@ -551,15 +544,11 @@ const App: React.FC = () => {
 };
 ```
 
-## Customizing with swizzle
+## Кастомизация через swizzle
 
-> 🚨 This feature can be used with `@refine/cli`. Please refer to [CLI documentation](/docs/packages/list-of-packages#swizzle) for more information.
+> 🚨 Для этого шага рекомендуем использовать `@refine/cli`.
 
-`<ThemedLayoutV2>` component source code can be ejecting using the `swizzle` command. This will create a copy of the component in your project's `src` directory, allowing you to customize as your needs.
-
-### Usage
-
-Let's create a new component by swizzling the `<ThemedLayoutV2>` components.
+Исходный код компонента `<ThemedLayoutV2>` может быть извлечен с помощью команды `swizzle`. Будет создана копия компонента, доступная для любых модификаций.
 
 ```bash
 > npm run refine swizzle
@@ -572,9 +561,7 @@ UI Framework
  ◉ @refinedev/antd
 ```
 
-First, you need to select the package you want to swizzle. In this example, we will swizzle the `@refinedev/antd` package.
-
-Refine CLI will only show the packages that are installed in your project.
+Сначала выберите пакет, который хотите извлечь - в нашем случае это `@refinedev/antd`.
 
 ```bash
 ? Which component do you want to swizzle?
@@ -591,7 +578,7 @@ Pages
 (Move up and down to reveal more choices)
 ```
 
-Then, you need to select the component you want to swizzle. In this example, we will swizzle the `ThemedLayoutV2` component.
+Далее выберите конкретный компонент, в этом примере - `ThemedLayoutV2`.
 
 ```bash
 Successfully swizzled Themed Layout
@@ -631,11 +618,11 @@ You should pass layout related components to the <ThemedLayoutV2/> component's p
     ╰────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
-Finally, the swizzle command will create a new folder in the `src/components/layout` directory and generate the layout components of the `@refinedev/antd` package in it.
+В итоге будет создана новая директория `src/components/layout` с извлеченными компонентами.
 
-You can use these components in your project as you wish.
+Далее их можно изменять и использовать по вашему усмотрению.
 
-```tsx
+```jsx
 import { Refine } from "@refinedev/core";
 import { ThemedLayoutV2 } from "components/themedLayout";
 import { ThemedHeaderV2 } from "components/themedLayout/header";
@@ -659,31 +646,7 @@ const App = () => {
 };
 ```
 
-:::simple Good to know
-
-Refine CLI determines the path to create a new folder according to the framework you are using. For example, if you are using the `remix`, the path will be `app/components/layout`.
-
-If there is already a file with the same name in the directory, the swizzle command will not overwrite it.
-
-:::
-
-## Migrate ThemedLayout to ThemedLayoutV2
-
-Fixed some UI problems with `ThemedLayoutV2`. If you are still using `ThemedLayout` you can update it by following these step.
-
-```diff title="src/App.tsx"
--import { ThemedLayout } from "@refinedev/antd";
-+import { ThemedLayoutV2 } from "@refinedev/antd";
-...
--<ThemedLayout>
-+<ThemedLayoutV2>
-    <Outlet />
--</ThemedLayout>
-+</ThemedLayoutV2>
-...
-```
-
-## collapse/uncollapse `Sider` component with `useThemedLayoutContext` hook
+## Управление состоянием компонента `Sider` через хук `useThemedLayoutContext`
 
 The `useThemedLayoutContext` hook is that is used to collapse/uncollapse the `Sider` component. You can do this anywhere you want using the `useThemedLayoutContext` hook. Below you can see an example put on the dashboard page.
 
@@ -779,130 +742,6 @@ const App: React.FC = () => {
 // visible-block-end
 
 render(<App />);
-```
-
-## FAQ
-
-### How can I persist the collapsed state of the [`<ThemedSiderV2>`][themed-sider] component?
-
-You can use [`initialSiderCollapsed`](#initialsidercollapsed) prop to persist the collapsed state of the [`<ThemedSiderV2>`][themed-sider] component.
-
-For example, you can get `initialSiderCollapsed`'s value from `localStorage` or `cookie` for persistence between sessions:
-
-<Tabs
-defaultValue="react-router"
-values={[
-{label: 'React Router', value: 'react-router'},
-{label: 'Next.js', value: 'next.js'},
-{label: 'Remix', value: 'remix'},
-]}>
-
-<TabItem value="react-router">
-
-```tsx title="src/App.tsx"
-import { useState } from "react";
-import { Refine } from "@refinedev/core";
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import { ThemedLayoutV2 } from "@refinedev/antd";
-
-const App: React.FC = () => {
-  // you can get this value from `localStorage` or `cookie`
-  // for persistence between sessions
-  const [initialSiderCollapsed, setInitialSiderCollapsed] = useState(true);
-
-  return (
-    <BrowserRouter>
-      <Refine
-      // ...
-      >
-        {/* ... */}
-        <Routes>
-          <Route
-            element={
-              <ThemedLayoutV2 initialSiderCollapsed={initialSiderCollapsed}>
-                <Outlet />
-              </ThemedLayoutV2>
-            }
-          >
-            {/* ... */}
-          </Route>
-        </Routes>
-      </Refine>
-    </BrowserRouter>
-  );
-};
-
-export default App;
-```
-
-</TabItem>
-
-<TabItem value="next.js">
-
-```tsx title="pages/_app.tsx"
-import { useState } from "react";
-
-import { Refine } from "@refinedev/core";
-import { ThemedLayoutV2 } from "@refinedev/antd";
-
-import type { AppProps } from "next/app";
-import type { NextPage } from "next";
-
-function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-  // you can get this value from `localStorage` or `cookie`
-  // for persistence between sessions
-  const [initialSiderCollapsed, setInitialSiderCollapsed] = useState(true);
-
-  const renderComponent = () => {
-    if (Component.noLayout) {
-      return <Component {...pageProps} />;
-    }
-
-    return (
-      <ThemedLayoutV2 initialSiderCollapsed={initialSiderCollapsed}>
-        <Component {...pageProps} />
-      </ThemedLayoutV2>
-    );
-  };
-
-  return (
-    <Refine
-    // ...
-    >
-      {/* ... */}
-      {renderComponent()}
-    </Refine>
-  );
-}
-
-export default MyApp;
-```
-
-</TabItem>
-
-<TabItem value="remix">
-
-```tsx title="app/routes/_layout.tsx"
-import { useState } from "react";
-import { Outlet } from "@remix-run/react";
-import { ThemedLayoutV2 } from "@refinedev/antd";
-
-export default function BaseLayout() {
-  // you can get this value from `localStorage` or `cookie`
-  // for persistence between sessions
-  const [initialSiderCollapsed, setInitialSiderCollapsed] = useState(true);
-
-  return (
-    <ThemedLayoutV2 initialSiderCollapsed={initialSiderCollapsed}>
-      <Outlet />
-    </ThemedLayoutV2>
-  );
-}
-```
-
-</TabItem>
-
-</Tabs>
 ```
 
 [themed-sider]: https://github.com/refinedev/refine/blob/master/packages/antd/src/components/themedLayoutV2/sider/index.tsx

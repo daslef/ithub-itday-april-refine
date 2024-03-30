@@ -5,17 +5,17 @@ swizzle: true
 source: packages/antd/src/components/pages/auth/index.tsx
 ---
 
-`<AuthPage>` component from Refine for **Ant Design** contains authentication pages that can be used for the login, register, forgot password, and update password actions.
+Компонент `<AuthPage>`, адаптированный для **Ant Design**, содержит страницы аутентификации, которые можно использовать для логина, регистрации, восстановления и обновления пароля.
 
-Before using `<AuthPage>` component you need to add [authProvider](/docs/authentication/auth-provider) that will be used to handle authentication.
+Перед использованием `<AuthPage>` убедитесь, что вы настроили [authProvider](/docs/authentication/auth-provider), который будет обрабатывать логику аутентификации.
 
 :::simple Good to know
 
-You can swizzle this component to customize it with the [**Refine CLI**](/docs/packages/list-of-packages)
+Для полноценной кастомизации компонент можно извлечь через команду `swizzle` **Refine CLI**
 
 :::
 
-```tsx live  shared
+```jsx live shared
 const { useNavigation: useNavigationShared, useLogout: useLogoutShared } =
   RefineCore;
 const {
@@ -123,86 +123,22 @@ const GithubIcon = (
 );
 ```
 
-## Usage
+## Использование
 
-The `<AuthPage>` component can be used like this:
+Компонент `<AuthPage>` можно использовать в следующих вариациях:
 
-```tsx live url=http://localhost:3000/login previewHeight=600px
-setInitialRoutes(["/login"]);
-setRefineProps({ Sider: () => null });
+- [`login`](#login) - страница логина.
+- `register` - страница регистрации.
+- `forgotPassword` - страница восстановления пароля.
+- `updatePassword` - страница обновления пароля.
 
-// visible-block-start
-import { Refine, Authenticated } from "@refinedev/core";
-import dataProvider from "@refinedev/simple-rest";
-import { AuthPage, ThemedLayoutV2, RefineThemes } from "@refinedev/antd";
-import routerProvider, {
-  CatchAllNavigate,
-  NavigateToResource,
-} from "@refinedev/react-router-v6";
+В данном проекте нам достаточно первого варианта.
 
-import { ConfigProvider } from "antd";
+### Логин
 
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+Вариант `login` используется по умолчанию.
 
-import { authProvider } from "./authProvider";
-import { DashboardPage } from "./pages/dashboard";
-
-const App = () => {
-  return (
-    <BrowserRouter>
-      <ConfigProvider theme={RefineThemes.Blue}>
-        <Refine
-          dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
-          routerProvider={routerProvider}
-          authProvider={authProvider}
-        >
-          <Routes>
-            <Route
-              element={
-                <Authenticated fallback={<CatchAllNavigate to="/login" />}>
-                  <ThemedLayoutV2>
-                    <Outlet />
-                  </ThemedLayoutV2>
-                </Authenticated>
-              }
-            >
-              <Route index element={<DashboardPage />} />
-            </Route>
-            <Route
-              element={
-                <Authenticated fallback={<Outlet />}>
-                  <NavigateToResource />
-                </Authenticated>
-              }
-            >
-              {/* highlight-start */}
-              <Route path="/login" element={<AuthPage type="login" />} />
-              {/* highlight-end */}
-            </Route>
-          </Routes>
-        </Refine>
-      </ConfigProvider>
-    </BrowserRouter>
-  );
-};
-// visible-block-end
-render(<App />);
-```
-
-## Types
-
-The `<AuthPage>` component has the following types:
-
-- [`login`](#login) - a type of login page and default type.
-- [`register`](#register) - a type of registration page.
-- [`forgotPassword`](#forgotpassword) - a type of forgot password page.
-- [`updatePassword`](#updatepassword) - a type of update password page.
-
-### Login
-
-`login` will be used as the default type of the `<AuthPage>` component. The login page will be used to log in to the system.
-
-```tsx live hideCode url=http://localhost:3000/login previewHeight=600px
+```jsx live hideCode url=http://localhost:3000/login previewHeight=600px
 setInitialRoutes(["/login"]);
 setRefineProps({ Sider: () => null });
 
@@ -265,12 +201,10 @@ const App = () => {
 render(<App />);
 ```
 
-After form submission, the [`login`][login] method of the [`authProvider`][auth-provider] will be called with the form values.
+После отправки формы будет вызван метод [`login`][login] провайдера [`authProvider`][auth-provider].
 
-```tsx title="src/authProvider.ts"
-import { AuthProvider } from "@refinedev/core";
-
-const authProvider: AuthProvider = {
+```jsx title="src/authProvider.js"
+const authProvider = {
   // --
   login: async ({ email, password, remember, providerName }) => {
     // You can handle the login process according to your needs.
@@ -292,471 +226,13 @@ const authProvider: AuthProvider = {
 };
 ```
 
-### Register
-
-The register page will be used to register new users. You can use the following props for the `<AuthPage>` component when the type is `"register"`:
-
-```tsx live hideCode url=http://localhost:3000/register previewHeight=600px
-setInitialRoutes(["/register"]);
-setRefineProps({ Sider: () => null });
-
-// visible-block-start
-import { Refine, Authenticated } from "@refinedev/core";
-import dataProvider from "@refinedev/simple-rest";
-import routerProvider, {
-  CatchAllNavigate,
-  NavigateToResource,
-} from "@refinedev/react-router-v6";
-
-import { AuthPage, ThemedLayoutV2, RefineThemes } from "@refinedev/antd";
-
-import { ConfigProvider } from "antd";
-
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-
-import { authProvider } from "./authProvider";
-
-import { DashboardPage } from "pages/dashboard";
-
-const App = () => {
-  return (
-    <BrowserRouter>
-      <ConfigProvider theme={RefineThemes.Blue}>
-        <Refine
-          dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
-          routerProvider={routerProvider}
-          authProvider={authProvider}
-        >
-          <Routes>
-            <Route
-              element={
-                <Authenticated fallback={<CatchAllNavigate to="/login" />}>
-                  <ThemedLayoutV2>
-                    <Outlet />
-                  </ThemedLayoutV2>
-                </Authenticated>
-              }
-            >
-              <Route index element={<DashboardPage />} />
-            </Route>
-            <Route
-              element={
-                <Authenticated fallback={<Outlet />}>
-                  <NavigateToResource />
-                </Authenticated>
-              }
-            >
-              <Route path="/login" element={<AuthPage />} />
-              {/* highlight-next-line */}
-              <Route path="/register" element={<AuthPage type="register" />} />
-            </Route>
-          </Routes>
-        </Refine>
-      </ConfigProvider>
-    </BrowserRouter>
-  );
-};
-// visible-block-end
-render(<App />);
-```
-
-After form submission, the [`register`][register] method of the [`authProvider`][auth-provider] will be called with the form values.
-
-```tsx title="src/authProvider.ts"
-import { AuthProvider } from "@refinedev/core";
-
-const authProvider: AuthProvider = {
-  // --
-  register: async ({ email, password, providerName }) => {
-    // You can handle the register process according to your needs.
-
-    // If the process is successful.
-    return {
-      success: true,
-    };
-
-    return {
-      success: false,
-      error: {
-        name: "Register Error",
-        message: "Invalid email or password",
-      },
-    };
-  },
-  // --
-};
-```
-
-### ForgotPassword
-
-The `forgotPassword` type is a page that allows users to reset their passwords. You can use this page to reset your password.
-
-```tsx live hideCode url=http://localhost:3000/forgot-password previewHeight=600px
-setInitialRoutes(["/forgot-password"]);
-setRefineProps({ Sider: () => null });
-
-// visible-block-start
-import { Refine, Authenticated } from "@refinedev/core";
-import dataProvider from "@refinedev/simple-rest";
-import routerProvider, {
-  CatchAllNavigate,
-  NavigateToResource,
-} from "@refinedev/react-router-v6";
-
-import { AuthPage, ThemedLayoutV2, RefineThemes } from "@refinedev/antd";
-
-import { ConfigProvider } from "antd";
-
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-
-import { authProvider } from "./authProvider";
-
-import { DashboardPage } from "pages/dashboard";
-
-const App = () => {
-  return (
-    <BrowserRouter>
-      <Refine
-        dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
-        routerProvider={routerProvider}
-        authProvider={authProvider}
-      >
-        <Routes>
-          <Route
-            element={
-              <Authenticated fallback={<CatchAllNavigate to="/login" />}>
-                <ThemedLayoutV2>
-                  <Outlet />
-                </ThemedLayoutV2>
-              </Authenticated>
-            }
-          >
-            <Route index element={<DashboardPage />} />
-          </Route>
-          <Route
-            element={
-              <Authenticated fallback={<Outlet />}>
-                <NavigateToResource />
-              </Authenticated>
-            }
-          >
-            <Route path="/login" element={<AuthPage />} />
-            <Route path="/register" element={<AuthPage type="register" />} />
-            {/* highlight-next-line */}
-            <Route
-              path="/forgot-password"
-              element={<AuthPage type="forgotPassword" />}
-            />
-          </Route>
-        </Routes>
-      </Refine>
-    </BrowserRouter>
-  );
-};
-// visible-block-end
-render(<App />);
-```
-
-After form submission, the [`forgotPassword`][forgot-password] method of the [`authProvider`][auth-provider] will be called with the form values.
-
-```tsx title="src/authProvider.ts"
-import { AuthProvider } from "@refinedev/core";
-
-const authProvider: AuthProvider = {
-  // --
-  forgotPassword: async ({ email }) => {
-    // You can handle the reset password process according to your needs.
-
-    // If the process is successful.
-    return {
-      success: true,
-    };
-
-    return {
-      success: false,
-      error: {
-        name: "Register Error",
-        message: "Invalid email",
-      },
-    };
-  },
-  // --
-};
-```
-
-### UpdatePassword
-
-The `updatePassword` type is the page used to update the password of the user.
-
-```tsx live hideCode url=http://localhost:3000/update-password previewHeight=600px
-setInitialRoutes(["/update-password"]);
-setRefineProps({ Sider: () => null });
-
-// visible-block-start
-import { Refine, Authenticated } from "@refinedev/core";
-import dataProvider from "@refinedev/simple-rest";
-import routerProvider, {
-  CatchAllNavigate,
-  NavigateToResource,
-} from "@refinedev/react-router-v6";
-
-import { AuthPage, ThemedLayoutV2, RefineThemes } from "@refinedev/antd";
-
-import { ConfigProvider } from "antd";
-
-import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-
-import { authProvider } from "./authProvider";
-
-import { DashboardPage } from "pages/dashboard";
-
-const App = () => {
-  return (
-    <BrowserRouter>
-      <Refine
-        dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
-        routerProvider={routerProvider}
-        authProvider={authProvider}
-      >
-        <Routes>
-          <Route
-            element={
-              <Authenticated fallback={<CatchAllNavigate to="/login" />}>
-                <ThemedLayoutV2>
-                  <Outlet />
-                </ThemedLayoutV2>
-              </Authenticated>
-            }
-          >
-            <Route index element={<DashboardPage />} />
-          </Route>
-          <Route
-            element={
-              <Authenticated fallback={<Outlet />}>
-                <NavigateToResource />
-              </Authenticated>
-            }
-          >
-            <Route path="/login" element={<AuthPage />} />
-            <Route path="/register" element={<AuthPage type="register" />} />
-            <Route
-              path="/forgot-password"
-              element={<AuthPage type="forgotPassword" />}
-            />
-            {/* highlight-next-line */}
-            <Route
-              path="/update-password"
-              element={<AuthPage type="updatePassword" />}
-            />
-          </Route>
-        </Routes>
-      </Refine>
-    </BrowserRouter>
-  );
-};
-// visible-block-end
-render(<App />);
-```
-
-After form submission, the [`updatePassword`][update-password] method of the [`authProvider`][auth-provider] will be called with the form values.
-
-```tsx title="src/authProvider.ts"
-import { AuthProvider } from "@refinedev/core";
-
-const authProvider: AuthProvider = {
-  // --
-  updatePassword: async ({ password, confirmPassword }) => {
-    // You can handle the update password process according to your needs.
-
-    // If the process is successful.
-    return {
-      success: true,
-    };
-
-    return {
-      success: false,
-      error: {
-        name: "Login Error",
-        message: "Invalid email or password",
-      },
-    };
-  },
-  // --
-};
-```
-
-## Props
-
-### hideForm
-
-When you set `hideForm` to `true`, the form will be hidden. You can use this property to show only providers.
-
-```tsx
-const MyLoginPage = () => {
-  return (
-    <AuthPage
-      type="login" // or "register"
-      hideForm={true}
-      providers={[
-        {
-          name: "google",
-          icon: GoogleIcon,
-          label: "Sign in with Google",
-        },
-        {
-          name: "github",
-          icon: GithubIcon,
-          label: "Sign in with GitHub",
-        },
-      ]}
-    />
-  );
-};
-```
-
-### providers
-
-The `providers` property defines the list of providers used to handle login authentication. `providers` accepts an array of `Provider` type. This property is only available for types `login` and `register`.
-
-```tsx
-const MyLoginPage = () => {
-  return (
-    <AuthPage
-      type="login"
-      providers={[
-        {
-          name: "google",
-          icon: GoogleIcon,
-          label: "Sign in with Google",
-        },
-        {
-          name: "github",
-          icon: GithubIcon,
-          label: "Sign in with GitHub",
-        },
-      ]}
-    />
-  );
-};
-```
-
-> For more information, refer to the [Interface section &#8594](#interface)
-
-### rememberMe
-
-The `rememberMe` property defines to render your custom `<RememberMe>` component or you can pass `false` to don't render it. This property is only available for type `login`.
-
-You have to wrap your custom `<RememberMe>` component with the `Form.Item` component from **Ant Design** and pass the `name` prop to it then you can access its value from the `formProps` `onFinish` function with `formValues`.
-
-```tsx
-const MyLoginPage = () => {
-  return (
-    <AuthPage
-      type="login"
-      // highlight-start
-      rememberMe={
-        <div
-          style={{
-            border: "1px dashed cornflowerblue",
-            padding: 3,
-          }}
-        >
-          <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox>Custom remember me</Checkbox>
-          </Form.Item>
-        </div>
-      }
-      // highlight-end
-    />
-  );
-};
-```
-
-### loginLink
-
-The `loginLink` property defines the link to the login page and also you can give a node to render. The default value is `"/login"`. This property is only available for type `register` and `forgotPassword`.
-
-```tsx
-const MyRegisterPage = () => {
-  return (
-    <AuthPage
-      type="register"
-      // highlight-start
-      loginLink={
-        <div
-          style={{
-            border: "1px dashed cornflowerblue",
-            padding: 3,
-          }}
-        >
-          <Link to="/login">Login</Link>
-        </div>
-      }
-      // highlight-end
-    />
-  );
-};
-```
-
-### registerLink
-
-The `registerLink` property defines the link to the registration page and also you can give a node to render. The default value is `"/register"`. This property is only available for type `login`.
-
-```tsx
-const MyLoginPage = () => {
-  return (
-    <AuthPage
-      type="login"
-      // highlight-start
-      registerLink={
-        <div
-          style={{
-            border: "1px dashed cornflowerblue",
-            marginTop: 5,
-            padding: 5,
-          }}
-        >
-          <Link to="/register">Register</Link>
-        </div>
-      }
-      // highlight-end
-    />
-  );
-};
-```
-
-### forgotPasswordLink
-
-The `forgotPasswordLink` property defines the link to the forgot password page and also you can give a node to render. Its default value is `"/forgot-password"`. This property is only available for type `login`.
-
-```tsx
-const MyLoginPage = () => {
-  return (
-    <AuthPage
-      type="login"
-      // highlight-start
-      forgotPasswordLink={
-        <div
-          style={{
-            border: "1px dashed cornflowerblue",
-            marginTop: 5,
-            padding: 5,
-          }}
-        >
-          <Link to="/forgot-password">Forgot Password</Link>
-        </div>
-      }
-      // highlight-end
-    />
-  );
-};
-```
+## Свойства, актуальные для проекта
 
 ### wrapperProps
 
-The `wrapperProps` is used for passing props to the wrapper component. In the example below you can see that the background color is changed with `wrapperProps`
+[`wrapperProps`](https://ant.design/components/layout/#API) можно использовать для настройки компонента-обёртки (враппера). Например, в примере ниже через это свойство задается цвет фона.
 
-```tsx
+```jsx
 const MyLoginPage = () => {
   return (
     <AuthPage
@@ -775,9 +251,9 @@ const MyLoginPage = () => {
 
 ### contentProps
 
-The `contentProps` is used for passing props to the content component which is the card component. In the example below, you can see that the title, header, and content styles are changed with `contentProps`.
+`contentProps` используется для задания свойств компоненту с содержимым, конкретно - карточке [`Card`](https://ant.design/components/card/#API). В примере ниже через это свойство задаются стили для заголовка, хедера и контента карточки.
 
-```tsx
+```jsx
 const MyLoginPage = () => {
   return (
     <AuthPage
@@ -801,9 +277,9 @@ const MyLoginPage = () => {
 
 ### formProps
 
-The `formProps` is used for passing props to the form component. In the example below you can see that the `initialValues` are changed with `formProps` and also the `onFinish` function is changed.
+[`FormProps`](https://ant.design/components/form/#API) позволяет задавать свойства компоненту формы. В примере ниже через него задаются `initialValues` и коллбэк `onFinish`.
 
-```tsx
+```jsx
 const MyLoginPage = () => {
   return (
     <AuthPage
@@ -824,12 +300,12 @@ const MyLoginPage = () => {
 
 ### title
 
-By default, `AuthPage` uses text with icon on top of page. You can use this property to change the default title.
+Это свойство можно использовать для задания текста и иконки на страницах авторизации.
 
-- Default text is: Refine Project
-- Default icon is: Refine Logo
+- Текст по умолчанию: Refine Project
+- Иконка по умолчанию: Refine Logo
 
-```tsx
+```jsx
 import { AuthPage, ThemedTitle } from "@refinedev/antd";
 
 const MyLoginPage = () => {
@@ -837,9 +313,9 @@ const MyLoginPage = () => {
 };
 ```
 
-Or you can customize the title with the `ThemedTitle` component.
+Либо можно использовать компонент `ThemedTitle` component:
 
-```tsx
+```jsx
 import { AuthPage } from "@refinedev/antd";
 
 const MyLoginPage = () => {
@@ -859,9 +335,9 @@ const MyLoginPage = () => {
 
 ### renderContent
 
-`renderContent` is used to render the form content and the [title](#title). You can use this property to render your own content, or change the default content and title that it gives you.
+`renderContent` представляет дополнительные возможности для настройки отображения формы и заголовка. Можно изменить верстку и стилизацию, добавить дополнительный контент от себя или изменить исходный.
 
-```tsx
+```jsx
 import { AuthPage } from "@refinedev/antd";
 
 const MyLoginPage = () => {
@@ -890,70 +366,6 @@ const MyLoginPage = () => {
     />
   );
 };
-```
-
-## FAQ
-
-### How can I remove the default title and logo ?
-
-You can use the `renderContent` property to remove the default title and logo.
-
-```tsx
-import { AuthPage } from "@refinedev/antd";
-
-const MyLoginPage = () => {
-  return (
-    <AuthPage
-      type="login"
-      // highlight-start
-      renderContent={(
-        content: React.ReactNode,
-        title: React.ReactNode, // not return
-      ) => {
-        return content;
-      }}
-      // highlight-end
-    />
-  );
-};
-```
-
-Or you can give `false` to the `title` property to remove the default title.
-
-```tsx
-import { AuthPage } from "@refinedev/antd";
-
-const MyLoginPage = () => {
-  return (
-    <AuthPage
-      type="login"
-      // highlight-start
-      title={false}
-      // highlight-end
-    />
-  );
-};
-```
-
-## API Reference
-
-### Properties
-
-<PropsTable module="@refinedev/antd/AuthPage"
-formProps-type="[`FormProps`](https://ant.design/components/form/#API)"
-wrapperProps-type="[`WrapperProps`](https://ant.design/components/layout/#API)"
-contentProps-type="[`CardProps`](https://ant.design/components/card/#API)"
-rememberMe-default="[`<Checkbox>Remember me</Checkbox>`](/docs/ui-integrations/ant-design/components/auth-page#rememberme)"
-/>
-
-### Interface
-
-```tsx
-interface OAuthProvider {
-  name: string;
-  icon?: React.ReactNode;
-  label?: string;
-}
 ```
 
 [auth-provider]: /docs/authentication/auth-provider

@@ -41,8 +41,6 @@ export const ProductList = () => {
 };
 ```
 
-`@refinedev/antd` также предоставляет компонент [`<FilterDropdown />`](/docs/ui-integrations/ant-design/components/filter-dropdown) для удобной фильтрации по столбцам таблицы.
-
 ## Формы
 
 Refine обеспечивает бесшовную интеграцию с компонентом [`<Form />`](https://ant.design/components/form) через хук [`useForm`](/docs/ui-integrations/ant-design/hooks/use-form) из пакета `@refinedev/antd`. Этот хук является адаптированной версией базового хука [`useForm`](/docs/data/hooks/use-form/) из пакета `@refinedev/core`.

@@ -3,11 +3,9 @@ title: List
 swizzle: true
 ---
 
-`<List>` provides us a layout to display the page. It does not contain any logic but adds extra functionalities like a create button or giving titles to the page.
+`<List>` предоставляет макет для списка содержимого ресурса, не содержащий логики, но дополняющий страницу некоторыми компонентами.
 
-We will show what `<List>` does using properties with examples.
-
-```tsx live hideCode url=http://localhost:3000/posts
+```tsx
 interface ICategory {
   id: number;
   title: string;
@@ -20,21 +18,23 @@ interface IPost {
   status: "published" | "draft" | "rejected";
   category: { id: number };
 }
+```
 
+```jsx live hideCode url=http://localhost:3000/posts
 // visible-block-start
 import { useMany } from "@refinedev/core";
 
 import { List, TextField, TagField, useTable } from "@refinedev/antd";
 import { Table } from "antd";
 
-const PostList: React.FC = () => {
-  const { tableProps } = useTable<IPost>({
+const PostList = () => {
+  const { tableProps } = useTable({
     syncWithLocation: true,
   });
 
   const categoryIds =
     tableProps?.dataSource?.map((item) => item.category.id) ?? [];
-  const { data, isLoading } = useMany<ICategory>({
+  const { data, isLoading } = useMany({
     resource: "categories",
     ids: categoryIds,
     queryOptions: {
@@ -86,23 +86,17 @@ render(
 );
 ```
 
-:::simple Good to know
-
-You can swizzle this component to customize it with the [**Refine CLI**](/docs/packages/list-of-packages)
-
-:::
-
-## Properties
+## Свойства
 
 ### title
 
-`title` allows you to add a title to the `<List>` component. If you don't pass the title props, it uses plural form of resource name by default.
+`title` позволяет изменить заголовок компонента `<List>`. По умолчанию используется имя ресурса.
 
-```tsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
+```jsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
 // visible-block-start
 import { List } from "@refinedev/antd";
 
-const PostList: React.FC = () => {
+const PostList = () => {
   return (
     /* highlight-next-line */
     <List title="Custom Title">
@@ -125,61 +119,11 @@ render(
 );
 ```
 
-### resource
-
-The `<List>` component reads the `resource` information from the route by default. If you want to use a custom resource for the `<List>` component, you can use the `resource` prop:
-
-```tsx live disableScroll previewHeight=280px url=http://localhost:3000/custom
-setInitialRoutes(["/custom"]);
-
-import { Refine } from "@refinedev/core";
-import routerProvider from "@refinedev/react-router-v6/legacy";
-import dataProvider from "@refinedev/simple-rest";
-// visible-block-start
-import { List } from "@refinedev/antd";
-
-const CustomPage: React.FC = () => {
-  return (
-    /* highlight-next-line */
-    <List resource="posts">
-      <p>Rest of your page here</p>
-    </List>
-  );
-};
-// visible-block-end
-
-const App: React.FC = () => {
-  return (
-    <RefineAntdDemo
-      legacyRouterProvider={{
-        ...routerProvider,
-        // highlight-start
-        routes: [
-          {
-            element: <CustomPage />,
-            path: "/custom",
-          },
-        ],
-        // highlight-end
-      }}
-      dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
-      resources={[{ name: "posts" }]}
-    />
-  );
-};
-
-render(<App />);
-```
-
-If you have multiple resources with the same name, you can pass the `identifier` instead of the `name` of the resource. It will only be used as the main matching key for the resource, data provider methods will still work with the `name` of the resource defined in the `<Refine/>` component.
-
-> For more information, refer to the [`identifier` of the `<Refine/>` component documentation &#8594](/docs/core/refine-component#identifier)
-
 ### canCreate and createButtonProps
 
-`canCreate` allows us to add the create button inside the `<List>` component. If you want to customize this button you can use `createButtonProps` property like the code below:
+`canCreate` позволяет добавить в макет кнопку создания записи, которую далее можно будет кастомизировать через свойство `createButtonProps`:
 
-```tsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
+```jsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
 const { Create } = RefineAntd;
 const { default: simpleRest } = RefineSimpleRest;
 
@@ -237,7 +181,7 @@ const authProvider = {
 import { List } from "@refinedev/antd";
 import { usePermissions } from "@refinedev/core";
 
-const PostList: React.FC = () => {
+const PostList = () => {
   const { data: permissionsData } = usePermissions();
   return (
     <List
@@ -270,21 +214,19 @@ render(
 );
 ```
 
-The create button redirects to the create page of the resource according to the value it reads from the URL.
+Кнопка создания перенаправит пользователя на соответствующую страницу.
 
-> For more information, refer to the [`usePermission` documentation &#8594](/docs/authentication/hooks/use-permissions)
+> Для дополнительной информации обратитесь к документации [хука `usePermission` &#8594](/docs/authentication/hooks/use-permissions)
 
 ### breadcrumb <GlobalConfigBadge id="core/refine-component/#breadcrumb" />
 
-To customize or disable the breadcrumb, you can use the `breadcrumb` property. By default it uses the `Breadcrumb` component from `@refinedev/antd` package.
+Для настройки или кастомизации хлебных крошек используйте свойство `breadcrumb`.
 
-[Refer to the `Breadcrumb` documentation for detailed usage. &#8594](/docs/ui-integrations/ant-design/components/breadcrumb)
-
-```tsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
+```jsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
 // visible-block-start
 import { List } from "@refinedev/antd";
 
-const CustomBreadcrumb: React.FC = () => {
+const CustomBreadcrumb = () => {
   return (
     <p
       style={{
@@ -325,13 +267,13 @@ render(
 
 ### wrapperProps
 
-You can use the `wrapperProps` property if you want to customize the wrapper of the `<List/>` component. The `@refinedev/antd` wrapper elements are simply `<div/>`s and `wrapperProps` and can get every attribute that `<div/>` can get.
+Свойство для кастомизации обертки компонента `<List/>`.
 
-```tsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
+```jsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
 // visible-block-start
 import { List } from "@refinedev/antd";
 
-const PostList: React.FC = () => {
+const PostList = () => {
   return (
     <List
       // highlight-start
@@ -364,13 +306,13 @@ render(
 
 ### headerProps
 
-You can use the `headerProps` property to customize the header of the `<List/>` component:
+Для кастомизации хедера компонента `<List/>` используйте свойство `headerProps`:
 
-```tsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
+```jsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
 // visible-block-start
 import { List } from "@refinedev/antd";
 
-const PostList: React.FC = () => {
+const PostList = () => {
   return (
     <List
       // highlight-start
@@ -402,17 +344,15 @@ render(
 );
 ```
 
-> For more information, refer to the [`PageHeader` documentation &#8594](https://procomponents.ant.design/en-US/components/page-header)
-
 ### contentProps
 
-You can use the `contentProps` property to customize the content of the `<Create/>` component. The `<List/>` components content is wrapped with a `<div/>` and `contentProps` can get every attribute that `<div/>` can get.
+Для кастомизации блока контента компонента `<Create/>` используйте свойство `contentProps`:
 
-```tsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
+```jsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
 // visible-block-start
 import { List } from "@refinedev/antd";
 
-const PostList: React.FC = () => {
+const PostList = () => {
   return (
     <List
       // highlight-start
@@ -445,18 +385,18 @@ render(
 
 ### headerButtons
 
-By default, the `<List/>` component has a [`<CreateButton>`][create-button] at the header.
+По умолчанию, компонент `<List/>` содержит в хедере кнопку [`<CreateButton>`][create-button].
 
-You can customize the buttons at the header by using the `headerButtons` property. It accepts `React.ReactNode` or a render function `({ defaultButtons, createButtonProps }) => React.ReactNode` which you can use to keep the existing buttons and add your own.
+Вы можете настроить кнопки хедера через свойство `headerButtons`, передав в него кастомный компонент либо рендер-функцию вида `({ defaultButtons, createButtonProps }) => React.ReactNode`.
 
-If the "create" resource is not defined or if [`canCreate`](#cancreate-and-createbuttonprops) is false, the [`<CreateButton>`][create-button] will not render and `createButtonProps`will be `undefined`.
+Если "create" для ресурсу не определен, либо если [`canCreate`](#cancreate-and-createbuttonprops) выставлен в false, кнопка [`<CreateButton>`][create-button] отображаться не будет.
 
-```tsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
+```jsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
 // visible-block-start
 import { List } from "@refinedev/antd";
 import { Button } from "antd";
 
-const PostList: React.FC = () => {
+const PostList = () => {
   return (
     <List
       // highlight-start
@@ -487,14 +427,12 @@ render(
 );
 ```
 
-Or, instead of using the `defaultButtons`, you can create your own buttons. If you want, you can use `createButtonProps` to utilize the default values of the [`<CreateButton>`][create-button] component.
-
-```tsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
+```jsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
 // visible-block-start
 import { List, CreateButton } from "@refinedev/antd";
 import { Button } from "antd";
 
-const PostList: React.FC = () => {
+const PostList = () => {
   return (
     <List
       // highlight-start
@@ -529,7 +467,7 @@ render(
 
 ### headerButtonProps
 
-You can customize the wrapper element of the buttons at the header by using the `headerButtonProps` property.
+Для кастомизации обертки над кнопками хедера используйте свойство `headerButtonProps`:
 
 ```tsx live disableScroll previewHeight=280px url=http://localhost:3000/posts
 // visible-block-start
@@ -567,19 +505,5 @@ render(
   />,
 );
 ```
-
-> For more information, refer to the [`Space` documentation &#8594](https://ant.design/components/space/)
-
-## API Reference
-
-### Properties
-
-<PropsTable module="@refinedev/antd/List"
-headerProps-type="[`PageHeaderProps`](https://procomponents.ant.design/en-US/components/page-header)"
-headerButtonProps-type="[`SpaceProps`](https://ant.design/components/space/)"
-createButtonProps-type="[`ButtonProps`](https://ant.design/components/button/#API) & `{ resourceName: string }`"
-breadcrumb-default="[`<Breadcrumb>`](https://ant.design/components/breadcrumb/)"
-canCreate-default="If the resource is passed a create component, `true` else `false`"
-/>
 
 [create-button]: /docs/ui-integrations/ant-design/components/buttons/create-button

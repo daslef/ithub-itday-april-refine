@@ -67,17 +67,13 @@ It can be used when your DataIndex and your sorting key are different.
 
 When using multiple sorting, `multiple` value is required for `sorter` property. Which specifies the priority of the column in sorting.
 
-## Filtering
+## Фильтрация
 
-We can use the `filterDropdown` property from [`<Table.Column>`][table-column] to make filtering based on the column values. In order to do this, we need to put the filtering form inside the [`<FilterDropdown>`][filter-dropdown] component and pass the properties coming to the function to these component's properties.
+Мы не рекомендуем реализовывать фильтрацию в данном прототипе.
 
-It also syncs the filtering state with the URL if you enable the [`syncWithLocation`](#syncwithlocation).
+## Initial Sorter
 
-<FilteringPreview />
-
-## Initial Filter and Sorter
-
-If you're using the `initial`, don't forget to add `getDefaultSortOrder` or `defaultFilteredValue` to your `<Table.Column>` component. Otherwise, hook states may not sync with the table.
+If you're using the `initial`, don't forget to add `getDefaultSortOrder` to your `<Table.Column>` component. Otherwise, hook states may not sync with the table.
 
 ```tsx
 // ---
@@ -881,6 +877,5 @@ const ListPage = () => {
 [httperror]: /docs/core/interface-references#httperror
 [table search]: /advanced-tutorials/search/table-search.md
 [Refine swl]: /docs/core/refine-component#syncwithlocation
-[filter-dropdown]: /docs/ui-integrations/ant-design/components/filter-dropdown
 [syncwithlocationparams]: /docs/core/interface-references#syncwithlocationparams
 [notification-provider]: /docs/notification/notification-provider

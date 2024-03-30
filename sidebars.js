@@ -265,7 +265,6 @@ module.exports = {
         "ui-integrations/ant-design/components/themed-layout/index",
         "ui-integrations/ant-design/components/auth-page/index",
         "ui-integrations/ant-design/components/breadcrumb/index",
-        "ui-integrations/ant-design/components/filter-dropdown/index",
         "ui-integrations/ant-design/components/auto-save-indicator/index",
         "ui-integrations/ant-design/components/inferencer/index",
         {
