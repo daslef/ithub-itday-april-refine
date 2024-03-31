@@ -6,7 +6,7 @@ import I18nHeadless from './i18n-headless.tsx';
 import TranslationFileEN from '../../partials/\_partial-translation-file-en.md';
 import TranslationFileDE from '../../partials/\_partial-translation-file-de.md';
 
-Internationalization (i18n) is a process that allows software applications to be localized for different regions and languages. Refine can work with any i18n framework, but needs an [`i18nProvider`](/docs/i18n/i18n-provider) to be created based on the chosen library.
+Интернационализация (i18n) - это процесс локализации программного обеспечения для различных регионов и языков. Refine можно интегрировать с любым i18n-фреймворком, главное реализовать для него [`i18nProvider`](/docs/i18n/i18n-provider).
 
 ## i18n Provider
 
@@ -163,7 +163,9 @@ After we pass the `i18nProvider` to the `<Refine>` component, all three translat
 
 ### Adding the Translations Files
 
-Before we get started, let's look at which parts are going to be translated:
+All of Refine's components supports `i18n`, meaning that if you want to change their text, you can create your own translation files to override Refine's default texts.
+
+Here is the list of all translation keys that you can override:
 
 <details>
 <summary>The translation file</summary>
@@ -211,216 +213,21 @@ values={[{ label: "English", value: "en" }, { label: "German", value: "de" }]}>
 </TabItem>
 </Tabs>
 
-All of Refine's components support i18n, meaning that if you want to change their text, you can create your own translation files with the reference to the keys above. We can override Refine's default texts by changing the `common.json` files in the example above.
-
-### Changing The Locale
-
-Next, we will create a `<Header>` component. This component will allow us to change the language.
-
-```tsx title="src/components/header.tsx"
-import { DownOutlined } from "@ant-design/icons";
-import { useGetLocale, useSetLocale } from "@refinedev/core";
-import { Avatar, Button, Dropdown, Layout, Menu, Space } from "antd";
-import { useTranslation } from "react-i18next";
-
-export const Header: React.FC = () => {
-  const { i18n } = useTranslation();
-  const locale = useGetLocale();
-  const changeLanguage = useSetLocale();
-
-  const currentLocale = locale();
-
-  const menu = (
-    <Menu selectedKeys={currentLocale ? [currentLocale] : []}>
-      {[...(i18n.languages || [])].sort().map((lang: string) => (
-        <Menu.Item
-          key={lang}
-          onClick={() => changeLanguage(lang)}
-          icon={
-            <span style={{ marginRight: 8 }}>
-              <Avatar size={16} src={`/images/flags/${lang}.svg`} />
-            </span>
-          }
-        >
-          {lang === "en" ? "English" : "German"}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
-
-  return (
-    <Layout.Header
-      style={{
-        display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "center",
-        padding: "0px 24px",
-        height: "48px",
-        backgroundColor: "#FFF",
-      }}
-    >
-      <Dropdown overlay={menu}>
-        <Button type="link">
-          <Space>
-            <Avatar size={16} src={`/images/flags/${currentLocale}.svg`} />
-            {currentLocale === "en" ? "English" : "German"}
-            <DownOutlined />
-          </Space>
-        </Button>
-      </Dropdown>
-    </Layout.Header>
-  );
-};
-```
-
-<br/>
-
-Then, we will pass `<Header>` to our `<Layout>` component.
-
-```tsx title="src/App.tsx"
-import { Refine, Resource } from "@refinedev/core";
-import { ThemedLayoutV2 } from "@refinedev/antd";
-
-import { useTranslation } from "react-i18next";
-
-import "./i18n";
-
-// highlight-next-line
-import { Header } from "components";
-
-const App: React.FC = () => {
-    const { t, i18n } = useTranslation();
-
-    const i18nProvider = {
-        translate: (key: string, options?: any) => t(key, options),
-        changeLocale: (lang: string) => i18n.changeLanguage(lang),
-        getLocale: () => i18n.language,
-    };
-
-    return (
-        <Refine
-            i18nProvider={i18nProvider}
-            /* ... */
-        >
-            <ThemedLayoutV2
-                // highlight-next-line
-                header={<Header />}
-            >
-                {/* ... */}
-            </Layout>
-        </Refine>
-    );
-};
-```
-
-<br />
-
-Finally, we will create the `<PostList>` page and then we will translate texts using `useTranslate`.
-
-```tsx title="src/App.tsx"
-import {
-  // highlight-next-line
-  useTranslate,
-  useMany,
-} from "@refinedev/core";
-import {
-  List,
-  useTable,
-  TextField,
-  EditButton,
-  ShowButton,
-} from "@refinedev/antd";
-import { Table, Space } from "antd";
-
-import { IPost, ICategory } from "interfaces";
-
-export const PostList: React.FC = () => {
-  // highlight-next-line
-  const translate = useTranslate();
-  const { tableProps } = useTable<IPost>();
-
-  const categoryIds =
-    tableProps?.dataSource?.map((item) => item.category.id) ?? [];
-  const { data, isLoading } = useMany<ICategory>({
-    resource: "categories",
-    ids: categoryIds,
-    queryOptions: {
-      enabled: categoryIds.length > 0,
-    },
-  });
-
-  return (
-    <List>
-      <Table {...tableProps} rowKey="id">
-        <Table.Column dataIndex="id" title="ID" />
-        <Table.Column
-          dataIndex="title"
-          // highlight-next-line
-          title={translate("posts.fields.title")}
-        />
-        <Table.Column
-          dataIndex={["category", "id"]}
-          // highlight-next-line
-          title={translate("posts.fields.category")}
-          render={(value) => {
-            if (isLoading) {
-              return <TextField value="Loading..." />;
-            }
-
-            return (
-              <TextField
-                value={data?.data.find((item) => item.id === value)?.title}
-              />
-            );
-          }}
-        />
-        <Table.Column<IPost>
-          // highlight-next-line
-          title={translate("table.actions")}
-          dataIndex="actions"
-          key="actions"
-          render={(_value, record) => (
-            <Space>
-              <EditButton size="small" recordItemId={record.id} />
-              <ShowButton size="small" recordItemId={record.id} />
-            </Space>
-          )}
-        />
-      </Table>
-    </List>
-  );
-};
-```
-
-```ts title="interfaces/index.d.ts"
-export interface ICategory {
-  id: number;
-  title: string;
-}
-
-export interface IPost {
-  id: number;
-  title: string;
-  content: string;
-  status: "published" | "draft" | "rejected";
-  category: { id: number };
-}
-```
-
-<Image src="https://refine.ams3.cdn.digitaloceanspaces.com/website/static/img/i18n/changing-language.gif" alt="Language change action" />
-
-## Translation file
-
-All of Refine's components supports `i18n`, meaning that if you want to change their text, you can create your own translation files to override Refine's default texts.
-
-Here is the list of all translation keys that you can override:
-
-<details>
-<summary>Show translation file</summary>
-
-<TranslationFileEN />
-
 </details>
+
+## Перевод для кастомных компонентов
+
+If you need to translate the texts in your own components, Refine provides the `useTranslate` hook, It returns the translate method from [`i18nProvider`](/docs/i18n/i18n-provider/#usage) under the hood.
+
+```tsx
+import { useTranslate } from "@refinedev/core";
+
+export const MyComponent = () => {
+  const translate = useTranslate();
+
+  return <button>{translate("my.translate.text")}</button>;
+};
+```
 
 [i18nnextjs]: /examples/i18n/i18n-nextjs.md
 [react-i18next]: https://react.i18next.com/

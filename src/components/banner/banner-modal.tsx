@@ -66,20 +66,6 @@ export const BannerModal: FC<Props> = ({
     }
   }, [tracker.scrollY]);
 
-  useEffect(() => {
-    if (
-      isOpen &&
-      typeof window !== "undefined" &&
-      typeof window.gtag !== "undefined"
-    ) {
-      window.gtag("event", "view_banner", {
-        banner_name: "banner-modal",
-        banner_text: title,
-        banner_image: image.src,
-      });
-    }
-  }, [isOpen]);
-
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog

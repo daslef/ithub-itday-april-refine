@@ -6,8 +6,8 @@ module.exports = {
   darkMode: ["class", '[data-theme="dark"]'],
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
-    "./docs/**/*.{md,mdx,tsx}",
-    "./tutorial/**/*.{md,mdx,tsx}",
+    "./docs/**/*.{md,mdx,jsx,tsx}",
+    "./tutorial/**/*.{md,mdx,jsx,tsx}",
   ],
   jit: true,
   theme: {

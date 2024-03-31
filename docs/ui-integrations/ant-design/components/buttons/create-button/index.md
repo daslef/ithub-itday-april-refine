@@ -3,19 +3,17 @@ title: Create
 swizzle: true
 ---
 
-`<CreateButton>` uses Ant Design's [`<Button>`](https://ant.design/components/button/) component and the `create` method from [`useNavigation`](/docs/routing/hooks/use-navigation) under the hood.
-
-It can be useful when redirecting the app to the create page route of resource.
+`<CreateButton>` использует Ant Design [`<Button>`](https://ant.design/components/button/) и метод `create` хука [`useNavigation`](/docs/routing/hooks/use-navigation).
 
 :::simple Good to know
 
-You can swizzle this component to customize it with the [**Refine CLI**](/docs/packages/list-of-packages)
+Вы можете извлечь этот компонент для более точной кастомизации командой swizzle **Refine CLI**
 
 :::
 
-## Usage
+## Использование
 
-```tsx live previewHeight=300px
+```jsx live previewHeight=300px
 const { useRouterContext } = RefineCore;
 // visible-block-start
 import {
@@ -26,8 +24,8 @@ import {
 } from "@refinedev/antd";
 import { Table } from "antd";
 
-const PostList: React.FC = () => {
-  const { tableProps } = useTable<IPost>();
+const PostList = () => {
+  const { tableProps } = useTable();
 
   return (
     <List
@@ -42,10 +40,6 @@ const PostList: React.FC = () => {
   );
 };
 
-interface IPost {
-  id: number;
-  title: string;
-}
 // visible-block-end
 
 const CreatePage = () => {
@@ -66,7 +60,7 @@ render(
 );
 ```
 
-## Properties
+## Свойства
 
 ### resource
 
@@ -131,7 +125,7 @@ const MyComponent = () => {
 
 ### hideText
 
-It is used to show and not show the text of the button. When `true`, only the button icon is visible.
+Используется для скрытия текста. Если свойство выставлено в `true`, отображается только иконка.
 
 ```tsx live disableScroll previewHeight=120px
 const { useRouterContext } = RefineCore;
@@ -171,9 +165,9 @@ render(
 
 ### accessControl
 
-This prop can be used to skip access control check with its `enabled` property or to hide the button when the user does not have the permission to access the resource with `hideIfUnauthorized` property. This is relevant only when an [`accessControlProvider`](/docs/authorization/access-control-provider) is provided to [`<Refine/>`](/docs/core/refine-component)
+Через это свойство можно отключить контроль доступа (установив `enabled: true`) либо напротив, скрывать кнопку при отсутствии необходимых прав (через `hideIfUnauthorized: true`). Это имеет смысл только если был настроен [`accessControlProvider`](/docs/authorization/access-control-provider).
 
-```tsx
+```jsx
 import { CreateButton } from "@refinedev/antd";
 
 export const MyListComponent = () => {
@@ -183,18 +177,8 @@ export const MyListComponent = () => {
 };
 ```
 
-### ~~resourceNameOrRouteName~~ <PropTag deprecated />
-
-Use `resource` prop instead.
-
-## API Reference
-
-### Properties
-
-<PropsTable module="@refinedev/antd/CreateButton" />
-
 :::simple External Props
 
-It also accepts all props of Ant Design [Button](https://ant.design/components/button/#API).
+Компонент также принимает все свойства соответствующего компонента Ant Design [Button](https://ant.design/components/button/#API).
 
 :::

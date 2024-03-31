@@ -313,7 +313,7 @@ const MyLoginPage = () => {
 };
 ```
 
-Либо можно использовать компонент `ThemedTitle` component:
+Либо можно использовать компонент `ThemedTitle`:
 
 ```jsx
 import { AuthPage } from "@refinedev/antd";

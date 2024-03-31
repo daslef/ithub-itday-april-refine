@@ -3,14 +3,6 @@ title: useBreadcrumb
 source: packages/core/src/hooks/breadcrumb
 ---
 
-:::simple Congratulations 🥇
-
-The feature won first place with the joint votes of our team members in a May 2022 internal hackathon!
-
-Congratulations [@salihozdemir](https://github.com/salihozdemir)! It was great seeing your project take first place! We're all very proud of you. Keep up the good work and don't forget to have fun while working here 🎉
-
-:::
-
 It is a hook that returns `breadcrumbs` to create breadcrumbs for the current page. The `breadcrumbs` is an array of objects with the following properties:
 
 - `label`: the label of the resource.

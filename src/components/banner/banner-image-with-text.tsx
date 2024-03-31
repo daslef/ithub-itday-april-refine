@@ -34,20 +34,6 @@ export const BannerImageWithText: FC<Props> = ({
   },
   bannerName,
 }) => {
-  React.useEffect(() => {
-    if (
-      typeof window !== "undefined" &&
-      typeof window.gtag !== "undefined" &&
-      bannerName
-    ) {
-      window.gtag("event", "view_banner", {
-        banner_name: bannerName,
-        banner_text: title,
-        banner_description: description,
-        banner_image: image.src,
-      });
-    }
-  }, [bannerName]);
 
   return (
     <div

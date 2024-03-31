@@ -10,22 +10,7 @@ const description =
 const image =
   "https://refine.ams3.cdn.digitaloceanspaces.com/website/static/banners/app-crm.png";
 
-export const BannerSidebar = ({ shouldShowBanner }) => {
-  React.useEffect(() => {
-    if (
-      typeof window !== "undefined" &&
-      typeof window.gtag !== "undefined" &&
-      shouldShowBanner
-    ) {
-      window.gtag("event", "view_banner", {
-        banner_name: "banner-sidebar",
-        banner_text: text,
-        banner_description: description,
-        banner_image: image,
-      });
-    }
-  }, [shouldShowBanner]);
-
+export const BannerSidebar = () => {
   return (
     <div
       className={clsx(

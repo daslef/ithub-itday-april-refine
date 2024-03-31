@@ -109,14 +109,6 @@
       "to": "/docs/data/hooks/use-update-many"
     },
     {
-      "from": "/docs/core/hooks/import-export/useExport/",
-      "to": "/docs/core/hooks/utilities/use-export"
-    },
-    {
-      "from": "/docs/core/hooks/import-export/useImport/",
-      "to": "/docs/core/hooks/utilities/use-import"
-    },
-    {
       "from": "/docs/core/hooks/invalidate/useInvalidate/",
       "to": "/docs/data/hooks/use-invalidate"
     },
@@ -143,18 +135,6 @@
     {
       "from": "/docs/core/hooks/show/useShow/",
       "to": "/docs/data/hooks/use-show"
-    },
-    {
-      "from": "/docs/core/hooks/translate/useGetLocale/",
-      "to": "/docs/i18n/hooks/use-get-locale"
-    },
-    {
-      "from": "/docs/core/hooks/translate/useSetLocale/",
-      "to": "/docs/i18n/hooks/use-set-locale"
-    },
-    {
-      "from": "/docs/core/hooks/translate/useTranslate/",
-      "to": "/docs/i18n/hooks/use-translate"
     },
     {
       "from": "/docs/core/hooks/ui/useMenu/",
@@ -213,14 +193,6 @@
       "to": "/docs/guides-concepts/forms"
     },
     {
-      "from": "/docs/guides-and-concepts/import-export/csv-export/",
-      "to": "/docs/guides-concepts/import-export/"
-    },
-    {
-      "from": "/docs/guides-and-concepts/import-export/csv-import/",
-      "to": "/docs/guides-concepts/import-export/"
-    },
-    {
       "from": "/docs/guides-and-concepts/real-time/",
       "to": "/docs/advanced-tutorials/real-time/"
     },
@@ -249,10 +221,6 @@
       "to": "/docs/ui-integrations/ant-design/components/breadcrumb"
     },
     {
-      "from": "/docs/ui-frameworks/antd/components/buttons/clone-button/",
-      "to": "/docs/ui-integrations/ant-design/components/buttons/clone-button"
-    },
-    {
       "from": "/docs/ui-frameworks/antd/components/buttons/create-button/",
       "to": "/docs/ui-integrations/ant-design/components/buttons/create-button"
     },
@@ -263,14 +231,6 @@
     {
       "from": "/docs/ui-frameworks/antd/components/buttons/edit-button/",
       "to": "/docs/ui-integrations/ant-design/components/buttons/edit-button"
-    },
-    {
-      "from": "/docs/ui-frameworks/antd/components/buttons/export-button/",
-      "to": "/docs/ui-integrations/ant-design/components/buttons/export-button"
-    },
-    {
-      "from": "/docs/ui-frameworks/antd/components/buttons/import-button/",
-      "to": "/docs/ui-integrations/ant-design/components/buttons/import-button"
     },
     {
       "from": "/docs/ui-frameworks/antd/components/buttons/list-button/",
@@ -500,10 +460,6 @@
       "to": "/docs/examples/customization/theme/customThemeAntd"
     },
     {
-      "from": "/docs/examples/import-export",
-      "to": "/docs/examples/import-export/antd"
-    },
-    {
       "from": "/docs/api-reference/",
       "to": "/docs/guides-concepts/general-concepts/"
     },
@@ -562,10 +518,6 @@
     {
       "from": "/docs/api-reference/core/providers/data-provider",
       "to": "/docs/data/data-provider"
-    },
-    {
-      "from": "/docs/api-reference/core/providers/i18n-provider",
-      "to": "/docs/i18n/i18n-provider"
     },
     {
       "from": "/docs/api-reference/core/providers/live-provider",
@@ -700,14 +652,6 @@
       "to": "/docs/data/hooks/use-form"
     },
     {
-      "from": "/docs/api-reference/core/hooks/import-export/useExport",
-      "to": "/docs/core/hooks/utilities/use-export"
-    },
-    {
-      "from": "/docs/api-reference/core/hooks/import-export/useImport",
-      "to": "/docs/core/hooks/utilities/use-import"
-    },
-    {
       "from": "/docs/api-reference/core/hooks/invalidate/useInvalidate",
       "to": "/docs/data/hooks/use-invalidate"
     },
@@ -760,18 +704,6 @@
       "to": "/docs/data/hooks/use-table"
     },
     {
-      "from": "/docs/api-reference/core/hooks/translate/useGetLocale",
-      "to": "/docs/i18n/hooks/use-get-locale"
-    },
-    {
-      "from": "/docs/api-reference/core/hooks/translate/useSetLocale",
-      "to": "/docs/i18n/hooks/use-set-locale"
-    },
-    {
-      "from": "/docs/api-reference/core/hooks/translate/useTranslate",
-      "to": "/docs/i18n/hooks/use-translate"
-    },
-    {
       "from": "/docs/api-reference/core/hooks/ui/useModal",
       "to": "/docs/core/hooks/utilities/use-modal"
     },
@@ -820,10 +752,6 @@
       "to": "/docs/ui-integrations/ant-design/components/breadcrumb"
     },
     {
-      "from": "/docs/api-reference/antd/components/buttons/clone-button",
-      "to": "/docs/ui-integrations/ant-design/components/buttons/clone-button"
-    },
-    {
       "from": "/docs/api-reference/antd/components/buttons/create-button",
       "to": "/docs/ui-integrations/ant-design/components/buttons/create-button"
     },
@@ -834,14 +762,6 @@
     {
       "from": "/docs/api-reference/antd/components/buttons/edit-button",
       "to": "/docs/ui-integrations/ant-design/components/buttons/edit-button"
-    },
-    {
-      "from": "/docs/api-reference/antd/components/buttons/export-button",
-      "to": "/docs/ui-integrations/ant-design/components/buttons/export-button"
-    },
-    {
-      "from": "/docs/api-reference/antd/components/buttons/import-button",
-      "to": "/docs/ui-integrations/ant-design/components/buttons/import-button"
     },
     {
       "from": "/docs/api-reference/antd/components/buttons/list-button",
@@ -982,10 +902,6 @@
     {
       "from": "/docs/core/providers/data-provider",
       "to": "/docs/data/data-provider"
-    },
-    {
-      "from": "/docs/core/providers/i18n-provider",
-      "to": "/docs/i18n/i18n-provider"
     },
     {
       "from": "/docs/core/providers/live-provider",
@@ -1160,18 +1076,6 @@
       "to": "/docs/routing/hooks/use-navigation"
     },
     {
-      "from": "/docs/core/hooks/translate/use-get-locale",
-      "to": "/docs/i18n/hooks/use-get-locale"
-    },
-    {
-      "from": "/docs/core/hooks/translate/use-set-locale",
-      "to": "/docs/i18n/hooks/use-set-locale"
-    },
-    {
-      "from": "/docs/core/hooks/translate/use-translate",
-      "to": "/docs/i18n/hooks/use-translate"
-    },
-    {
       "from": "/docs/core/hooks/utilities/use-notification",
       "to": "/docs/notification/hooks/use-notification"
     },
@@ -1186,14 +1090,6 @@
     {
       "from": "/docs/packages/data-providers/supabase",
       "to": "/docs/data/packages/supabase"
-    },
-    {
-      "from": "/docs/advanced-tutorials/import-export/csv-import/",
-      "to": "/docs/guides-concepts/import-export"
-    },
-    {
-      "from": "/docs/advanced-tutorials/import-export/csv-export/",
-      "to": "/docs/guides-concepts/import-export"
     },
     {
       "from": "/docs/further-readings/benchmarks/",

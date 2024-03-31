@@ -47,7 +47,6 @@ module.exports = {
         "guides-concepts/ui-libraries/index",
         "guides-concepts/notifications/index",
         "guides-concepts/realtime/index",
-        "guides-concepts/import-export/index",
         "guides-concepts/i18n/index",
       ],
     },
@@ -223,26 +222,6 @@ module.exports = {
         },
       ],
     },
-    // i18n
-    {
-      type: "category",
-      label: "I18n",
-      className: "category-as-header",
-      items: [
-        "i18n/i18n-provider/index",
-        {
-          type: "category",
-          collapsed: false,
-          label: "Hooks",
-          items: [
-            "i18n/hooks/use-get-locale/index",
-            "i18n/hooks/use-set-locale/index",
-            "i18n/hooks/use-translate/index",
-          ],
-        },
-        "examples/i18n/i18n-react"
-      ],
-    },
     {
       type: "category",
       label: "Core Hooks",
@@ -281,12 +260,9 @@ module.exports = {
           type: "category",
           label: "Buttons",
           items: [
-            "ui-integrations/ant-design/components/buttons/clone-button/index",
             "ui-integrations/ant-design/components/buttons/create-button/index",
             "ui-integrations/ant-design/components/buttons/delete-button/index",
             "ui-integrations/ant-design/components/buttons/edit-button/index",
-            "ui-integrations/ant-design/components/buttons/export-button/index",
-            "ui-integrations/ant-design/components/buttons/import-button/index",
             "ui-integrations/ant-design/components/buttons/list-button/index",
             "ui-integrations/ant-design/components/buttons/refresh-button/index",
             "ui-integrations/ant-design/components/buttons/save-button/index",
@@ -344,7 +320,6 @@ module.exports = {
             "examples/form/antd/useStepsForm",
             "examples/form/antd/custom-form-validation",
             "examples/form/antd/serverSideFormValidation",
-            "examples/import-export/antd",
             "examples/antd-calendar-example",
             "examples/customization/theme/customThemeAntd",
             "examples/themes/refine-themes-antd",

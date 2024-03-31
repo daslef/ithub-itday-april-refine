@@ -6,7 +6,6 @@ import {
   AwesomeIcon,
   ContributeIcon,
   RefineWeekIcon,
-  HackathonsIcon,
   AboutUsIcon,
   StoreIcon,
   MeetIcon,
@@ -70,65 +69,11 @@ export const MENU_ITEMS: MenuItemType[] = [
         icon: ExamplesIcon,
       },
       {
-        label: "Blog",
-        description: "Articles about web development.",
-        link: "/blog",
-        icon: BlogIcon,
-      },
-    ],
-  },
-  {
-    isPopover: false,
-    label: "Enterprise",
-    href: "/enterprise",
-    icon: NewBadgeIcon,
-  },
-  {
-    isPopover: true,
-    label: "Community",
-    items: [
-      {
-        label: "Contributing",
-        description: "Join open-source contributors.",
-        link: "/docs/guides-concepts/contributing/",
-        icon: ContributeIcon,
-      },
-      {
         label: "RefineWeek",
         description: "Weekly projects to practice refine.",
         link: "/week-of-refine",
         icon: RefineWeekIcon,
       },
-      {
-        label: "Hackathons",
-        description: "Compete in hackathons and earn prizes!",
-        link: "https://s.refine.dev/hackathon2",
-        icon: HackathonsIcon,
-      },
     ],
-  },
-  {
-    isPopover: true,
-    label: "Company",
-    items: [
-      {
-        label: "About Refine",
-        description: "Team & company information.",
-        link: "/about",
-        icon: AboutUsIcon,
-      },
-      {
-        label: "Swag Store",
-        description: "T-shirts, caps, and more!",
-        link: "https://store.refine.dev",
-        icon: StoreIcon,
-      },
-      {
-        label: "Meet Refine",
-        description: "Call us for any questions",
-        link: "https://refinedev.typeform.com/to/Z9wS06kE",
-        icon: MeetIcon,
-      },
-    ],
-  },
+  }
 ];

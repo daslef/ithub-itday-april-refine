@@ -5,7 +5,6 @@ export * from "./integrations";
 export * from "./tutorial";
 export * from "./about-us";
 export * from "./contribute";
-export * from "./hackathons";
 export * from "./meet";
 export * from "./refine-week";
 export * from "./store";

@@ -166,18 +166,15 @@ export const ProductList = () => {
 };
 ```
 
-Полный список кнопок:
+Список полезных кнопок:
 
 - [`<CreateButton />`](/docs/ui-integrations/ant-design/components/buttons/create-button)
 - [`<EditButton />`](/docs/ui-integrations/ant-design/components/buttons/edit-button)
 - [`<ListButton />`](/docs/ui-integrations/ant-design/components/buttons/list-button)
 - [`<ShowButton />`](/docs/ui-integrations/ant-design/components/buttons/show-button)
-- [`<CloneButton />`](/docs/ui-integrations/ant-design/components/buttons/clone-button)
 - [`<DeleteButton />`](/docs/ui-integrations/ant-design/components/buttons/delete-button)
 - [`<SaveButton />`](/docs/ui-integrations/ant-design/components/buttons/save-button)
 - [`<RefreshButton />`](/docs/ui-integrations/ant-design/components/buttons/refresh-button)
-- [`<ImportButton />`](/docs/ui-integrations/ant-design/components/buttons/import-button)
-- [`<ExportButton />`](/docs/ui-integrations/ant-design/components/buttons/export-button)
 
 ### Вьюшки
 
