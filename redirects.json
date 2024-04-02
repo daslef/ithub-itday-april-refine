@@ -137,18 +137,6 @@
       "to": "/docs/data/hooks/use-show"
     },
     {
-      "from": "/docs/core/hooks/ui/useMenu/",
-      "to": "/docs/core/hooks/utilities/use-menu"
-    },
-    {
-      "from": "/docs/core/hooks/ui/useModal/",
-      "to": "/docs/core/hooks/utilities/use-modal"
-    },
-    {
-      "from": "/docs/core/hooks/useBreadcrumb/",
-      "to": "/docs/core/hooks/utilities/use-breadcrumb"
-    },
-    {
       "from": "/docs/core/hooks/useForm/",
       "to": "/docs/data/hooks/use-form"
     },
@@ -179,10 +167,6 @@
     {
       "from": "/docs/advanced-tutorials/data-provider/supabase/",
       "to": "/docs/data/packages/supabase"
-    },
-    {
-      "from": "/docs/guides-and-concepts/custom-layout/",
-      "to": "/docs/advanced-tutorials/custom-layout/"
     },
     {
       "from": "/docs/guides-and-concepts/custom-pages/",
@@ -293,14 +277,6 @@
       "to": "/docs/ui-integrations/ant-design/hooks/use-form"
     },
     {
-      "from": "/docs/ui-frameworks/antd/customization/antd-custom-layout/",
-      "to": "/docs/advanced-tutorials/custom-layout/"
-    },
-    {
-      "from": "/docs/ui-frameworks/antd/customization/antd-custom-sider/",
-      "to": "/docs/advanced-tutorials/custom-layout/"
-    },
-    {
       "from": "/docs/ui-frameworks/antd/customization/antd-custom-theme/",
       "to": "/docs/ui-integrations/ant-design/theming"
     },
@@ -403,13 +379,6 @@
     {
       "from": "/docs/api-reference/core/hooks/resource/useResourceWithRoute/",
       "to": "/docs/routing/hooks/use-resource"
-    },
-    {
-      "to": "/docs/advanced-tutorials/custom-layout/",
-      "from": [
-        "/docs/api-reference/antd/customization/antd-custom-sider/",
-        "/docs/api-reference/antd/customization/antd-custom-layout/"
-      ]
     },
     {
       "from": "/docs/api-reference/antd/customization/antd-custom-theme",
@@ -584,10 +553,6 @@
       "to": "/docs/authentication/hooks/use-update-password"
     },
     {
-      "from": "/docs/api-reference/core/hooks/useBreadcrumb",
-      "to": "/docs/core/hooks/utilities/use-breadcrumb"
-    },
-    {
       "from": "/docs/api-reference/core/hooks/data/useApiUrl",
       "to": "/docs/data/hooks/use-api-url"
     },
@@ -702,14 +667,6 @@
     {
       "from": "/docs/api-reference/core/hooks/useTable",
       "to": "/docs/data/hooks/use-table"
-    },
-    {
-      "from": "/docs/api-reference/core/hooks/ui/useModal",
-      "to": "/docs/core/hooks/utilities/use-modal"
-    },
-    {
-      "from": "/docs/api-reference/core/hooks/ui/useMenu",
-      "to": "/docs/core/hooks/utilities/use-menu"
     },
     {
       "from": "/docs/api-reference/antd/introduction",
@@ -1143,10 +1100,6 @@
     {
       "from": "/tutorial/next-steps/devtools/react-router",
       "to": "/tutorial/next-steps/devtools/react-router/ant-design"
-    },
-    {
-      "from": "/tutorial/next-steps/summary",
-      "to": "/tutorial/next-steps/summary/react-router/ant-design"
     }
   ]
 }

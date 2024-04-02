@@ -54,18 +54,6 @@ const DrawerComponent: FC<PropsWithChildren<Props>> = ({
     onClose();
   });
 
-  // this is required for the <TopAnnouncement /> component.
-  React.useEffect(() => {
-    const unsubscribeScrollY = scrollY.onChange((latest) => {
-      if (latest >= 48) {
-        setTopOffset(0);
-        return;
-      }
-      setTopOffset(DEFAULT_TOP_OFFSET - latest);
-    });
-
-    return () => unsubscribeScrollY();
-  }, []);
 
   return (
     <div

@@ -3,7 +3,7 @@ import { TutorialSandpack } from "@site/src/refine-theme/tutorial-sandpack";
 
 export const Sandpack = ({ children }: { children: React.ReactNode }) => {
   return (
-    <TutorialSandpack previewOnly dependencies={dependencies} files={files}>
+    <TutorialSandpack contentOnly dependencies={dependencies} files={files}>
       {children}
     </TutorialSandpack>
   );

@@ -1,16 +1,8 @@
 import {
   DocumentsIcon,
-  IntegrationsIcon,
   TutorialIcon,
   ExamplesIcon,
-  AwesomeIcon,
-  ContributeIcon,
   RefineWeekIcon,
-  AboutUsIcon,
-  StoreIcon,
-  MeetIcon,
-  BlogIcon,
-  NewBadgeIcon,
 } from "../icons/popover";
 
 export type NavbarPopoverItemType = {
@@ -36,7 +28,7 @@ export type MenuItemType = NavbarPopoverItemType | NavbarItemType;
 export const MENU_ITEMS: MenuItemType[] = [
   {
     isPopover: true,
-    label: "Open-source",
+    label: "Navigation",
     items: [
       {
         label: "Documentation",
@@ -49,18 +41,6 @@ export const MENU_ITEMS: MenuItemType[] = [
         description: "Create your first Refine application.",
         link: "/tutorial/essentials/intro",
         icon: TutorialIcon,
-      },
-      {
-        label: "Awesome Refine",
-        description: "Repository of awesome things.",
-        link: "https://github.com/refinedev/awesome-refine",
-        icon: AwesomeIcon,
-      },
-      {
-        label: "Integrations",
-        description: "Discover the Refine ecosystem.",
-        link: "/integrations",
-        icon: IntegrationsIcon,
       },
       {
         label: "Templates",

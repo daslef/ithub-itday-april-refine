@@ -1,24 +1,24 @@
 ---
-title: Refactoring
+title: Рефакторинг
 ---
 
 import { Sandpack, RefactorTableInListProducts, AddSortersInListProducts, AddFiltersInListProducts, RefactorFieldsInShowProduct, RefactorFormInEditProduct, RefactorFormInCreateProduct } from "./sandpack.tsx";
 
 <Sandpack>
 
-Now we're ready to refactor our app to use the `@refinedev/antd`'s `useForm` and `useTable` hooks. These hooks will allow us to create forms and tables with ease by providing an interface that is compatible with Ant Design's `<Form />` and `<Table />` components.
+Теперь мы можем отрефакторить приложение с использованием `useForm` и `useTable` из `@refinedev/antd`. Эти хуки обеспечивают совместимость с компонентами `<Form />` и `<Table />` от Ant Design.
 
-We'll also be using the field components provided by `@refinedev/antd` to create product details screen. These components are tailored to work with Ant Design's design system and provide an easy way to display various types of data.
+Мы также будем использовать преднастроенные компоненты полей ввода от `@refinedev/antd` для экрана с детальной информацией о продукте.
 
-## Using `<Table />` and `useTable`
+## Используем `<Table />` и `useTable`
 
-We'll start by refactoring our `<ListProducts />` component to use the `useTable` hook from `@refinedev/antd` and the `<Table />` component from Ant Design. This will allow us to create a table to display our products with minimal effort.
+Начнем с рефакторинга `<ListProducts />` с использованием хука `useTable` из `@refinedev/antd` и компонента `<Table />` от Ant Design.
 
-`useTable` will give us the same functionality as the core version but will also return the `tableProps` that we can use to pass to the `<Table />` component with ease.
+`useTable` возвращает объект `tableProps`, который можно напрямую передать в компонент `<Table />`.
 
-Update your `src/pages/products/list.tsx` file by adding the following lines:
+Обнови `src/pages/products/list.jsx`:
 
-```tsx title="src/pages/products/list.tsx"
+```jsx title="src/pages/products/list.jsx"
 import { useMany } from "@refinedev/core";
 // highlight-next-line
 import { useTable, EditButton, ShowButton } from "@refinedev/antd";
@@ -28,10 +28,10 @@ import { Table, Space } from "antd";
 
 export const ListProducts = () => {
   // highlight-start
-  // We'll use pass `tableProps` to the `<Table />` component,
-  // This will manage the data, pagination, filters and sorters for us.
   const { tableProps } = useTable({
-    sorters: { initial: [{ field: "id", order: "asc" }] },
+    sorters: {
+      initial: [{ field: "id", order: "asc" }],
+    },
     syncWithLocation: true,
   });
   // highlight-end
@@ -66,7 +66,7 @@ export const ListProducts = () => {
           title="Actions"
           render={(_, record) => (
             <Space>
-              {/* We'll use the `EditButton` and `ShowButton` to manage navigation easily */}
+              {/* Используем `EditButton` и `ShowButton` для навигации */}
               <ShowButton hideText size="small" recordItemId={record.id} />
               <EditButton hideText size="small" recordItemId={record.id} />
             </Space>
@@ -81,32 +81,28 @@ export const ListProducts = () => {
 
 <RefactorTableInListProducts />
 
-Notice that we've get rid of every logic related to managing the data, pagination, filters and sorters because these will be managed by the `tableProps` value. We've also used the `EditButton` and `ShowButton` components to manage navigation easily.
+Обратим внимание на то, что использование `tableProps` избавило нас от необходимости вручную обрабатывать данные, управлять пагинацией, фильтрами и сортировкой. Также, мы добавили компоненты `EditButton` и `ShowButton` для удобства перехода к роутам редактирования и отображения.
 
-Button components provided by Refine uses the styling from Ant Design and provides many features from built-in access control to i18n and more.
+Подобные кнопки используют стилизацию Ant Design и предоставляют множество возможностей, от контроля доступа до интернационализации.
 
-List of available button components:
+Список доступных кнопок:
 
-- [`<CreateButton />`](/docs/ui-integrations/ant-design/components/buttons/create-button), renders a button to navigate to the create route.
-- [`<EditButton />`](/docs/ui-integrations/ant-design/components/buttons/edit-button), renders a button to navigate to the edit route.
-- [`<ListButton />`](/docs/ui-integrations/ant-design/components/buttons/list-button), renders a button to navigate to the list route.
-- [`<ShowButton />`](/docs/ui-integrations/ant-design/components/buttons/show-button), renders a button to navigate to the show route.
-- [`<CloneButton />`](/docs/ui-integrations/ant-design/components/buttons/clone-button), renders a button to navigate to the clone route.
-- [`<DeleteButton />`](/docs/ui-integrations/ant-design/components/buttons/delete-button), renders a button to delete a record.
-- [`<SaveButton />`](/docs/ui-integrations/ant-design/components/buttons/save-button), renders a button to trigger the form submission.
-- [`<RefreshButton />`](/docs/ui-integrations/ant-design/components/buttons/refresh-button), renders a button to refresh/refetch the data.
-- [`<ImportButton />`](/docs/ui-integrations/ant-design/components/buttons/import-button), renders a button to trigger import bulk data with CSV/Excel files.
-- [`<ExportButton />`](/docs/ui-integrations/ant-design/components/buttons/export-button), renders a button to trigger export bulk data with CSV format.
+- [`<CreateButton />`](/docs/ui-integrations/ant-design/components/buttons/create-button) для навигации к роуту `create`.
+- [`<EditButton />`](/docs/ui-integrations/ant-design/components/buttons/edit-button) для навигации к роуту `edit`.
+- [`<ListButton />`](/docs/ui-integrations/ant-design/components/buttons/list-button)для навигации к роуту `list`.
+- [`<ShowButton />`](/docs/ui-integrations/ant-design/components/buttons/show-button)для навигации к роуту `show`.
+- [`<DeleteButton />`](/docs/ui-integrations/ant-design/components/buttons/delete-button) для удаления записи.
+- [`<SaveButton />`](/docs/ui-integrations/ant-design/components/buttons/save-button) для отправки формы.
+- [`<RefreshButton />`](/docs/ui-integrations/ant-design/components/buttons/refresh-button) для обновления данных на странице.
+- и другие.
 
-### Adding Sorters
+### Сортировка
 
-Let's integrate the Refine's sorters with the Ant Design's `<Table />` component. While `tableProps` will be transforming the sorters to the Ant Design's format, all we need to do is to enable the sorters for the columns we want and pass the default sorting orders.
+Интегрировать сортировку еще проще. Подключим ее для колонок `ID` и `Name`.
 
-We'll add sorting to the `ID` and the `Name` columns.
+Обнови `src/pages/products/list.jsx`:
 
-Update your `src/pages/products/list.tsx` file by adding the following lines:
-
-```tsx title="src/pages/products/list.tsx"
+```jsx title="src/pages/products/list.jsx"
 import { useMany } from "@refinedev/core";
 // highlight-next-line
 import {
@@ -181,17 +177,17 @@ export const ListProducts = () => {
 
 <AddSortersInListProducts />
 
-Now we've enabled sorters with no additional logic. The `getDefaultSortOrder` function will handle the default sorting orders for us.
+Как видим, не пришлось добавлять никакой дополнительный логики - мы просто передали `sorters`, определенные в `useTable`, на обработку функции `getDefaultSortOrder`.
 
-### Adding Filters
+### Фильтрация
 
-Let's integrate the Refine's filters with the Ant Design's `<Table />` component. While `tableProps` will be transforming the filters to the Ant Design's format, all we need to do is to provide the elements for the filter dropdowns. We'll use the [`<FilterDropdown />`](/docs/ui-integrations/ant-design/components/filter-dropdown) to bind the inputs to the filters.
+Здесь помимо тех же самых компонента `<Table />` и объекта `tableProps` мы будем использовать `<FilterDropdown />` чтобы связать поля ввода с фильтрами.
 
-We'll be using the `<Input />` component to create a text filter for the `Name` column and the `<Select />` component with `useSelect` to create a select filter for the `Category` column.
+Для текстового фильтра по колонке названия используем компонент `<Input />`, а для фильтра по категории используем компонент `<Select />` и хук `useSelect`.
 
-Update your `src/pages/products/list.tsx` file by adding the following lines:
+Обнови `src/pages/products/list.jsx`:
 
-```tsx title="src/pages/products/list.tsx"
+```jsx title="src/pages/products/list.jsx"
 // highlight-next-line
 import { useMany, getDefaultFilter } from "@refinedev/core";
 import {
@@ -213,7 +209,6 @@ export const ListProducts = () => {
   const { tableProps, sorters, filters } = useTable({
     sorters: { initial: [{ field: "id", order: "asc" }] },
     // highlight-start
-    // We're adding default values for our filters
     filters: {
       initial: [{ field: "category.id", operator: "eq", value: 2 }],
     },
@@ -249,7 +244,6 @@ export const ListProducts = () => {
           sorter
           defaultSortOrder={getDefaultSortOrder("name", sorters)}
           // highlight-start
-          // FilterDropdown will map the value to the filter
           filterDropdown={(props) => (
             <FilterDropdown {...props}>
               <Input />
@@ -272,7 +266,7 @@ export const ListProducts = () => {
           filterDropdown={(props) => (
             <FilterDropdown
               {...props}
-              // We'll store the selected id as number
+              // Сохраняем выбранный id как число
               mapValue={(selectedKey) => Number(selectedKey)}
             >
               <Select style={{ minWidth: 200 }} {...selectProps} />
@@ -300,23 +294,21 @@ export const ListProducts = () => {
 
 <AddFiltersInListProducts />
 
-Now we've added both the filters and sorters to our table without writing any additional logic.
-
 :::note Implementation Details
 
-Remember that we've only implemented the `eq` filter in our data provider. Even though `category.id` field is best to be filtered with `in` operator and `name` field is best to be filtered with `contains` operators. We're keeping it simple for the sake of this tutorial.
+Для простоты мы использовали фильтрацию через оператор `eq`. В реальной практике `category.id` лучше было бы фильтровать через оператор `in`, а `name` - через `contains`.
 
 :::
 
-## Using `useForm` and `<Form />`
+## Используем `useForm` и `<Form />`
 
-Next, we'll refactor our `<EditProduct />` and `<CreateProduct />` components to use the `useForm` hook from `@refinedev/antd` and the `<Form />` component from Ant Design. This will allow us to create forms with minimal effort.
+Теперь перепишем `<EditProduct />` и `<CreateProduct />` с использованием хука `useForm` из `@refinedev/antd` и компонента `<Form />` Ant Design.
 
-`useForm` will give us the same functionality as the core version but will also return the `formProps` that we can use to pass to the `<Form />` component with ease.
+По аналогии с предыдущим примером, `useForm` возвращает объект `formProps`, который мы будем передавать в компонент `<Form />`.
 
-Update your `src/pages/products/edit.tsx` file by adding the following lines:
+Обнови `src/pages/products/edit.jsx`:
 
-```tsx title="src/pages/products/edit.tsx"
+```jsx title="src/pages/products/edit.jsx"
 // highlight-next-line
 import { useForm, useSelect, SaveButton } from "@refinedev/antd";
 
@@ -353,7 +345,7 @@ export const EditProduct = () => {
       <Form.Item label="Price" name="price">
         <InputNumber step="0.01" stringMode />
       </Form.Item>
-      {/* SaveButton renders a submit button to submit our form */}
+      {/* Кнопка отправки формы */}
       <SaveButton {...saveButtonProps} />
     </Form>
     // highlight-end
@@ -363,13 +355,11 @@ export const EditProduct = () => {
 
 <RefactorFormInEditProduct />
 
-Notice that we've also used the `useSelect` hook with `<Select />` component to create a select input for the `category` field. `useSelect` is fully compatible with Ant Design's `<Select />` component and provides an easy way to create select inputs with minimal effort.
+Мы также использовали связку `useSelect` + `<Select />` для создания выпадающего списка для поля `category`.
 
-Now let's do the same for the `CreateProduct` component. These components will use mostly the same logic except the edit action will provide default values for the fields.
+Теперь сделаем то же для компонента `CreateProduct` в `src/pages/products/create.jsx`:
 
-Update your `src/pages/products/create.tsx` file by adding the following lines:
-
-```tsx title="src/pages/products/create.tsx"
+```jsx title="src/pages/products/create.jsx"
 // highlight-next-line
 import { useForm, useSelect, SaveButton } from "@refinedev/antd";
 
@@ -414,28 +404,28 @@ export const CreateProduct = () => {
 
 <RefactorFormInCreateProduct />
 
-## Refactoring `<ShowProduct />`
+## Рефакторинг `<ShowProduct />`
 
-Now that we've refactored our list, edit and create components, let's refactor our `<ShowProduct />` component to use the field components from `@refinedev/antd` to represent every field with proper styling and formatting.
+Здесь нам нужно перевести компонент на использование полей ввода из `@refinedev/antd`.
 
-List of available field components:
+Доступные компоненты для полей ввода:
 
-- [`<BooleanField />`](/docs/ui-integrations/ant-design/components/fields/boolean-field), displays a checkbox element for boolean values.
-- [`<DateField />`](/docs/ui-integrations/ant-design/components/fields/date-field), displays a date with customizable formatting.
-- [`<EmailField />`](/docs/ui-integrations/ant-design/components/fields/email-field), displays an email with a mailto anchor.
-- [`<FileField />`](/docs/ui-integrations/ant-design/components/fields/file-field), displays a download anchor for file.
-- [`<ImageField />`](/docs/ui-integrations/ant-design/components/fields/image-field), displays an image with Ant Design's `<Image />` component.
-- [`<MarkdownField />`](/docs/ui-integrations/ant-design/components/fields/markdown-field), displays a GitHub flavored markdown with `react-makrdown` library.
-- [`<NumberField />`](/docs/ui-integrations/ant-design/components/fields/number-field), displays a number with localized and customizable formatting.
-- [`<TagField />`](/docs/ui-integrations/ant-design/components/fields/tag-field), displays the value with Ant Design's `<Tag />` component.
-- [`<TextField />`](/docs/ui-integrations/ant-design/components/fields/text-field), displays the value with Ant Design's `<Typography.Text />` component.
-- [`<UrlField />`](/docs/ui-integrations/ant-design/components/fields/url-field), displays the value with a link anchor.
+- [`<BooleanField />`](/docs/ui-integrations/ant-design/components/fields/boolean-field), чекбокс для булевых параметров.
+- [`<DateField />`](/docs/ui-integrations/ant-design/components/fields/date-field), поле даты с настраиваемым форматированием.
+- [`<EmailField />`](/docs/ui-integrations/ant-design/components/fields/email-field), почтовое поле.
+- [`<FileField />`](/docs/ui-integrations/ant-design/components/fields/file-field), для скачивания файла.
+- [`<ImageField />`](/docs/ui-integrations/ant-design/components/fields/image-field), поле для изображения, использующее компонент Ant Design `<Image />`.
+- [`<MarkdownField />`](/docs/ui-integrations/ant-design/components/fields/markdown-field), поле для отображения маркдаун-контента через библиотеку `react-makrdown`.
+- [`<NumberField />`](/docs/ui-integrations/ant-design/components/fields/number-field), поле для численных данных, поддерживает локализацию и форматирование.
+- [`<TagField />`](/docs/ui-integrations/ant-design/components/fields/tag-field), отображает значение в компоненте Ant Design `<Tag />`.
+- [`<TextField />`](/docs/ui-integrations/ant-design/components/fields/text-field), отображает значение через компонент Ant Design `<Typography.Text />`.
+- [`<UrlField />`](/docs/ui-integrations/ant-design/components/fields/url-field), отображает значение с ссылкой.
 
-We'll be using the `<TextField />`, `<NumberField />` and `<MarkdownField />` components to represent the fields of the products properly.
+Сейчас мы будем использовать компоненты `<TextField />`, `<NumberField />` и `<MarkdownField />`.
 
-Update your `src/pages/products/show.tsx` file by adding the following lines:
+Обнови `src/pages/products/show.jsx`:
 
-```tsx title="src/pages/products/show.tsx"
+```jsx title="src/pages/products/show.jsx"
 import { useShow, useOne } from "@refinedev/core";
 // highlight-next-line
 import { TextField, NumberField, MarkdownField } from "@refinedev/antd";
@@ -499,8 +489,6 @@ export const ShowProduct = () => {
 
 <RefactorFieldsInShowProduct />
 
-Now we've updated all our routes to use extended versions of Refine's core hooks and helper components.
-
-In the next step, we'll be learning about the CRUD views provided by `@refinedev/antd`, what they are and why they are useful.
+Теперь все роуты приложения используют расширенные версии хуков, адаптированные под использование с Ant Design.
 
 </Sandpack>

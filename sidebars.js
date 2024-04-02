@@ -222,18 +222,6 @@ module.exports = {
         },
       ],
     },
-    {
-      type: "category",
-      label: "Core Hooks",
-      className: "category-as-header",
-      items: [
-        "core/hooks/utilities/use-modal/index",
-        "core/hooks/utilities/use-menu/index",
-        "core/hooks/utilities/use-breadcrumb/index",
-        "core/hooks/utilities/use-import/index",
-        "core/hooks/utilities/use-export/index",
-      ],
-    },
     // UI Integrations
     {
       type: "category",
@@ -334,11 +322,9 @@ module.exports = {
       label: "Further Readings",
       className: "category-as-header",
       items: [
-        "advanced-tutorials/custom-layout",
         "advanced-tutorials/handling-filters",
         "advanced-tutorials/real-time",
         "guides-concepts/deployment/index",
-        "packages/cli/index",
         "further-readings/testing",
       ],
     },

@@ -10,7 +10,6 @@ import { RefineLogoIcon } from "../icons/refine-logo";
 import { MENU_ITEMS, NavbarItemType } from "./constants";
 import { MenuItem } from "./menu-item";
 import { MobileNavItem } from "./mobile-nav-item";
-import { TopAnnouncement } from "../top-announcement";
 import { DarkModeIcon } from "../icons/dark-mode";
 import { LightModeIcon } from "../icons/light-mode";
 import { useLocation } from "@docusaurus/router";
@@ -79,7 +78,6 @@ const Modal: FC<PropsWithChildren<MobileMenuModalProps>> = ({
               "flex-col",
             )}
           >
-            <TopAnnouncement />
             <div
               className={clsx(
                 "flex items-center justify-between",

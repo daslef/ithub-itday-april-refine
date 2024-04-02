@@ -23,7 +23,7 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const ListProductsTsx = /* tsx */ `
+const ListProductsTsx = /* jsx */ `
 import { useMany, getDefaultFilter } from "@refinedev/core";
 import {
   useTable,
@@ -114,7 +114,7 @@ export const ListProducts = () => {
 };
 `.trim();
 
-const ShowProductTsx = /* tsx */ `
+const ShowProductTsx = /* .jsx */ `
 import { useShow, useOne } from "@refinedev/core";
 import { TextField, NumberField, MarkdownField, Show } from "@refinedev/antd";
 
@@ -159,7 +159,7 @@ export const ShowProduct = () => {
 };
 `.trim();
 
-const CreateProductTsx = /* tsx */ `
+const CreateProductTsx = /* .jsx */ `
 import { useForm, useSelect, Create } from "@refinedev/antd";
 
 import { Form, Input, Select, InputNumber } from "antd";
@@ -197,7 +197,7 @@ export const CreateProduct = () => {
 };
 `.trim();
 
-const EditProductTsx = /* tsx */ `
+const EditProductTsx = /* .jsx */ `
 import { useForm, useSelect, Edit } from "@refinedev/antd";
 
 import { Form, Input, Select, InputNumber } from "antd";
@@ -244,8 +244,8 @@ export const ListInListProducts = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("src/pages/products/list.tsx", ListProductsTsx);
-        sandpack.setActiveFile("/src/pages/products/list.tsx");
+        sandpack.updateFile("src/pages/products/list.jsx", ListProductsTsx);
+        sandpack.setActiveFile("/src/pages/products/list.jsx");
       }}
     />
   );
@@ -257,8 +257,8 @@ export const EditInEditProduct = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("src/pages/products/edit.tsx", EditProductTsx);
-        sandpack.setActiveFile("/src/pages/products/edit.tsx");
+        sandpack.updateFile("src/pages/products/edit.jsx", EditProductTsx);
+        sandpack.setActiveFile("/src/pages/products/edit.jsx");
       }}
     />
   );
@@ -270,8 +270,8 @@ export const CreateInCreateProduct = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("src/pages/products/create.tsx", CreateProductTsx);
-        sandpack.setActiveFile("/src/pages/products/create.tsx");
+        sandpack.updateFile("src/pages/products/create.jsx", CreateProductTsx);
+        sandpack.setActiveFile("/src/pages/products/create.jsx");
       }}
     />
   );
@@ -283,8 +283,8 @@ export const ShowInShowProduct = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("src/pages/products/show.tsx", ShowProductTsx);
-        sandpack.setActiveFile("/src/pages/products/show.tsx");
+        sandpack.updateFile("src/pages/products/show.jsx", ShowProductTsx);
+        sandpack.setActiveFile("/src/pages/products/show.jsx");
       }}
     />
   );
@@ -294,17 +294,17 @@ export const ShowInShowProduct = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/pages/products/list.tsx": {
+  "src/pages/products/list.jsx": {
     code: ListProductsTsx,
     active: true,
   },
-  "src/pages/products/show.tsx": {
+  "src/pages/products/show.jsx": {
     code: ShowProductTsx,
   },
-  "src/pages/products/create.tsx": {
+  "src/pages/products/create.jsx": {
     code: CreateProductTsx,
   },
-  "src/pages/products/edit.tsx": {
+  "src/pages/products/edit.jsx": {
     code: EditProductTsx,
   },
 };

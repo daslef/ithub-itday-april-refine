@@ -241,57 +241,6 @@ export const LandingHeroShowcaseSection = () => {
           </a>
         </div>
       </div>
-      <div
-        className={clsx(
-          "flex",
-          "items-center",
-          "justify-center",
-          "landing-lg:-mb-4",
-        )}
-      >
-        <a
-          href={activeApp.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={clsx(
-            "landing-lg:opacity-0",
-            "duration-150",
-            "delay-75",
-            "ease-in-out",
-            "transition-all",
-            "hover:no-underline",
-            "z-[3]",
-            "py-2 landing-sm:py-4",
-            "pl-4 pr-4 landing-sm:pl-6 landing-sm:pr-4",
-            "rounded-[32px] landing-sm:rounded-[48px]",
-            "flex",
-            "landing-lg:hidden",
-            "items-center",
-            "justify-center",
-            "gap-2",
-            "bg-refine-blue dark:bg-refine-cyan-alt",
-            "bg-opacity-10 dark:bg-opacity-10",
-            "landing-lg:bg-opacity-100 dark:landing-lg:bg-opacity-100",
-            "text-refine-blue dark:text-refine-cyan-alt",
-            "landing-lg:text-gray-0 dark:landing-lg:text-gray-900",
-            "hover:brightness-125",
-            "landing-lg:hover:scale-105 landing-lg:hover:brightness-100",
-            "hover:text-refine-blue dark:hover:text-refine-cyan-alt",
-            "landing-lg:hover:text-gray-0 dark:landing-lg:hover:text-gray-900",
-            "landing-lg:border-8 landing-lg:border-solid",
-            activeApp.dark
-              ? "landing-lg:border-gray-900"
-              : "landing-lg:border-gray-0",
-          )}
-        >
-          <span
-            className={clsx("text-xs landing-sm:text-base", "font-semibold")}
-          >
-            {activeApp.label}
-          </span>
-          <LandingArrowRightIcon />
-        </a>
-      </div>
     </div>
   );
 };
@@ -713,7 +662,6 @@ const apps = [
     name: "CRM Application",
     link: "https://example.crm.refine.dev",
     showcase: ShowcaseCRM,
-    label: "See live demo",
   },
   {
     name: "E-Commerce Application",

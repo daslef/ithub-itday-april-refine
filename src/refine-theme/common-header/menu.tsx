@@ -20,7 +20,7 @@ export const Menu: React.FC = () => {
         if (item.isPopover) {
           return (
             <NavbarPopoverItem key={`navbar-${item.label}`} item={item}>
-              {item.label === "Open-source" && (
+              {item.label === "Navigation" && (
                 <>
                   <div
                     className={clsx(

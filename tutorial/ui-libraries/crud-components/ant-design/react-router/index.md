@@ -1,28 +1,22 @@
 ---
-title: CRUD Components
+title: Компоненты CRUD
 ---
 
 import { Sandpack, ListInListProducts, EditInEditProduct, CreateInCreateProduct, ShowInShowProduct } from "./sandpack.tsx";
 
 <Sandpack>
 
-After refactoring the components, it's time to learn about the CRUD view components provided by Refine's Ant Design integration. These components are implemented to provide consistent design with Ant Design with additional features such as headers with i18n support, breadcrumbs, navigation buttons, submission buttons, and more.
+Помимо тех компонентов, что мы рассмотрели ранее, интеграция с Ant Design также предлагает нам так называемые _CRUD-компоненты_. Эти компоненты представляют собой своего рода обертку над основным функционалам, обеспечивают тем самым целостный дизайн и дополнительный функционал.
 
-These components are not required to use Refine, but they are useful for building a consistent user interface without worrying about the common features you need across your application.
+Эти компоненты не обязательны к использованию, но существенно снижают затраты на реализацию рутинного функционала, так что рекомендуем попробовать!
 
-## List View
+## List
 
-The `<List />` component is a wrapper component for list pages which provides an header with i18n support and navigation to create a new record. You can always provide more features and elements by passing customizing the component.
+Компонент `<List />` оборачивает страницы со списком записей ресурса, включает в себя хедер с поддержкой локализации и навигацией к созданию новой записи.
 
-:::note
+Обнови `src/pages/products/list.jsx`:
 
-Remember that when we've removed the `<Header />` component, we've also removed the navigation link for the `/products/create` route. `<List />` will automatically add a button for this purpose without needing any additional code.
-
-:::
-
-Update your `src/pages/products/list.tsx` file by adding the following lines:
-
-```tsx title="src/pages/products/list.tsx"
+```jsx title="src/pages/products/list.jsx"
 import { useMany, getDefaultFilter } from "@refinedev/core";
 import {
   useTable,
@@ -72,13 +66,13 @@ export const ListProducts = () => {
 
 <ListInListProducts />
 
-## Create View
+## Create
 
-The `<Create />` component is a wrapper component for create pages. It provides an header with i18n support and navigation to list view, a back button and breadcrumbs. It includes a `<SaveButton />` at the footer that you can pass `saveButtonProps` from the `useForm` hook to submit your forms. You can always provide more features and elements by passing customizing the component.
+Компонент `<Create />` является оберткой для страниц создания новых записей. Содержит хедер с поддержкой i18n и навигацией к списку записей ресурса, кнопкой назад и хлебными крошками. Содержит футер с компонентом `<SaveButton />`, который служит для отправки формы и ожидает на вход `saveButtonProps` из `useForm`.
 
-Update your `src/pages/products/create.tsx` file by adding the following lines:
+Обнови `src/pages/products/create.jsx`:
 
-```tsx title="src/pages/products/create.tsx"
+```jsx title="src/pages/products/create.jsx"
 // highlight-next-line
 import { useForm, useSelect, Create } from "@refinedev/antd";
 
@@ -121,13 +115,13 @@ export const CreateProduct = () => {
 
 <CreateInCreateProduct />
 
-## Edit View
+## Edit
 
-The `<Edit />` component is a wrapper component for edit pages. The design and the usage is similar to the `<Create />` component. Additionally, it includes the `<RefreshButton />` and `<DeleteButton />` at its header. You can always provide more features and elements by passing customizing the component.
+Компонент `<Edit />` является оберткой для страниц редактирования. Дизайн и использование схожи с `<Create />`, но дополнительно представлены кнопки `<RefreshButton />` и `<DeleteButton />`. Компонент доступен для расширения и кастомизации.
 
-Update your `src/pages/products/edit.tsx` file by adding the following lines:
+Обнови `src/pages/products/edit.jsx`:
 
-```tsx title="src/pages/products/edit.tsx"
+```jsx title="src/pages/products/edit.jsx"
 // highlight-next-line
 import { useForm, useSelect, Edit } from "@refinedev/antd";
 
@@ -173,17 +167,17 @@ export const EditProduct = () => {
 
 :::tip
 
-Notice that we've removed the `<SaveButton />` component from the `<EditProduct />` and used the `saveButtonProps` prop to provide the same functionality with the `<Edit />` component.
+Обрати внимание, мы удалили `<SaveButton />` из `<EditProduct />` и используем свойство `saveButtonProps` для получения той же функциональности с компонентом `<Edit />`.
 
 :::
 
-## Show View
+## Show
 
-The `<Show />` component is a wrapper component for show pages.It provides a header with i18n support and navigation to the list view, edit the record, a refresh button, a delete button, a back button, and breadcrumbs. You can always provide more features and elements by passing customizing the component.
+Компонент `<Show />` - обертка для страниц, представляющих конкретную запись ресурса. Он содержит хедер с поддержкой i18n, навигацией к списку записей ресурса и редактированию записи, кнопки обновления и удаления, кнопку "назад" и хлебные крошки. Каждый из перечисленных компонентов можно расширить и кастомизировать.
 
-Update your `src/pages/products/show.tsx` file by adding the following lines:
+Обнови `src/pages/products/show.jsx`:
 
-```tsx title="src/pages/products/show.tsx"
+```jsx title="src/pages/products/show.jsx"
 import { useShow, useOne } from "@refinedev/core";
 // highlight-next-line
 import { TextField, NumberField, MarkdownField, Show } from "@refinedev/antd";
@@ -232,8 +226,6 @@ export const ShowProduct = () => {
 
 <ShowInShowProduct />
 
-Now our application has a consistent design with many features ready to use without writing a single line of code.
-
-In the next step, we will learn how to handle notifications with Refine and integrate it with Ant Design's notification system.
+Наше приложение получило целостный дизайн!
 
 </Sandpack>

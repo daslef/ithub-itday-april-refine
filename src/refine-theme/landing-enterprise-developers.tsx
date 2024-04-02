@@ -9,7 +9,6 @@ import {
   SupportIcon,
 } from "../components/landing/icons";
 
-import { LandingSectionCtaButtonAlt } from "./landing-section-cta-button";
 
 const list = [
   {
@@ -148,10 +147,6 @@ export const LandingEnterpriseDevelopers: FC<Props> = ({ className }) => {
           );
         })}
       </div>
-
-      <LandingSectionCtaButtonAlt to="/enterprise">
-        Check out Enterprise Edition
-      </LandingSectionCtaButtonAlt>
     </div>
   );
 };

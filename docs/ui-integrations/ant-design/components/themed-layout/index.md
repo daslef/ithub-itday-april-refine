@@ -110,7 +110,7 @@ render(<App />);
 
 ### Sider
 
-При использовании `<ThemedLayoutV2>` за боковую панель по умолчанию отвечает компонент [`<ThemedSiderV2>`][themed-sider]. Меню на боковой панели генерируется автоматически на основе ресурсов, определенных в компоненте [`<Refine>`][refine-component], и хука [`useMenu`][use-menu]. Однако при необходимости компонент [`<ThemedSiderV2>`][themed-sider] можно заменить на кастомный, передав его в проп `Sider`.
+При использовании `<ThemedLayoutV2>` за боковую панель по умолчанию отвечает компонент [`<ThemedSiderV2>`][themed-sider]. Меню на боковой панели генерируется автоматически на основе ресурсов, определенных в компоненте [`<Refine>`][refine-component], и хука `useMenu`. Однако при необходимости компонент [`<ThemedSiderV2>`][themed-sider] можно заменить на кастомный, передав его в проп `Sider`.
 
 ```jsx
 import { Refine } from "@refinedev/core";
@@ -747,7 +747,6 @@ render(<App />);
 [themed-sider]: https://github.com/refinedev/refine/blob/master/packages/antd/src/components/themedLayoutV2/sider/index.tsx
 [themed-header]: https://github.com/refinedev/refine/blob/master/packages/antd/src/components/themedLayoutV2/header/index.tsx
 [themed-title]: https://github.com/refinedev/refine/blob/master/packages/antd/src/components/themedLayoutV2/title/index.tsx
-[use-menu]: /docs/core/hooks/utilities/use-menu
 [refine-component]: /docs/core/refine-component
 [antd-drawer]: https://ant.design/components/drawer
 [antd-sider]: https://ant.design/components/layout#layoutsider

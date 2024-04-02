@@ -8,7 +8,7 @@ Internally, it uses [Papa Parse][papaparse] to parse the file contents.
 
 It will return properties that are compatible with Ant Design's [`<Upload>`](https://ant.design/components/upload/) and [`<Button>`](https://ant.design/components/button/) components.
 
-The `useImport` hook is extended from [`useImport`][use-import-core] hook from the [`@refinedev/core`](https://github.com/refinedev/refine/tree/master/packages/core) package. This means that you can use all the features of [`useImport`][use-import-core] hook.
+The `useImport` hook is extended from `useImport` hook from the [`@refinedev/core`](https://github.com/refinedev/refine/tree/master/packages/core) package. This means that you can use all the features of `useImport` hook.
 
 ## Usage
 
@@ -297,4 +297,3 @@ With this code, the parsed data will be mapped to conform to the API requirement
 [papaparse]: https://www.papaparse.com/docs
 [usemutation]: https://react-query.tanstack.com/reference/useMutation
 [number.max_safe_integer]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER
-[use-import-core]: /docs/core/hooks/utilities/use-import

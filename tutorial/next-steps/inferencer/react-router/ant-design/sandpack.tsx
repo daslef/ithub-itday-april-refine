@@ -24,7 +24,7 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const ListCategoriesBase = /* tsx */ `
+const ListCategoriesBase = /* jsx */ `
 export const ListCategories = () => {
   return (
     <div>
@@ -34,7 +34,7 @@ export const ListCategories = () => {
 };
 `.trim();
 
-const AppWithCategories = /* tsx */ `
+const AppWithCategories = /* jsx */ `
 import { Refine, Authenticated } from "@refinedev/core";
 import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
 import {
@@ -136,15 +136,12 @@ export default function App() {
 }
 `.trim();
 
-const ListCategoriesWithInferencer = /* tsx */ `
+const ListCategoriesWithInferencer = /* jsx */ `
 import { AntdInferencer } from "@refinedev/inferencer/antd";
 
 export const ListCategories = () => {
   return (
-    <AntdInferencer
-    // resource="categories" // We're omitting this prop because it's inferred from the route
-    // action="list" // We're omitting this prop because it's inferred from the route
-    />
+    <AntdInferencer />
   );
 };
 `.trim();
@@ -156,10 +153,10 @@ export const CreateListCategoriesTsx = () => {
 
   return (
     <TutorialCreateFileButton
-      name="src/pages/categories/list.tsx"
+      name="src/pages/categories/list.jsx"
       onClick={() => {
-        sandpack.addFile("src/pages/categories/list.tsx", ListCategoriesBase);
-        sandpack.setActiveFile("/src/pages/categories/list.tsx");
+        sandpack.addFile("src/pages/categories/list.jsx", ListCategoriesBase);
+        sandpack.setActiveFile("/src/pages/categories/list.jsx");
       }}
     />
   );
@@ -171,8 +168,8 @@ export const AddListCategoriesToApp = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", AppWithCategories);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", AppWithCategories);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -185,10 +182,10 @@ export const AddInferencerToListCategories = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/categories/list.tsx",
+          "src/pages/categories/list.jsx",
           ListCategoriesWithInferencer,
         );
-        sandpack.setActiveFile("/src/pages/categories/list.tsx");
+        sandpack.setActiveFile("/src/pages/categories/list.jsx");
       }}
     />
   );
@@ -198,11 +195,11 @@ export const AddInferencerToListCategories = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/pages/categories/list.tsx": {
+  "src/pages/categories/list.jsx": {
     code: ListCategoriesWithInferencer,
     active: true,
   },
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: AppWithCategories,
   },
 };

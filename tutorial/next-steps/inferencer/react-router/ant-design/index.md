@@ -1,34 +1,28 @@
 ---
-title: Using Inferencer
+title: Inferencer
 ---
 
 import { Sandpack, CreateListCategoriesTsx, AddListCategoriesToApp, AddInferencerToListCategories } from "./sandpack.tsx";
 
 <Sandpack>
 
-Refine's [`@refinedev/inferencer`](/docs/packages/inferencer) package can be used to scaffold initial code for your resource pages based on API responses.
+Пакет [`@refinedev/inferencer`](/docs/packages/inferencer) может быть использован для быстрой генерации кода страниц ресурсов на основе запросов к API.
 
-Generated code aren't guaranteed to work perfectly. This tool meant to be used locally to speed up the development process by generating the initial code and shouldn't be used on production.
+Сгенерированный код не будет идеален, его не стоит использовать в продакшен-средах, и рано или поздно его придется кастомизировать, но для первого шага некоторые могут счесть его полезным.
 
-## Installation
+## Установка
 
-Let's start by installing the `@refinedev/inferencer` package. Inferencer package can generate views with multiple UI libraries that Refine provides a built-in support for. To generate a view with a UI library, you need to install their dependencies as well (e.g. `@refinedev/antd` and `antd` packages for Ant Design).
-
-Supported UI libraries for Inferencer are:
+Начнем с установки пакета `@refinedev/inferencer`. Этот пакет может работать в связке с рядом интегрированных UI-библиотек, но для этого убедитесь, что должные зависимости также установлены (например, для Ant Design это `@refinedev/antd` и `antd`).
 
 - [Ant Design](/docs/ui-integrations/ant-design/components/inferencer)
-- [Chakra UI](/docs/ui-integrations/chakra-ui/components/inferencer)
-- [Material UI](/docs/ui-integrations/material-ui/components/inferencer)
-- [Mantine](/docs/ui-integrations/mantine/components/inferencer)
-- [Headless (Unstyled)](/docs/packages/inferencer)
 
-<InstallPackagesCommand args="@refinedev/inferencer" />
+<InstallPackagesCommand args="@refinedev/inferencer @refinedev/antd antd" />
 
-## Usage
+## Использование
 
-Inferencer package exports UI specific inferencer components with sub-paths for each UI library. For example, to use Inferencer with Ant Design, you need to import `AntdInferencer` from `@refinedev/inferencer/antd`.
+Для использования с Ant Design нужно импортировать `AntdInferencer` из `@refinedev/inferencer/antd`.
 
-```tsx
+```jsx
 import { AntdInferencer } from "@refinedev/inferencer/antd";
 
 export const MyPage = () => {
@@ -36,23 +30,19 @@ export const MyPage = () => {
 };
 ```
 
-In the example above, we are using `AntdInferencer` to generate a list view for the `products` resource. The `action` prop is used to specify the type of view to be generated. The available actions are `list`, `show`, `edit`, and `create`.
+В примере выше мы используем `AntdInferencer` чтобы сгенерировать страницу списка записей ресурса `products`, на это указывает `action="list"`. Помимо списка, можно подать значения `show`, `edit` и `create`.
 
-After you have mounted the Inferencer component, you will get a preview of the generated view for the specified action of the resource and provided with the source code of the generated component. You can copy & paste the generated code and customize it to fit your application's needs.
+После маунта компонента Inferencer ты увидишь превью результата и его исходный код, который можно скопировать и модифицировать под собственные нужды.
 
-## Using Inferencer for the Categories Resource
-
-In our application, we've used the `categories` resource in relation to the `products` resource. Now we will use inferencer component to generate a list view for the `categories` resource.
-
-Let's start by creating a new file called `src/pages/categories/list.tsx` file.
+Теперь аналогично сгенерируем страницы для ресурса категорий, связанного с ресурсом продуктов. Начнем с созданий нового файла `src/pages/categories/list.jsx`.
 
 <CreateListCategoriesTsx />
 
-Then let's create a route at `/categories` to render the `ListCategories` component.
+Теперь определим роут `/categories` на рендер компонента `ListCategories`.
 
-Update your `src/App.tsx` file by adding the following lines:
+Обнови `src/App.jsx`:
 
-```tsx title="src/App.tsx"
+```jsx title="src/App.jsx"
 import { Refine, Authenticated } from "@refinedev/core";
 import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
 import {
@@ -100,8 +90,6 @@ export default function App() {
                 meta: { label: "Products" },
               },
               // highlight-start
-              // We're adding the categories resource to the resources array
-              // This way, there will be a link to the categories list in the sidebar
               {
                 name: "categories",
                 list: "/categories",
@@ -163,31 +151,20 @@ export default function App() {
 
 <AddListCategoriesToApp />
 
-We've mounted the `ListCategories` component to the `/categories` route and added the `categories` resource to the `resources` array, which enables the sidebar will automatically have a link to the categories list.
+Теперь добавим Inferencer к компоненту `ListCategories` в `src/pages/categories/list.jsx`:
 
-Now let's add Inferencer to the `ListCategories` component.
-
-Update your `src/pages/categories/list.tsx` file by adding the following lines:
-
-```tsx title="src/pages/categories/list.tsx"
+```jsx title="src/pages/categories/list.jsx"
 import { AntdInferencer } from "@refinedev/inferencer/antd";
 
 export const ListCategories = () => {
-  return (
-    <AntdInferencer
-    // resource="categories" // We're omitting this prop because it's inferred from the route
-    // action="list" // We're omitting this prop because it's inferred from the route
-    />
-  );
+  return <AntdInferencer />;
 };
 ```
 
 <AddInferencerToListCategories />
 
-Notice that we've not provided the `resource` and `action` props to the `AntdInferencer` component because they are inferred from the route.
+Заметь, что мы не пердали свойства `resource` и `action` в компонент `AntdInferencer`, так как они будут автоматически определены исходя из роута.
 
-Now, if you navigate to the `/categories` route, you will see the generated list view for the `categories` resource. Then you can copy & paste the generated code and customize it to fit your application's needs.
-
-In this step, we've covered the basics of using Inferencer to generate views for resources. In the next step, we'll be learning about the Refine's CLI and its features.
+Перейди к `/categories` и убедись, что страница списка категорий сгенерирована, скопируй исходный код и попробуй внести модификации.
 
 </Sandpack>

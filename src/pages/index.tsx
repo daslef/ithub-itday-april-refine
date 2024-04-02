@@ -12,7 +12,6 @@ import { LandingAlreadyInvented } from "../refine-theme/landing-already-invented
 import { LandingPureReactCode } from "../refine-theme/landing-pure-react-code";
 import { LandingSweetSpot } from "../refine-theme/landing-sweet-spot";
 import { LandingHeroSection } from "../refine-theme/landing-hero-section";
-import { LandingTryItSection } from "../refine-theme/landing-try-it-section";
 import { CommonHeader } from "../refine-theme/common-header";
 import { LandingTestimonial } from "../refine-theme/landing-testimonial";
 
@@ -80,7 +79,6 @@ function Home() {
             <LandingEnterpriseDevelopers />
             <LandingCommunity />
             <LandingTestimonial />
-            <LandingTryItSection />
           </div>
           <LandingFooter />
         </div>

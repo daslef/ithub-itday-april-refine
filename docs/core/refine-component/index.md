@@ -714,8 +714,6 @@ const App = () => (
 
 The default sidebar can be customized by using Refine hooks and passing custom components to the `Sider` property.
 
-> For more information, refer to the [`useMenu` hook documentation &#8594](/docs/core/hooks/utilities/use-menu)
-
 ## ~~Footer~~ <PropTag deprecated />
 
 The default app footer can be customized by passing the `Footer` property.

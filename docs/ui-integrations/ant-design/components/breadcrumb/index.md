@@ -3,7 +3,7 @@ title: Breadcrumb
 swizzle: true
 ---
 
-Хлебные крошки отображают текущую локацию приложения с учетом иерархии. Созданы на основе компонента Ant Design [Breadcrumb][antd-breadcrumb] с использованием хука [`useBreadcrumb`](/docs/core/hooks/utilities/use-breadcrumb).
+Хлебные крошки отображают текущую локацию приложения с учетом иерархии. Созданы на основе компонента Ant Design [Breadcrumb][antd-breadcrumb] с использованием хука useBreadcrumb.
 
 ```jsx live url=http://localhost:3000/posts/show/123 previewHeight=280px disableScroll
 // visible-block-start
