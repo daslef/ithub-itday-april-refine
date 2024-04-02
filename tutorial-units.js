@@ -4,27 +4,27 @@ module.exports = {
     units: {
       introduction: {
         no: 1,
-        label: "Welcome",
+        label: "Ориентирование",
       },
       "getting-started": {
         no: 2,
-        label: "Create and deploy your first Refine app",
+        label: "Создание первого приложения с Refine",
       },
       "understanding-dataprovider": {
         no: 3,
-        label: "Understanding the Data Provider",
+        label: "Провайдер данных",
       },
       "understanding-resources": {
         no: 4,
-        label: "Understanding the Resources",
+        label: "Концепция ресурсов",
       },
       "adding-crud-pages": {
         no: 5,
-        label: "Adding CRUD pages",
+        label: "Добавление функционала CRUD",
       },
       "understanding-authprovider": {
         no: 6,
-        label: "Understanding the Auth provider",
+        label: "Провайдер аутентификации",
       },
     },
   },

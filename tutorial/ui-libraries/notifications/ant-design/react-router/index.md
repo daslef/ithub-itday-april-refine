@@ -1,26 +1,24 @@
 ---
-title: Notifications
+title: Уведомления
 ---
 
 import { Sandpack, AddNotificationProviderToApp } from "./sandpack.tsx";
 
 <Sandpack>
 
-In this step, we will explore integrating Ant Design's notification system with Refine to deliver notifications to users.
+В этом шаге мы интегрируем систему уведомлений Ant Design с аналогичной системой Refine для доставки уведомлений пользователям.
 
-Refine triggers notification in various scenarios, such as when a record is created, updated, or deleted, when there is an error from your data provider or your auth provider. It's important to provide feedback to the user when interacting with the application.
+Refine отображает уведомления в различных сценариях, например при создании записи, обновлении или удалении, либо при возникновении ошибок в провайдерах. Важно, чтобы пользователь получал обратную связь при взаимодействии с приложением.
 
-All these notifications are enabled just by providing a `notificationProvider` prop to the `<Refine />` component. A notification provider is responsible from displaying and dismissing notifications as well as handling undoable mutation notifications.
+Все описанные уведомления начинают срабатывать как только `notificationProvider` передан в компонент `<Refine />`. Провайдер уведомлений отвечает за отображение уведомлений любого рода.
 
-Ant Design provides a notification system that can be used to handle these notifications by using the `useNotificationProvider` export of the `@refinedev/antd` package.
+Ant Design предоставляет систему нотификаций, которую можно использовать в связке с Refine через хук `useNotificationProvider` из пакета `@refinedev/antd`.
 
-## Adding Notification Provider
+## Провайдер уведомлений
 
-To add the notification provider to our application, we need to import the `useNotificationProvider` and pass it to the `notificationProvider` prop of the `<Refine />` component.
+Импортируем `useNotificationProvider` и передадим его в свойство `notificationProvider` компонента `<Refine />`:
 
-Update your `src/App.tsx` file by adding the following lines:
-
-```tsx title="src/App.tsx"
+```jsx title="src/App.jsx"
 import { Refine, Authenticated } from "@refinedev/core";
 import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
 // highlight-next-line
@@ -46,7 +44,7 @@ import { Login } from "./pages/login";
 
 import "antd/dist/reset.css";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <BrowserRouter>
       <ConfigProvider>
@@ -79,8 +77,6 @@ export default function App(): JSX.Element {
 
 <AddNotificationProviderToApp />
 
-Now we're set with the notification provider. You can now create, update, and delete records to see the notifications in action.
-
-In the next step, we'll learn about the `<AuthPage />` components and how to use them to create login pages.
+Попробуй создать, обновить, удалить запись, либо выполнить логаут и логин в приложении, чтобы увидеть уведомления в работе.
 
 </Sandpack>

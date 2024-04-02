@@ -25,7 +25,7 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const LayoutWithCustomTitle = /* tsx */ `
+const LayoutWithCustomTitle = /* jsx */ `
 import { Refine, Authenticated } from "@refinedev/core";
 import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
 import { ThemedLayoutV2, ThemedTitleV2 } from "@refinedev/antd";
@@ -46,7 +46,7 @@ import { Login } from "./pages/login";
 
 import "antd/dist/reset.css";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <BrowserRouter>
       <ConfigProvider>
@@ -120,8 +120,8 @@ export const AddCustomTitleToLayout = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", LayoutWithCustomTitle);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", LayoutWithCustomTitle);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -131,7 +131,7 @@ export const AddCustomTitleToLayout = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: LayoutWithCustomTitle,
     active: true,
   },

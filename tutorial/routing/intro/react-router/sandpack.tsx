@@ -22,7 +22,7 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const AppTsxWithRouterProvider = /* tsx */ `
+const AppTsxWithRouterProvider = /* jsx */ `
 import { Refine, Authenticated } from "@refinedev/core";
 import routerProvider from "@refinedev/react-router-v6";
 
@@ -39,7 +39,7 @@ import { CreateProduct } from "./pages/products/create";
 import { Login } from "./pages/login";
 import { Header } from "./components/header";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <BrowserRouter>
       <Refine
@@ -68,8 +68,8 @@ export const AddRouterProviderToApp = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", AppTsxWithRouterProvider);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", AppTsxWithRouterProvider);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -85,7 +85,7 @@ export const dependencies = {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: AppTsxWithRouterProvider,
     active: true,
   },

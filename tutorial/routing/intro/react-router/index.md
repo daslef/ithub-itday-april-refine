@@ -1,44 +1,38 @@
 ---
-title: Introduction
+title: Введение
 ---
 
 import { Sandpack, AddRouterProviderToApp } from "./sandpack.tsx";
 
 <Sandpack>
 
-Now we've learned the data fetching essentials and basics of authentication in Refine. In this unit, we'll learn how to add a router provider to our app and the features we're unlocking with a router provider.
+В этой секции мы добавим к нашему приложению провайдер роутинга!
+
+Refine предоставляет интеграции для наиболее популярных решений, таких как [React Router](/docs/routing/integrations/react-router), [Next.js](/docs/routing//integrations/next-js) и [Remix](/docs/routing/integrations/remix).
 
 :::simple Implementation Tips
 
-- Refine provides integrations for the most popular routing options.It's recommended to pick a built-in integration for your router.
-
-- Refine won't interfere with your router's way of handling navigation. You'll be generating the routes/pages as you would normally do with your router.
-
-- Providing a router provider to Refine will unlock many features without giving up any of your router's features.
+Пусть Refine и предоставляет возможность реализации провайдера роутинга с нуля, мы рекомендуем использовать одну из готовых интеграций.
 
 :::
 
-This unit will cover the following topics:
+В этой секции мы обсудим:
 
-- Refine's resource concept and how to use it,
-- Using router integration to infer parameters such as `resource`, `action` and `id` from the URL,
-- Handling navigation and redirections in Refine,
-- Using router integration to store form and table states in the URL,
-- Finally, handling authentication with router options.
+- Концепцию _ресурсов_,
+- Использование роутера для автоматического определения параметров, таких как `resource`, `action` или `id` из URL,
+- Навигация и редиректы,
+- Использование роутера для хранения состояний форм и таблиц в URL,
+- Интеграция с провайдером аутентификации и провайдеров данных.
 
-This unit will be UI framework agnostic. Related parts of routing for the UI frameworks will be covered in the next units.
+## Провайдер роутинга
 
-## Adding Router Provider
-
-Let's get started with adding our dependencies. For routing, we will use `react-router-dom`, and to integrate it with Refine, we'll be using `@refinedev/react-router-v6` package.
+Начнем с установки зависимостей `react-router-dom` и `@refinedev/react-router-v6`.
 
 <InstallPackagesCommand args="react-router-dom @refinedev/react-router-v6"/>
 
-Then we'll pass our router provider to the `<Refine />` component. Additionally, we'll be wrapping our app with `<BrowserRouter />` from `react-router-dom`.
+Настроим провайдер на уровне компонента `<Refine />` в `src/App.tsx`:
 
-Update your `src/App.tsx` file by adding the following lines:
-
-```tsx title="src/App.tsx"
+```jsx title="src/App.jsx"
 import { Refine, Authenticated } from "@refinedev/core";
 // highlight-next-line
 import routerProvider from "@refinedev/react-router-v6";
@@ -57,7 +51,7 @@ import { CreateProduct } from "./pages/products/create";
 import { Login } from "./pages/login";
 import { Header } from "./components/header";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     // highlight-next-line
     <BrowserRouter>
@@ -82,9 +76,5 @@ export default function App(): JSX.Element {
 ```
 
 <AddRouterProviderToApp />
-
-Now we're ready to start exploring the features of Refine's router integration.
-
-In the next step, we'll be learning about how to inform Refine about the related routes per resource.
 
 </Sandpack>

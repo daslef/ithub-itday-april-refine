@@ -1,32 +1,29 @@
 ---
-title: Data Provider Integration
+title: Интеграция с провайдером данных
 ---
 
 import { Sandpack, AddAuthenticationToDataProvider, AddProtectedProductsResourceToListProducts, AddOnErrorMethodToAuthProvider } from "./sandpack.tsx";
 
 <Sandpack>
 
-Having implemented the authentication logic, we will now integrate it with our data provider to protect our resources from unauthenticated users.
+Теперь, когда реализована ауз-логика, интегрируемся с провайдером данных, чтобы скрыть ресурсы от неавторизованных пользователей, а для обработки связанных с аутентификацией ошибок применим `onError`.
 
-We've obtained the `token` from our API and stored it in the `localStorage` in the previous steps. Now, we'll be adding the `Authorization` header to our API requests.
+## Добавление хедера `Authorization`
 
-We'll also be learning about the `onError` method of the auth provider to handle the authentication-related errors that are thrown by the data provider.
+На предыдущем шаге мы получали `token` и сохраняли его в `localStorage`, а теперь добавим к нашим запросам хедер `Authorization`.
 
-## Adding the `Authorization` Header
+Наш фейковый REST API предоставляет несколько ресурсов, защищенных от анонимных запросов. Для доступа к таким ресурсам фейковый API ожидает, что мы отправим `token` в поле `Authorization` хедера.
 
-Our fake REST API has some resources that require authentication to access them. The authentication will be done by sending the `token` in the `Authorization` header.
+Предлагаем заменить метод `fetch` провайдера данных на кастомную обертку над ним, добавляющую к запросам хедер `Authorization`.
 
-Let's replace our data provider's `fetch` method with a custom wrapper that adds the `Authorization` header to the requests. This way, we'll be able to protect our resources from unauthenticated users and handle this step in a single place.
+Обнови `src/providers/data-provider.js` следующим образом:
 
-Update your `src/providers/data-provider.ts` file by adding the following lines:
-
-```ts title="src/providers/data-provider.ts"
-import type { DataProvider } from "@refinedev/core";
+```js title="src/providers/data-provider.js"
 
 const API_URL = "https://api.fake-rest.refine.dev";
 
 // highlight-start
-const fetcher = async (url: string, options?: RequestInit) => {
+const fetcher = async (url, options) => {
   return fetch(url, {
     ...options,
     headers: {
@@ -37,7 +34,7 @@ const fetcher = async (url: string, options?: RequestInit) => {
 };
 // highlight-end
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
     const params = new URLSearchParams();
 
@@ -137,15 +134,15 @@ export const dataProvider: DataProvider = {
 
 <AddAuthenticationToDataProvider />
 
-## Using a Restricted Resource
+## Работа с защищенным ресурсом
 
-Our fake REST API also has a resource called `protected-products` that is same as the `products` resource, but requires authentication to access it for demonstration purposes.
+Фейковый ресурс `protected-products` по сути аналогичен ресурсу `products`, который мы использовали ранее, но в отличие от него требует аутентификации.
 
-Let's switch to using `protected-resources` in our `<ListProducts />` component.
+Давай переключимся на использование `protected-resources` в компоненте `<ListProducts />`.
 
-Update your `src/pages/products/list.tsx` file by adding the following lines:
+Обнови `src/pages/products/list.jsx`:
 
-```tsx title="src/pages/products/list.tsx"
+```jsx title="src/pages/products/list.jsx"
 import { useTable, useMany } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -196,22 +193,16 @@ export const ListProducts = () => {
 
 <AddProtectedProductsResourceToListProducts />
 
-## Handling Authentication Errors
+## Обработка ошибок аутентификации
 
-When we try to access a protected resource without authentication, our API will return a `401 Unauthorized` error. We'll be handling this error in our auth provider's `onError` method.
+При попытке получить защищенный ресурс без аутентификации фейковый API вернем нам ошибку `401 Unauthorized`. Мы можем обработать ее в методе `onError` провайдера аутентификации.
 
-`onError` will be called by the Refine's data hooks automatically when an error is thrown from the data provider. This method does not need to handle all errors, only the ones related to authentication.
+`onError` обрабатывает ошибки, происходящие на провайдере данных. Используя этот метод, мы сможем обрабатывать случаи истечения срока годности токенов, невалидные токены и требовать логаут.
 
-By using `onError` method, we'll be able to handle cases such as expired and invalid tokens and trigger a logout operation.
+Добавим метод `onError` в `src/providers/auth-provider.js` и обработаем ошибку `401 Unauthorized`:
 
-Let's add the `onError` method to our auth provider and handle the `401 Unauthorized` error.
-
-Update your `src/providers/auth-provider.ts` file by adding the following lines:
-
-```ts title="src/providers/auth-provider.ts"
-import { AuthProvider } from "@refinedev/core";
-
-export const authProvider: AuthProvider = {
+```js title="src/providers/auth-provider.js"
+export const authProvider = {
   // highlight-start
   onError: async (error) => {
     if (error?.status === 401) {
@@ -242,16 +233,8 @@ export const authProvider: AuthProvider = {
 
 <AddOnErrorMethodToAuthProvider />
 
-Finally, we'll be able to handle the `401 Unauthorized` error thrown from the data providers and trigger a logout operation.
+## Итоги
 
-## Summary
-
-Now we have our authentication mechanism integrated with Refine, additional methods can be implemented in the same way and used with the respective hooks of Refine.
-
-All of the built-in data providers of Refine have the ability to customize the client/fetcher instance. They can be used to handle authentication in the same way as we did in this tutorial without requiring a custom data provider.
-
-In the next units, we'll start learning about the routing in Refine and how to integrate routing solutions such as React Router.
-
-Current way of handling authentication can be refactored but the concepts will remain the same.
+Первый шаг интеграции сделан, остальные методы могут быть реализованы по аналогии, с использованием соответствующих хуков.
 
 </Sandpack>

@@ -22,7 +22,7 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const AppTsxWithRoutes = /* tsx */ `
+const AppTsxWithRoutes = /* jsx */ `
 import { Refine, Authenticated } from "@refinedev/core";
 import routerProvider from "@refinedev/react-router-v6";
 
@@ -39,7 +39,7 @@ import { CreateProduct } from "./pages/products/create";
 import { Login } from "./pages/login";
 import { Header } from "./components/header";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <BrowserRouter>
       <Refine
@@ -83,7 +83,7 @@ export default function App(): JSX.Element {
 }
 `.trim();
 
-const AppTsxWithResources = /* tsx */ `
+const AppTsxWithResources = /* jsx */ `
 import { Refine, Authenticated } from "@refinedev/core";
 import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
 
@@ -100,7 +100,7 @@ import { CreateProduct } from "./pages/products/create";
 import { Login } from "./pages/login";
 import { Header } from "./components/header";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <BrowserRouter>
       <Refine
@@ -162,8 +162,8 @@ export const AddRoutesToApp = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", AppTsxWithRoutes);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", AppTsxWithRoutes);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -175,8 +175,8 @@ export const AddResourcesToApp = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", AppTsxWithResources);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", AppTsxWithResources);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -186,7 +186,7 @@ export const AddResourcesToApp = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: AppTsxWithResources,
     active: true,
   },

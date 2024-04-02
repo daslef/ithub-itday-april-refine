@@ -1,42 +1,37 @@
 ---
-title: Redirects
+title: Перенаправления
 ---
 
 import { Sandpack, AddRedirectsToAuthProvider, AddCustomRedirectToCreate, AddCustomRedirectToEdit } from "./sandpack.tsx";
 
 <Sandpack>
 
-Now we've updated our components to benefit from the parameter inference of Refine. In this step, we'll be learning about the redirects and how to benefit from them in our forms and auth provider.
+Научимся использовать редиректы в связке с формами и провайдером аутентификации.
 
-Refine can manage redirects automatically for you. After a successful form submission, Refine will try to redirect the user to the appropriate page.
+## Редирект после отправки формы
 
-Just like the forms, redirects are also supported in the auth provider. By providing a `redirectTo` parameter to the return values of the `login`, `logout` and `onError` method, you can redirect the user to the appropriate page. Such as the index page after a successful login or the login page after a successful logout.
-
-## Redirecting After Form Submission
-
-By default, Refine will redirect the user to the list page of the target resource after a successful form submission. We can customize this behavior by providing a `redirect` parameter to the `useForm` hook.
+По умолчанию, после успешной отправки формы Refine перенаправит пользователя к странице со списком записей ресурса, но это можно настроить, задав значение параметру `redirect` хука `useForm`.
 
 :::tip
 
-You can also use the `options.redirect` prop of the `<Refine />` component to set a default redirect for all forms per action.
+Можно также установить редирект по умолчанию, который будет применяться ко всем формам, через свойство `options.redirect` компонента `<Refine />`.
 
 :::
 
-### Showing the Record After Update
+### Показать запись после обновления
 
-Let's update our `<EditProduct />` component and provide a `redirect` parameter to let users redirect to the show page of the edited product after a successful form submission.
+Настроим компонент `<EditProduct />` на редирект к странице отображения записи после успешной отправки формы редактирования.
+Обнови `src/pages/products/edit.jsx`:
 
-Update your `src/pages/products/edit.tsx` file by adding the following lines:
-
-```tsx title="src/pages/products/edit.tsx"
+```jsx title="src/pages/products/edit.jsx"
 import { useForm, useSelect } from "@refinedev/core";
 
 export const EditProduct = () => {
   const { onFinish, mutationResult, queryResult } = useForm({
     // highlight-start
-    // This will redirect to the show page after the mutation is successful.
-    // Default value is `"list"`.
-    // We can also provide `false` to disable the redirect.
+    // По умолчанию перенаправление происходит на `"list"`.
+    // Мы перенастроили на перенаправление к странице ``"show"`.
+    // А передав значение `false` редирект можно отключить.
     redirect: "show",
     // highlight-end
   });
@@ -47,20 +42,18 @@ export const EditProduct = () => {
 
 <AddCustomRedirectToEdit />
 
-### Continue to Edit the Record After Creation
+### Редактирование записи после создания
 
-Let's update our `<CreateProduct />` component and provide a `redirect` parameter to let users continue to edit the created product after a successful form submission.
+Передав в `<CreateProduct />` `redirect` равный `"edit"`, мы дадим возможность внести изменения в только что созданный продукт.
 
-Update your `src/pages/products/create.tsx` file by adding the following lines:
+Обнови `src/pages/products/create.jsx`:
 
-```tsx title="src/pages/products/create.tsx"
+```jsx title="src/pages/products/create.jsx"
 import { useForm, useSelect } from "@refinedev/core";
 
 export const CreateProduct = () => {
   const { onFinish, mutationResult } = useForm({
     // highlight-start
-    // We can also provide `false` to disable the redirect.
-    // Default value is `"list"`.
     redirect: "edit",
     // highlight-end
   });
@@ -71,23 +64,18 @@ export const CreateProduct = () => {
 
 <AddCustomRedirectToCreate />
 
-## Handling Redirects in Auth Provider
+## Редиректы провайдера аутентификации
 
-Refine provides a simple way to integrate routing into your auth provider. By providing a `redirectTo` parameter to the return values of the `login`, `logout` and `onError` methods, you can redirect the user to the appropriate page. Such as the index page after a successful login or the login page after a successful logout.
+Используя `redirectTo` в методах `login`, `logout` и `onError`, можно перенаправить пользователя на желаемую страницу.
 
-Let's update our `src/providers/auth-provider.ts` file and provide a `redirectTo` properties to the return values of the `login` and `logout` methods. We want to redirect the user to the index page after a successful login and to the login page after a successful logout.
+Обновим `src/providers/auth-provider.js` и зададим `redirectTo` на главную страницу после успешного логина и на логин после успешного логаута.
 
-Update your `src/providers/auth-provider.ts` file by adding the following lines:
-
-```tsx title="src/providers/auth-provider.ts"
-import { AuthProvider } from "@refinedev/core";
-
-export const authProvider: AuthProvider = {
+```jsx title="src/providers/auth-provider.js"
+export const authProvider = {
   logout: async () => {
     localStorage.removeItem("my_access_token");
 
     // highlight-start
-    // Let's redirect to the login page after a successful logout.
     return { success: true, redirectTo: "/login" };
     // highlight-end
   },
@@ -108,7 +96,6 @@ export const authProvider: AuthProvider = {
     if (data.token) {
       localStorage.setItem("my_access_token", data.token);
       // highlight-start
-      // Let's redirect to the index page after a successful login.
       return { success: true, redirectTo: "/" };
       // highlight-end
     }
@@ -120,7 +107,5 @@ export const authProvider: AuthProvider = {
 ```
 
 <AddRedirectsToAuthProvider />
-
-Now we've learned about the redirects and how to benefit from them in our forms and auth provider, let's move on to the next step. In the next step, we'll be learning about how to store the current table state in the URL.
 
 </Sandpack>

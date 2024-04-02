@@ -21,15 +21,12 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const AuthProviderTsxCode = /* tsx */ `
-import { AuthProvider } from "@refinedev/core";
-
-export const authProvider: AuthProvider = {
+const AuthProviderTsxCode = /* jsx */ `
+export const authProvider = {
     login: async ({ email, password }) => { throw new Error("Not implemented"); },
     logout: async () => { throw new Error("Not implemented"); },
     check: async () => { throw new Error("Not implemented"); },
     onError: async (error) => { throw new Error("Not implemented"); },
-    // optional methods
     register: async (params) => { throw new Error("Not implemented"); },
     forgotPassword: async (params) => { throw new Error("Not implemented"); },
     updatePassword: async (params) => { throw new Error("Not implemented"); },
@@ -38,7 +35,7 @@ export const authProvider: AuthProvider = {
 };
 `.trim();
 
-const AppTsxWithAuthProvider = /* tsx */ `
+const AppTsxWithAuthProvider = /* jsx */ `
 import { Refine } from "@refinedev/core";
 
 import { dataProvider } from "./providers/data-provider";
@@ -49,7 +46,7 @@ import { EditProduct } from "./pages/products/edit";
 import { ListProducts } from "./pages/products/list";
 import { CreateProduct } from "./pages/products/create";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine
         dataProvider={dataProvider}
@@ -64,14 +61,9 @@ export default function App(): JSX.Element {
 }
 `.trim();
 
-const AuthProviderTsxWithCheckMethod = /* tsx */ `
-import { AuthProvider } from "@refinedev/core";
-
-export const authProvider: AuthProvider = {
+const AuthProviderTsxWithCheckMethod = /* jsx */ `
+export const authProvider = {
     check: async () => {
-      // When logging in, we'll obtain an access token from our API and store it in the local storage.
-      // Now let's check if the token exists in the local storage.
-      // In the later steps, we'll be implementing the login and logout methods.
       const token = localStorage.getItem("my_access_token");
 
       return { authenticated: Boolean(token) };
@@ -79,7 +71,6 @@ export const authProvider: AuthProvider = {
     login: async ({ email, password }) => { throw new Error("Not implemented"); },
     logout: async () => { throw new Error("Not implemented"); },
     onError: async (error) => { throw new Error("Not implemented"); },
-    // optional methods
     register: async (params) => { throw new Error("Not implemented"); },
     forgotPassword: async (params) => { throw new Error("Not implemented"); },
     updatePassword: async (params) => { throw new Error("Not implemented"); },
@@ -88,7 +79,7 @@ export const authProvider: AuthProvider = {
 };
 `.trim();
 
-const AppTsxWithAuthenticatedComponent = /* tsx */ `
+const AppTsxWithAuthenticatedComponent = /* jsx */ `
 import { Refine, Authenticated } from "@refinedev/core";
 
 import { dataProvider } from "./providers/data-provider";
@@ -99,7 +90,7 @@ import { EditProduct } from "./pages/products/edit";
 import { ListProducts } from "./pages/products/list";
 import { CreateProduct } from "./pages/products/create";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine
         dataProvider={dataProvider}
@@ -130,14 +121,14 @@ export const CreateAuthProviderFile = () => {
     <TutorialCreateFileButton
       onClick={() => {
         sandpack.addFile({
-          "/src/providers/auth-provider.ts": {
+          "/src/providers/auth-provider.js": {
             code: AuthProviderTsxCode,
           },
         });
-        sandpack.openFile("/src/providers/auth-provider.ts");
-        sandpack.setActiveFile("/src/providers/auth-provider.ts");
+        sandpack.openFile("/src/providers/auth-provider.js");
+        sandpack.setActiveFile("/src/providers/auth-provider.js");
       }}
-      name="src/providers/auth-provider.ts"
+      name="src/providers/auth-provider.js"
     />
   );
 };
@@ -148,8 +139,8 @@ export const AddAuthProviderToAppTsx = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", AppTsxWithAuthProvider);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", AppTsxWithAuthProvider);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -162,10 +153,10 @@ export const AddCheckMethodToAuthProvider = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/auth-provider.ts",
+          "/src/providers/auth-provider.js",
           AuthProviderTsxWithCheckMethod,
         );
-        sandpack.setActiveFile("/src/providers/auth-provider.ts");
+        sandpack.setActiveFile("/src/providers/auth-provider.js");
       }}
     />
   );
@@ -177,8 +168,8 @@ export const AddAuthenticatedComponentToAppTsx = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("src/App.tsx", AppTsxWithAuthenticatedComponent);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("src/App.jsx", AppTsxWithAuthenticatedComponent);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -188,11 +179,11 @@ export const AddAuthenticatedComponentToAppTsx = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: AppTsxWithAuthenticatedComponent,
     active: true,
   },
-  "src/providers/auth-provider.ts": {
+  "src/providers/auth-provider.js": {
     code: AuthProviderTsxWithCheckMethod,
   },
 };

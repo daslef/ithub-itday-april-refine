@@ -1,5 +1,5 @@
 ---
-title: Introduction
+title: Введение
 ---
 
 import { Sandpack } from "./sandpack.tsx";
@@ -7,20 +7,18 @@ import { TutorialParameterDropdown } from "@site/src/refine-theme/tutorial-param
 
 <Sandpack>
 
-This tutorial will walk you through from essentials of Refine to advanced topics. You'll learn how to build a full-featured CRUD applications with Refine.
+Этот обучающий курс проведет тебя от основ использования Refine к продвинутым темам, в результате чего ты разработаешь полноценное CRUD-приложение с помощью Refine. 
 
-Refine is router agnostic and you're free to choose the routing library you're most familiar with. Refine officially supports [React Router DOM](/docs/routing/integrations/react-router), [Next.js](/docs/routing/integrations/next-js) and [Remix](/docs/routing/integrations/remix). In the further steps of the tutorial, you'll be presented with the related content based on your routing selection. You can always change your selection and see the content for the other libraries throughout the tutorial.
+Refine можно интегрировать с любой библиотекой роутинга, более того, для трёх из них (`React Router DOM`, `Next.js`, `Remix`) реализованы официальные адаптеры, однако в данном курсе мы рекомендуем использовать именно `React Router DOM`.
 
-Pick the Routing library you want to continue with:
+Выбери библиотеку роутинга:
 
 <TutorialParameterDropdown parameter="routerSelection" label="Routing" className="w-min pb-4" />
 
-In the further units of this tutorial, you'll be selecting a UI framework integration of Refine and learn more about how UI integrations are made and where they can be useful. While Refine provides official support for Ant Design, Material UI, Mantine and Chakra UI, the tutorial is prepared for the top two most used UI frameworks; [Ant Design](/docs/ui-integrations/ant-design/introduction) and [Material UI](docs/ui-integrations/material-ui/introduction).
+Последующие разделы будут адаптированы под выбранный тобой UI-фреймворк. Официально, Refine поддерживает Ant Design, Material UI, Mantine и Chakra UI, но этот курс подготовлен под два наиболее популярных: [Ant Design](/docs/ui-integrations/ant-design/introduction) и [Material UI](docs/ui-integrations/material-ui/introduction).
 
-Pick the UI framework you want to continue with:
+Выбери UI-фреймворк:
 
 <TutorialParameterDropdown parameter="uiSelection" label="UI Framework" className="w-min pb-4" />
-
-You can find the corresponding material that is taught in this tutorial for the other UI frameworks in the [documentation](/docs/guides-concepts/ui-libraries).
 
 </Sandpack>

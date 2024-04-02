@@ -1,22 +1,18 @@
 ---
-title: Syncing State with Location
+title: Синхронизация состояния
 ---
 
 import { Sandpack, AddLocationSyncToListProducts } from "./sandpack.tsx";
 
 <Sandpack>
 
-As the final step of this unit, we'll be learning how to sync the state of our tables with the location. This will allow us to share the current state of the table with others. For example, we can share the URL of the table with our colleagues and they will see the same table with the same filters, sorting, and pagination.
+В качестве заключительного шага секции мы научимся синхронизировать состояние таблиц с URL-адресом. Это даст возможность поделиться состоянием таблиц (выставленные фильтры, сортировки, состояние пагинации и т.п.) с другими пользователями, передав ссылку.
 
-Refine's `useTable` hook offers a `syncWithLocation` option that allows us to sync the state of the table with the location with a single line of code.
+Хук `useTable` содержит для этих целей опцию `syncWithLocation`. При любом изменении состояния таблицы URL будет обновлен.
 
-Whenever the state of the table changes (e.g. filters, sorting, pagination), the URL will be updated with the new state. And the table will be updated with the state in the URL when the page is loaded.
+Обнови `src/pages/products/list.jsx`:
 
-Let's update our `<ListProducts>` component and add the `syncWithLocation` option to the `useTable` hook.
-
-Update your `src/pages/products/list.tsx` file by adding the following lines:
-
-```tsx title="src/pages/products/list.tsx"
+```jsx title="src/pages/products/list.jsx"
 import { useTable, useMany, useNavigation } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -40,19 +36,16 @@ export const ListProducts = () => {
 
 <AddLocationSyncToListProducts />
 
-Now, let's try to navigate to the `/products` page and change the filters, sorting, or pagination. You'll see that the URL is updated with the new state of the table. When you refresh the page, you'll see that the table is updated with the same state in the URL.
+Перейди на страницу `/products`, поменяй фильтры, сортировку или пагинацию, и отследи изменения в URL.
 
-## Summary
+## Итоги
 
-In this unit, we've learned;
+В этой секции мы научились:
 
-- How to use Refine's router integrations,
-- How to define resources and why it's important to define them,
-- Using the inferred parameters from the URL in our hooks,
-- Using Refine's hooks to handle navigation between any action of any resource,
-- Handling redirections from auth provider and forms,
-- Syncing the state of the table with the location.
-
-In the next unit, we'll be learning on how to use a UI framework with Refine and how Refine handles the UI framework integrations.
+- Использовать роутеры и хуки навигации,
+- Объявлять ресурсы,
+- Автоматически определять параметры для хуков на основе URL,
+- Работать с перенаправлениями,
+- Синхронизировать состояние таблиц с URL.
 
 </Sandpack>

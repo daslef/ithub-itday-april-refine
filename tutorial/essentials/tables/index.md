@@ -1,26 +1,26 @@
 ---
-title: Tables
+title: Таблицы
 ---
 
 import { Sandpack, MountListProductsInAppTsx, RefactorToUseTableInListProducts, AddRelationHandlingToUseTableInListProducts, AddGetManyMethodToDataProvider, AddTotalToGetListMethodInDataProvider, AddPaginationToUseTableInListProducts, AddHeaderSortersToUseTableInListProducts } from "./sandpack.tsx";
 
 <Sandpack>
 
-In this step, we'll be learning about the Refine's `useTable` hook to manage tables in our application.
+Следующая важнейшая тема - работа с данными в табличном виде через хук - `useTable`.
 
 :::simple Implementation Tips
 
-Refine's `useTable` has extended versions for UI libraries like Ant Design, Material UI and table libraries like Tanstack Table. To learn more about them, please refer to the [Tables](/docs/guides-concepts/tables) guide.
+Хук `useTable` имеет расширенные версии для UI-библиотек типа Ant Design или Material UI и библиотек для таблиц типа Tanstack Table.
 
 :::
 
-`useTable` hook is an extended version of the `useList` hook. It internally manages the search, filters, sorters and pagination for us and also has a built-in integration with the router options to persist the state of the table in the URL.
+Хук `useTable` построен на базе хука `useList` hook. Он из коробки поддерживает поиск, фильтрацию, сортировку и пагинацию, а также в сквозную интегрируется с роутерами.
 
-In this step, we'll be refactoring our `<ListProducts />` component to use the `useTable` hook.
+В этой секции мы отрефакторим наш компонент `<ListProducts />` для работы через хук `useTable`.
 
-Let's start with mounting our `<ListProducts />` in our `/src/App.tsx` file:
+Вновь замаунтим `<ListProducts />` в `/src/App.jsx`:
 
-```tsx title="src/App.tsx"
+```jsx title="src/App.jsx"
 import { Refine } from "@refinedev/core";
 
 import { dataProvider } from "./providers/data-provider";
@@ -30,7 +30,7 @@ import { EditProduct } from "./pages/products/edit";
 import { ListProducts } from "./pages/products/list";
 import { CreateProduct } from "./pages/products/create";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine dataProvider={dataProvider}>
       {/* <ShowProduct /> */}
@@ -45,13 +45,11 @@ export default function App(): JSX.Element {
 
 <MountListProductsInAppTsx />
 
-## Refactoring to use `useTable`
+## Рефакторинг с использованием `useTable`
 
-We'll be using the `useTable` hook in our `<ListProducts />` component and add fields `id`, `name`, `category`, `material` and `price`.
+Добавим хук `useTable` и поля `id`, `name`, `category`, `material` и `price` в компонент `<ListProducts />`, который находится в файле `src/pages/products/list.jsx`::
 
-Update your `src/pages/products/list.tsx` file by adding the following lines::
-
-```tsx title="src/pages/products/list.tsx"
+```jsx title="src/pages/products/list.jsx"
 // highlight-next-line
 import { useTable } from "@refinedev/core";
 
@@ -104,13 +102,13 @@ export const ListProducts = () => {
 
 <RefactorToUseTableInListProducts />
 
-## Handling Relationships
+## Отношения
 
-Notice that we're now only displaying the `category.id` in our table. Similar to the `useSelect` hook, Refine offers `useMany` hook that we can use to fetch multiple records with their ids at once.
+Обрати внимание, что сейчас мы отображаем в таблице `category.id`. По схожей с хуком `useSelect` схеме, Refine также предлагает хук `useMany` для получения множества записей по их идентификаторам.
 
-Let's update our code to use `useMany` hook to fetch the categories in the table and display the `category.title` instead of `category.id`:
+Используем `useMany` для получения полной информации о категориях по их идентификаторам и отобразим `category.title` вместо `category.id`:
 
-```tsx title="src/pages/products/list.tsx"
+```jsx title="src/pages/products/list.jsx"
 // highlight-next-line
 import { useTable, useMany } from "@refinedev/core";
 
@@ -174,24 +172,22 @@ export const ListProducts = () => {
 
 <AddRelationHandlingToUseTableInListProducts />
 
-## Adding `getMany` to the Data Provider
+## Добавление метода `getMany` в провайдер данных
 
-We're now fetching the categories in our `<ListProducts />` component. However, we're fetching them one-by-one using the `getOne` method. We can implement the `getMany` method in our data provider to fetch multiple records at once.
+Мы научились получать категории для компонента `<ListProducts />`. Но сейчас мы получаем их по одному, через метод `getOne`. Но если реализовать метод `getMany` в провайдере данных, мы сможем получать коллекцию записей однократным запросом.
 
 :::simple Implementation Tips
 
-If `getMany` method is not implemented in the data provider, Refine will automatically fetch the records one-by-one using the `getOne` method.
+Если `getMany` в используемом провайдере данных не реализован, Refine автоматически переходит на получение записей по одной через метод `getOne`.
 
 :::
 
-Our fake API supports fetching multiple records at once by passing multiple ids to the url like; `/products?id=1&id=2&id=3`. Let's add the `getMany` method to our data provider:
+Наш фейковый API поддерживает запрос множества записей через перечисление их идентификаторов в следующей форме: `/products?id=1&id=2&id=3`. Добавим метод `getMany` в провайдер данных:
 
-```tsx title="src/providers/data-provider.ts"
-import type { DataProvider } from "@refinedev/core";
-
+```jsx title="src/providers/data-provider.js"
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   // highlight-start
   getMany: async ({ resource, ids, meta }) => {
     const params = new URLSearchParams();
@@ -233,22 +229,18 @@ export const dataProvider: DataProvider = {
 
 <AddGetManyMethodToDataProvider />
 
-Now our `useMany` method will be able to fetch the categories in a single request and prevent us from bloating our network.
+Наше сетевое взаимодействие стало чуточку эффективней!
 
-## Adding `total` to the Data Provider
+## Реализация `total` в провайдере данных
 
-In order to make the pagination work properly, we need to return a proper `total` value from the `getList` method in our data provider.
+Для корректной работы пагинации мы должны возвращать значение `total` в методе `getList`. Фейковый API предоставляет нам количество записей в хедере `X-Total-Count`.
 
-Our fake API sends the total number of records in the `X-Total-Count` header.
+Обновим `getList`:
 
-Let's update our `getList` method to return the `total` value:
-
-```tsx title="src/providers/data-provider.ts"
-import type { DataProvider } from "@refinedev/core";
-
+```jsx title="src/providers/data-provider.js"
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   // highlight-next-line
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
     const params = new URLSearchParams();
@@ -266,7 +258,6 @@ export const dataProvider: DataProvider = {
     if (filters && filters.length > 0) {
       filters.forEach((filter) => {
         if ("field" in filter && filter.operator === "eq") {
-          // Our fake API supports "eq" operator by simply appending the field name and value to the query string.
           params.append(filter.field, filter.value);
         }
       });
@@ -305,15 +296,15 @@ export const dataProvider: DataProvider = {
 
 <AddTotalToGetListMethodInDataProvider />
 
-## Adding Pagination to the Table
+## Реализация пагинации для таблиц
 
-Now we're ready to add pagination to our table. By using the `total`, Refine's `useTable` will calculate the `pageCount` values for us.
+Теперь, когда у нас есть актуальный `total`, Refine сможет высчитать количество страниц для пагинации `pageCount` за нас.
 
-We'll use the `current`, `setCurrent` and `pageCount` values from the `useTable`'s response to implement the pagination.
+Для пагинирования таблицы мы будем использовать значения `current`, `setCurrent` и `pageCount` из ответа хука `useTable`.
 
-Let's update our `<ListProducts />` component to display a simple pagination under the table:
+Обновим компонент `<ListProducts />` следующим образом:
 
-```tsx title="src/pages/products/list.tsx"
+```jsx title="src/pages/products/list.jsx"
 import { useTable, useMany } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -418,15 +409,15 @@ export const ListProducts = () => {
 
 <AddPaginationToUseTableInListProducts />
 
-Now when we change the page, `useTable` will automatically fetch the new page and update the table.
+Теперь при смене страницы `useTable` автоматически запрашивает данные для новой страницы и ререндерит наш компонент.
 
-## Adding Sorters to the Table
+## Добавление сортировок
 
-As the last step, we'll implement sorters in our table which will allow us to sort the table by clicking on the table headers. We'll use the `sorters` and `setSorters` values from the `useTable`'s response to implement this.
+Наконец, для реализации сортировки мы используем `sorters` и `setSorters` из ответа хука `useTable`.
 
-Let's update our `<ListProducts />` component to allow sorting by clicking on the table headers and display a visual indicator for the sorters:
+Обновим `<ListProducts />` таким образом, чтобы сортировка происходила при клике на заголовки таблицы и сопровождалась визуальным индикатором.
 
-```tsx title="src/pages/products/list.tsx"
+```jsx title="src/pages/products/list.jsx"
 import { useTable, useMany } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -458,11 +449,11 @@ export const ListProducts = () => {
 
   const onNext = () => { /* ... */ };
 
-  const onPage = (page: number) => { /* ... */ };
+  const onPage = (page) => { /* ... */ };
 
   // highlight-start
-  // We'll use this function to get the current sorter for a field.
-  const getSorter = (field: string) => {
+  // используем эту функцию для получения актуального сортировщика
+  const getSorter = (field) => {
     const sorter = sorters?.find((sorter) => sorter.field === field);
 
     if (sorter) {
@@ -472,8 +463,8 @@ export const ListProducts = () => {
   // highlight-end
 
   // highlight-start
-  // We'll use this function to toggle the sorters when the user clicks on the table headers.
-  const onSort = (field: string) => {
+  // используем эту функцию для переключения сортировки при клике на заголовки таблицы
+  const onSort = (field) => {
     const sorter = getSorter(field);
     setSorters(
         sorter === "desc" ? [] : [
@@ -487,7 +478,7 @@ export const ListProducts = () => {
   // highlight-end
 
   // highlight-start
-  // We'll use this object to display visual indicators for the sorters.
+  // используем для визуальной индикации
   const indicator = { asc: "⬆️", desc: "⬇️" };
   // highlight-end
 
@@ -530,16 +521,10 @@ export const ListProducts = () => {
 
 <AddHeaderSortersToUseTableInListProducts />
 
-## Summary
+## Итоги
 
-In this step, we've learned about the `useTable` hook and how to use it to manage tables in our application.
+Хук `useTable` - один из самых полезных для информационных систем, так как очень многие данные удобнее всего представлять именно в виде таблиц. У него много применений, в том числе для реализации фильтров, сортировки и пагинирования. А еще он интегрируется с роутерами для синхронизации адреса страницы и состояния таблицы.
 
-It provides many utilities to manage filters, sorters, paginations and also has a built-in integration with the router options to persist the state of the table in the URL.
-
-Notice that the interfaces are almost identical to the `useList` hook. The only difference is that `useTable` has the implementations for wider range of use cases.
-
-To learn more about the Tables in Refine, please refer to the [Tables](/docs/guides-concepts/tables) guide.
-
-In the next steps, we'll be learning about the Authentication and Routing in Refine.
+Заметь, что хук `useTable` во многом похож на `useList`, но имеет больший охват кейсов применения.
 
 </Sandpack>

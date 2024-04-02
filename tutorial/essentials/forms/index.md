@@ -1,43 +1,43 @@
 ---
-title: Forms
+title: Формы
 ---
 
 import { Sandpack, AddCreateMethod, CreateCreateProductFile, AddUseFormToCreateProduct, AddCreateProductToAppTsx, AddPriceUpdateToCreateProduct, AddCategoryRelationToCreateProduct, MountEditProductInAppTsx, RefactorToUseFormInEditProduct } from "./sandpack.tsx";
 
 <Sandpack>
 
-In this step, we'll be learning about the Refine's `useForm` hook to manage forms for creating and updating records.
+Формы - один из основных способов взаимодействия с бэкендом. Пришло время изучить хук `useForm`, который служит для создания и обновления записей.
 
 :::simple Implementation Tips
 
-Refine's `useForm` has extended versions with more features and compatibility with other libraries. To learn more about the `useForm` hook, please refer to the [Forms](/docs/guides-concepts/forms) guide.
+У хука `useForm` есть расширенные версии, созданные под конкретные UI-библиотеки, и в реальных проектах мы рекомендуем использовать их.
 
 :::
 
-`useForm` hook can be used for 3 different actions;
+Хук `useForm` можно использовать в трех вариациях:
 
-- `create`: To create a new record for a resource using the data provider's `create` method.
-- `edit`: To update an existing record for a resource using the data provider's `update` method.
-- `clone`: To create a new record using an existing record's data as a template using the data provider's `create` method.
+- `create`: для создания новой записи для ресурса через метод `create` провайдера данных.
+- `edit`: для обновления существующей записи ресурса через метод `update` провайдера данных.
+- `clone`: для создания новой записи на основе существующей, также через метод `create`.
 
-In this step, we'll be covering the `create` and `edit` actions. Check out the [Clone](/docs/guides-concepts/forms/#clone) section of the Forms guide for information about the `clone` action.
+В этом руководстве мы рассмотрим первые два.
 
-## Implementing the `create` Method
+## Имплементация метода `create`
 
-To create a record using Refine's `useForm` and `useCreate` hooks, first we need to implement the `create` method in our data provider. This method will be called when we use the `useForm` with `create` action.
+Для создания записи через хуки `useForm` и `useCreate` изначально нам нужно реализовать метод `create` для провайдера данных.
 
-The `create` method will receive `resource`, `variables` and `meta` properties. `resource` will be the name of the entity we're creating. `variables` will be an object containing the data we're sending to the API. `meta` will be an object containing any additional data we're passing to the hook.
+Метод `create` принимает свойства `resource`, `variables` и `meta`:
+- `resource` это имя сущности, экземпляр которой мы создаем;
+- `variables` - объект, содержащий данные;
+- `meta` можно использовать для передачи дополнительных данных и настроек.
 
-`products` entity of our fake API expects us to create a record using the `/products` endpoint with a `POST` request. So, we'll be using the `resource` and `variables` properties to make our request.
+Фейковый API для создания нового продукта ожидает от нас `POST` запрос к эндпоинту `/products`. Обнови `src/providers/data-provider.js` следующим образом:
 
-Update your `src/providers/data-provider.ts` file by adding the following lines:
-
-```ts title="src/providers/data-provider.ts"
-import type { DataProvider } from "@refinedev/core";
+```js title="src/providers/data-provider.js"
 
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   // highlight-start
   create: async ({ resource, variables }) => {
     const response = await fetch(`${API_URL}/${resource}`, {
@@ -70,15 +70,17 @@ export const dataProvider: DataProvider = {
 
 <AddCreateMethod />
 
-## Using the `useForm` Hook
+## Применение хука `useForm`
 
-After implementing the `create` method, we'll be able to call `useForm` hook and create a single record from our API. Let's create a component called `CreateProduct` and mount it inside our `<Refine />` component. Then, we'll use the `useForm` hook inside our `CreateProduct` to create a record of `products` entity from our API.
+Теперь можно попробовать вызвать хук `useForm` для создания новой записи. 
+
+Создай файл `/pages/products/create.js` и компонент `CreateProduct`
 
 <CreateCreateProductFile />
 
-Now, we'll mount our `CreateProduct` component inside our `<Refine />` component. Update your `src/App.tsx` file by adding the following lines::
+Теперь импортируй компонент `CreateProduct` в `src/App.jsx` и примонтируй его внутрь компонента `<Refine />`:
 
-```tsx title="src/App.tsx"
+```jsx title="src/App.jsx"
 import { Refine } from "@refinedev/core";
 
 import { dataProvider } from "./providers/data-provider";
@@ -89,7 +91,7 @@ import { ListProducts } from "./pages/products/list";
 // highlight-next-line
 import { CreateProduct } from "./pages/products/create";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine dataProvider={dataProvider}>
       {/* <ShowProduct /> */}
@@ -104,11 +106,11 @@ export default function App(): JSX.Element {
 
 <AddCreateProductToAppTsx />
 
-We'll be using the `useForm` hook and have form fields for `name`, `description`, `price`, `material` and `category`.
+Будем использовать форму с полями `name`, `description`, `price`, `material` и `category`.
 
-Update your `src/pages/products/create.tsx` file by adding the following lines:
+Обнови `src/pages/products/create.jsx` следующим образом:
 
-```tsx title="src/pages/products/create.tsx"
+```jsx title="src/pages/products/create.jsx"
 import { useForm } from "@refinedev/core";
 
 export const CreateProduct = () => {
@@ -117,11 +119,11 @@ export const CreateProduct = () => {
     resource: "products",
   });
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    // Using FormData to get the form values and convert it to an object.
+    // используем FormData чтобы достать значения из формы и упаковать их в объект
     const data = Object.fromEntries(new FormData(event.target).entries());
-    // Calling onFinish to submit with the data we've collected from the form.
+    // вызываем onFinish чтобы отправить данные
     onFinish(data);
   };
 
@@ -151,17 +153,15 @@ export const CreateProduct = () => {
 
 <AddUseFormToCreateProduct />
 
-Now, we'll be able to create a record using our `CreateProduct` component.
+## Предобработка значений перед отправкой формы
 
-## Updating Values Before Submitting
+Кажется, что мы готовы к отправке формы. Но перед этим стоит удостовериться, что формат наших данных соответствует ожиданиям API.
 
-Although we're able to create a record using our `CreateProduct` component, we're not quite finished yet. We need to make sure that the values we're sending to the API are in the correct format.
+Ориентируясь на документацию фейкового API, оно ожидает поле `price` в виде строки с двумя знаками после точки, а поле `category` - в виде объекта со свойством `id`. Так что необходимо сделать некоторую предобработку.
 
-Our fake API's `products` field requires us to send the `price` as a string with 2 decimal points. So, we need to make sure that the `price` value is in correct format before submitting the form. Also our `category` field requires us to send an object with the `id` property. So, we need to make sure that the `category` value is in correct format before submitting the form.
+Обнови `src/pages/products/create.jsx`, добавив следующие строки::
 
-Update your `src/pages/products/create.tsx` file by adding the following lines::
-
-```tsx title="src/pages/products/create.tsx"
+```jsx title="src/pages/products/create.jsx"
 import { useForm } from "@refinedev/core";
 
 export const CreateProduct = () => {
@@ -170,11 +170,9 @@ export const CreateProduct = () => {
     resource: "products",
   });
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    // Using FormData to get the form values and convert it to an object.
     const data = Object.fromEntries(new FormData(event.target).entries());
-    // Calling onFinish to submit with the data we've collected from the form.
     // highlight-start
     onFinish({
       ...data,
@@ -190,25 +188,23 @@ export const CreateProduct = () => {
 
 <AddPriceUpdateToCreateProduct />
 
-We're now able to create a record with the `price` value properly formatted.
+Теперь поле `price` имеет корректный формат.
 
 :::simple Implementation Tips
 
-Modifying the values before submission is supported in all the derivatives of the `useForm` hook but the implementation may differ slightly. To learn more about their usage, please refer to the [Modifying Data Before Submission](/docs/guides-concepts/forms/#modifying-data-before-submission) section of the Forms guide.
+Изменение значение перед отправкой поддерживается всеми версиями хука `useForm`, но реализация может отличаться, поэтому используя аналоги, настроенные под конкретную UI-библиотеку, обращайтесь к документации.
 
 :::
 
-## Handling Relationships
+## Отношения
 
-Notice that we've added a `category` field to our `CreateProduct` component. This field will be used to select the category of the product we're creating.
+Теперь обратим внимание на поле `category`, которое используется для выбора категории нового продукта.
 
-Our fake API has the `categories` entity which we use in our `products` entity as a relationship. So, we need to make sure that we're sending the correct data to the API.
+Наш фейковый API предоставляет сущность `categories`, которая связана с используемой нами сущностью `products`. Следовательно, стоит удостовериться, что мы отправляем категорию, которая точно существует, и в идеале - подгружать список категорий для выбора динамически!
 
-To handle this relation in our forms, Refine offers a `useSelect` hook. This hook will be used to fetch the data for the relationship and provide us options for the `<select>` element.
+Для подобных случаев Refine предлагает хук `useSelect`. Его можно использовать для подгрузки данных для html-элемента `<select>`:
 
-Update your `src/pages/products/create.tsx` file by adding the following lines to use `useSelect` and the `<select>` element:
-
-```tsx title="src/pages/products/create.tsx"
+```jsx title="src/pages/products/create.jsx"
 // highlight-next-line
 import { useForm, useSelect } from "@refinedev/core";
 
@@ -221,12 +217,10 @@ export const CreateProduct = () => {
   // highlight-start
   const { options } = useSelect({
     resource: "categories",
-    // optionLabel: "title", // Default value is "title" so we don't need to provide it.
-    // optionValue: "id", // Default value is "id" so we don't need to provide it.
   });
   // highlight-end
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event) => {
     /* ... */
   };
 
@@ -253,21 +247,20 @@ export const CreateProduct = () => {
 
 <AddCategoryRelationToCreateProduct />
 
-And we'll finally be able to create a proper record with all the necessary fields in right format and with the correct relationships.
+Ура! Мы наконец можем отправить форму 😅
 
 :::simple Relations
 
-Refine allows you to use different types of relationships in your forms, tables or in other ways to display data. To learn more about the relationships, please refer to the [Relationships](/docs/guides-concepts/data-fetching/#relationships) section of the Data Fetching guide.
-
+Refine поддерживает различные виды отношений, которые могут быть полезны для отображения в формах, таблицах, и не только. Если возникнет необходимость, больше информации ты сможешь найти в [разделе документации по работе с данными](/docs/guides-concepts/data-fetching/#relationships)
 :::
 
-## Refactoring `src/pages/products/edit.tsx` with `useForm`
+## Рефакторинг `src/pages/products/edit.jsx` с `useForm`
 
-Now we've learned how to use the `useForm` hook to create a record. Let's refactor our `EditProduct` component to use the `useForm` hook to update a record.
+Теперь, когда мы научились работать с `useForm`, перепишем на его основе компонент `EditProduct` для обновления записей.
 
-Let's start with mounting our `EditProduct` component inside our `<Refine />` component. Update your `src/App.tsx` file by adding the following lines:
+Вновь замаунтим `EditProduct` в компонент `<Refine />`:
 
-```tsx title="src/App.tsx"
+```jsx title="src/App.jsx"
 import { Refine } from "@refinedev/core";
 
 import { dataProvider } from "./providers/data-provider";
@@ -277,7 +270,7 @@ import { EditProduct } from "./pages/products/edit";
 import { ListProducts } from "./pages/products/list";
 import { CreateProduct } from "./pages/products/create";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine dataProvider={dataProvider}>
       {/* <ShowProduct /> */}
@@ -292,23 +285,13 @@ export default function App(): JSX.Element {
 
 <MountEditProductInAppTsx />
 
-Now, we should be seeing our `EditProduct` component, let's import our `useForm` hook to replace both `useOne` and `useUpdate` hooks.
+Теперь, когда мы снова увидели компонент `EditProduct`, импортируем `useForm` для замены им сразу двух действий - получения исходных данных через `useOne` и обновления через `useUpdate`.
 
-We'll also be re-using the elements we've used for the fields in our `<CreateProduct />` component.
+Мы также переиспользуем часть элементов, использованных при построении компонента `<CreateProduct />`.
 
-:::simple Implementation Tips
+Обнови `src/pages/products/edit.jsx` следующим образом:
 
-`useForm` hook requires us to pass the `id` property when we're using the `edit` action.
-
-`useForm` will fetch the record first to make sure we're able to provide default values for the fields.
-
-In the extensions of the `useForm` hook, this is handled automatically. To learn more about the extensions, please refer to the [Forms](/docs/guides-concepts/forms) guide.
-
-:::
-
-Update your `src/pages/products/edit.tsx` file by adding the following lines:
-
-```tsx title="src/pages/products/edit.tsx"
+```jsx title="src/pages/products/edit.jsx"
 import { useForm, useSelect } from "@refinedev/core";
 
 export const EditProduct = () => {
@@ -327,11 +310,10 @@ export const EditProduct = () => {
     resource: "categories",
   });
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    // Using FormData to get the form values and convert it to an object.
     const data = Object.fromEntries(new FormData(event.target).entries());
-    // Calling onFinish to submit with the data we've collected from the form.
+
     onFinish({
       ...data,
       price: Number(data.price).toFixed(2),
@@ -395,23 +377,18 @@ export const EditProduct = () => {
 
 <RefactorToUseFormInEditProduct />
 
-Now we'll be able to update a record using our `EditProduct` component with `useForm` and provide all the necessary fields with the correct formats and relationships.
+Сделано! Теперь функционал редактирования реализован на базе более продвинутого хука `useForm`!
 
-## Summary
+## Итоги
 
-Now we've learned how to use the `useForm` hook to create and update records. We've also learned how to handle relationships in our forms.
+Итак, мы рассмотрели хук `useForm`, который может быть использован для создания и обновления записей, попутно поработав с отношениями.
 
-Refine's `useForm` hooks are not limited to these abilities. `useForm` hook will also handle;
+Хук `useForm` и его расширения так же позволяют:
 
-- Invalidation of the related queries,
-- Redirecting to a different page after submission,
-- Server side validation,
-- Optimistic updates for the related queries,
-- Auto saving,
-- Notifications and more...
-
-To learn more about the `useForm` hook, please refer to the [Forms](/docs/guides-concepts/forms) guide.
-
-In the next step, we'll be learning about the Refine's `useTable` hook and how to display a list of records in a table.
+- Инвалидировать связанные запросы,
+- Перенаправлять после отправки формы,
+- Интегрировать валидацию на стороне сервера,
+- Автосохраненять состояние полей,
+- Отправлять уведомления и многое другое...
 
 </Sandpack>

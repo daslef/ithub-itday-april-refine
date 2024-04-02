@@ -22,7 +22,7 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const ListProductsWithSyncWithLocation = /* tsx */ `
+const ListProductsWithSyncWithLocation = /* jsx */ `
 import { useTable, useMany, useNavigation } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -62,11 +62,11 @@ export const ListProducts = () => {
     }
   };
 
-  const onPage = (page: number) => {
+  const onPage = (page) => {
     setCurrent(page);
   };
 
-  const getSorter = (field: string) => {
+  const getSorter = (field) => {
     const sorter = sorters?.find((sorter) => sorter.field === field);
 
     if (sorter) {
@@ -74,7 +74,7 @@ export const ListProducts = () => {
     }
   };
 
-  const onSort = (field: string) => {
+  const onSort = (field) => {
     const sorter = getSorter(field);
     setSorters(
       sorter === "desc"
@@ -175,10 +175,10 @@ export const AddLocationSyncToListProducts = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/list.tsx",
+          "src/pages/products/list.jsx",
           ListProductsWithSyncWithLocation,
         );
-        sandpack.setActiveFile("/src/pages/products/list.tsx");
+        sandpack.setActiveFile("/src/pages/products/list.jsx");
       }}
     />
   );
@@ -188,7 +188,7 @@ export const AddLocationSyncToListProducts = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/pages/products/list.tsx": {
+  "src/pages/products/list.jsx": {
     code: ListProductsWithSyncWithLocation,
     active: true,
   },

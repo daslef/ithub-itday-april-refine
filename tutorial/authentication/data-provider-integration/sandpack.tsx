@@ -21,12 +21,10 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const DataProviderWithAuthentication = /* ts */ `
-import type { DataProvider } from "@refinedev/core";
-
+const DataProviderWithAuthentication = /* js */ `
 const API_URL = "https://api.fake-rest.refine.dev";
 
-const fetcher = async (url: string, options?: RequestInit) => fetch(url, {
+const fetcher = async (url, options) => fetch(url, {
         ...options,
         headers: {
             ...options?.headers,
@@ -34,7 +32,7 @@ const fetcher = async (url: string, options?: RequestInit) => fetch(url, {
         },
     });
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
     const params = new URLSearchParams();
 
@@ -51,7 +49,6 @@ export const dataProvider: DataProvider = {
     if (filters && filters.length > 0) {
       filters.forEach((filter) => {
         if ("field" in filter && filter.operator === "eq") {
-          // Our fake API supports "eq" operator by simply appending the field name and value to the query string.
           params.append(filter.field, filter.value);
         }
       });
@@ -64,7 +61,6 @@ export const dataProvider: DataProvider = {
     const data = await response.json();
 
     const total = Number(response.headers.get("x-total-count"));
-
 
     return {
         data,
@@ -133,7 +129,7 @@ export const dataProvider: DataProvider = {
 };
 `.trim();
 
-const ListProductsWithProtectedProductsResource = /* tsx */ `
+const ListProductsWithProtectedProductsResource = /* jsx */ `
 import { useTable, useMany } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -171,11 +167,11 @@ export const ListProducts = () => {
     }
   };
 
-  const onPage = (page: number) => {
+  const onPage = (page) => {
     setCurrent(page);
   };
 
-  const getSorter = (field: string) => {
+  const getSorter = (field) => {
     const sorter = sorters?.find((sorter) => sorter.field === field);
 
     if (sorter) {
@@ -183,7 +179,7 @@ export const ListProducts = () => {
     }
   }
 
-  const onSort = (field: string) => {
+  const onSort = (field) => {
     const sorter = getSorter(field);
     setSorters(
         sorter === "desc" ? [] : [
@@ -256,10 +252,8 @@ export const ListProducts = () => {
 };
 `.trim();
 
-const AuthProviderWithOnErrorMethod = /* tsx */ `
-import { AuthProvider } from "@refinedev/core";
-
-export const authProvider: AuthProvider = {
+const AuthProviderWithOnErrorMethod = /* jsx */ `
+export const authProvider = {
     onError: async (error) => {
         if (error?.status === 401) {
             return {
@@ -289,7 +283,6 @@ export const authProvider: AuthProvider = {
         localStorage.removeItem("my_access_token");
         return { success: true };
     },
-    // login method receives an object with all the values you've provided to the useLogin hook.
     login: async ({ email, password }) => {
         const response = await fetch("https://api.fake-rest.refine.dev/auth/login", {
             method: "POST",
@@ -313,7 +306,6 @@ export const authProvider: AuthProvider = {
 
         return { authenticated: Boolean(token) };
     },
-    // optional methods
     register: async (params) => { throw new Error("Not implemented"); },
     forgotPassword: async (params) => { throw new Error("Not implemented"); },
     updatePassword: async (params) => { throw new Error("Not implemented"); },
@@ -330,10 +322,10 @@ export const AddAuthenticationToDataProvider = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/data-provider.ts",
+          "/src/providers/data-provider.js",
           DataProviderWithAuthentication,
         );
-        sandpack.setActiveFile("/src/providers/data-provider.ts");
+        sandpack.setActiveFile("/src/providers/data-provider.js");
       }}
     />
   );
@@ -346,10 +338,10 @@ export const AddProtectedProductsResourceToListProducts = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/list.tsx",
+          "src/pages/products/list.jsx",
           ListProductsWithProtectedProductsResource,
         );
-        sandpack.setActiveFile("/src/pages/products/list.tsx");
+        sandpack.setActiveFile("/src/pages/products/list.jsx");
       }}
     />
   );
@@ -362,10 +354,10 @@ export const AddOnErrorMethodToAuthProvider = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/auth-provider.ts",
+          "/src/providers/auth-provider.js",
           AuthProviderWithOnErrorMethod,
         );
-        sandpack.setActiveFile("/src/providers/auth-provider.ts");
+        sandpack.setActiveFile("/src/providers/auth-provider.js");
       }}
     />
   );
@@ -375,14 +367,14 @@ export const AddOnErrorMethodToAuthProvider = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/providers/data-provider.ts": {
+  "src/providers/data-provider.js": {
     code: DataProviderWithAuthentication,
   },
-  "src/pages/products/list.tsx": {
+  "src/pages/products/list.jsx": {
     code: ListProductsWithProtectedProductsResource,
     active: true,
   },
-  "src/providers/auth-provider.ts": {
+  "src/providers/auth-provider.js": {
     code: AuthProviderWithOnErrorMethod,
   },
 };

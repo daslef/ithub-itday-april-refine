@@ -22,13 +22,12 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const AppTsxWithAntDesignWrappers = /* tsx */ `
+const AppTsxWithAntDesignWrappers = /* jsx */ `
 import { Refine, Authenticated } from "@refinedev/core";
 import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
 
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 
-// We'll wrap our app with Ant Design's ConfigProvider to set the theme and App component to use the theme properly.
 import { ConfigProvider, App as AntdApp } from "antd";
 
 import { dataProvider } from "./providers/data-provider";
@@ -42,10 +41,9 @@ import { CreateProduct } from "./pages/products/create";
 import { Login } from "./pages/login";
 import { Header } from "./components/header";
 
-// We're importing a reset.css file to reset the default styles of the browser.
 import "antd/dist/reset.css";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <BrowserRouter>
       <ConfigProvider>
@@ -106,14 +104,13 @@ export default function App(): JSX.Element {
 }
 // `.trim();
 
-const AppTsxWithLayout = /* tsx */ `
+const AppTsxWithLayout = /* jsx */ `
 import { Refine, Authenticated } from "@refinedev/core";
 import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
 import { ThemedLayoutV2 } from "@refinedev/antd";
 
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 
-// We'll wrap our app with Ant Design's ConfigProvider to set the theme and App component to use the theme properly.
 import { ConfigProvider, App as AntdApp } from "antd";
 
 import { dataProvider } from "./providers/data-provider";
@@ -126,10 +123,9 @@ import { CreateProduct } from "./pages/products/create";
 
 import { Login } from "./pages/login";
 
-// We're importing a reset.css file to reset the default styles of the browser.
 import "antd/dist/reset.css";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <BrowserRouter>
       <ConfigProvider>
@@ -199,8 +195,8 @@ export const AddAntDesignToApp = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", AppTsxWithAntDesignWrappers);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", AppTsxWithAntDesignWrappers);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -212,8 +208,8 @@ export const AddLayoutToApp = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", AppTsxWithLayout);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", AppTsxWithLayout);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -223,11 +219,11 @@ export const AddLayoutToApp = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: AppTsxWithLayout,
     active: true,
   },
-  "src/components/header.tsx": {
+  "src/components/header.jsx": {
     code: "",
     hidden: true,
   },

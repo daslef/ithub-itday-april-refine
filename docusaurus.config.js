@@ -104,8 +104,6 @@ const siteConfig = {
     },
     "./plugins/docgen.js",
     "./plugins/examples.js",
-    // "./plugins/intercom.js",
-    // "./plugins/clarity.js",
     "./plugins/templates.js",
     "./plugins/example-redirects.js",
     "./plugins/tutorial-navigation.js",

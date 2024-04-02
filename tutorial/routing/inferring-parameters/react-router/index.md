@@ -1,28 +1,20 @@
 ---
-title: Inferring Parameters
+title: Инференс параметров
 ---
 
 import { Sandpack, AddInferenceToEditProduct, AddInferenceToCreateProduct, AddInferenceToShowProduct, AddInferenceToListProducts } from "./sandpack.tsx";
 
 <Sandpack>
 
-Now we've learned about the `useNavigation` hook and how to handle navigation with Refine. In this step, we'll be updating components to benefit from the parameter inference of Refine.
+Освоившись с хуком `useNavigation`, теперь мы можем отрефакторить существующие компоненты с учетом инференса параметров.
 
-When integrated with a router provider, Refine infers the parameters from route definitions and incorporates them into its hooks and components, eliminating the need for manual passing of `resource`, `id` and `action` parameters.
+При использования провайдера роутинга Refine инферит параметры из определения роута и прокидывает их в хуки и компоненты автоматически, что в большинстве случае избавляет нас от необходимости задавать `resource`, `id` или `action` вручную (но не запрещает).
 
-:::tip
+## Рефакторинг компонента `ListProducts`
 
-You can always pass the parameters manually if you want to override the inferred parameters.
+Обновим компонент `<ListProducts />`, исключив параметр `resource` из хука `useTable`:
 
-:::
-
-## Updating the `ListProducts` Component
-
-Let's update our `<ListProducts />` component and omit the `resource` parameter from the `useTable` hook.
-
-Update your `src/pages/products/list.tsx` file by adding the following lines:
-
-```tsx title="src/pages/products/list.tsx"
+```jsx title="src/pages/products/list.jsx"
 import { useTable, useMany } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -46,15 +38,15 @@ export const ListProducts = () => {
 
 <AddInferenceToListProducts />
 
-## Updating the `ShowProduct` Component
+## Рефакторинг компонента `ShowProduct`
 
-Let's update our `<ShowProduct />` component and omit the `resource` and `id` parameters. Remember that previously we've hard-coded the `id` parameter. Now we'll be letting Refine to infer the `id` parameter from the route definition and dynamically fetch the product.
+Для компонента `<ShowProduct />` рискнем убрать сразу два параметра: `resource` и `id`. Ранее мы задавали `id` хардкодом, теперь же позволим определить `id` автоматически, исходя из роута, и динамически подгрузить контент.
 
-We'll also start using [`useShow`](/docs/data/hooks/use-show) hook which is wrapper around `useOne`. Unlike the useOne hook, it offers inference capabilities, eliminating the need to explicitly pass `resource` and `id` parameters
+Мы также перейдем на хук [`useShow`](/docs/data/hooks/use-show), который является более продвинутой оберткой над `useOne` и в отличие от него поддерживает инференс, значит что передавать `resource` и `id` вручную более не требуется.
 
-Update your `src/pages/products/show.tsx` file by adding the following lines:
+Обнови `src/pages/products/show.jsx`:
 
-```tsx title="src/pages/products/show.tsx"
+```jsx title="src/pages/products/show.jsx"
 // highlight-next-line
 import { useShow } from "@refinedev/core";
 
@@ -70,13 +62,13 @@ export const ShowProduct = () => {
 
 <AddInferenceToShowProduct />
 
-## Updating the `EditProduct` Component
+## Рефакторинг компонента `EditProduct`
 
-Let's update our `<EditProduct />` component and omit the `resource`, `action` and `id` parameters from the `useForm` hook. Just like the `<ShowProduct />` component, we'll be letting Refine to infer the `id` parameter from the route definition. Since we've defined the `edit` action in our resource definition, Refine will also infer the `action` parameter as `edit`.
+Обновим компонент `<EditProduct />`, удалив `resource`, `action` и `id` из хука `useForm`. Помимо инференса ресурса и идентификатора, как в примерах ранее, здесь также автоматически распознается параметр `action`, равный `edit`.
 
-Update your `src/pages/products/edit.tsx` file by adding the following lines:
+Обнови `src/pages/products/edit.jsx`:
 
-```tsx title="src/pages/products/edit.tsx"
+```jsx title="src/pages/products/edit.jsx"
 import { useForm, useSelect } from "@refinedev/core";
 
 export const EditProduct = () => {
@@ -99,13 +91,13 @@ export const EditProduct = () => {
 
 <AddInferenceToEditProduct />
 
-## Updating the `CreateProduct` Component
+## Рефакторинг компонента `CreateProduct`
 
-Let's update our `<CreateProduct />` component and omit the `resource` and `action` parameters from the `useForm` hook. Since we've defined the `create` action in our resource definition, Refine will also infer the `action` parameter as `create`.
+Наконец, проделаем аналогичные операции с компонентом `<CreateProduct />`, удалив `resource` и `action` из хука `useForm`. Так как при определении ресурсов мы указали текущий роут как роут для создания новых записей, `create` также автоматически определяется как значение параметра `action`.
 
-Update your `src/pages/products/create.tsx` file by adding the following lines:
+Обнови `src/pages/products/create.jsx`:
 
-```tsx title="src/pages/products/create.tsx"
+```jsx title="src/pages/products/create.jsx"
 import { useForm, useSelect } from "@refinedev/core";
 
 export const CreateProduct = () => {
@@ -126,8 +118,6 @@ export const CreateProduct = () => {
 
 <AddInferenceToCreateProduct />
 
-Now you should be able to see that our components are working as expected. We've successfully updated our components to benefit from the parameter inference of Refine.
-
-In the next step, we'll be learning about how to handle redirects in our app.
+Теперь мы используем преимущества динамического инференса параметров для хуков!
 
 </Sandpack>

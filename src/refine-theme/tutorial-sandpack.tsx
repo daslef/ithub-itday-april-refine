@@ -354,7 +354,7 @@ const TutorialSandpackBase = ({
       ),
     },
   },
-  template = "react-ts",
+  template = "vite-react",
   customSetup,
   files,
   ...props

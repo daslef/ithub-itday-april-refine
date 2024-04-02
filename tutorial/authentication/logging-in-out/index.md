@@ -1,29 +1,25 @@
 ---
-title: Logging In & Out
+title: Логин & Логаут
 ---
 
 import { Sandpack, AddLoginMethodToAuthProvider, CreateLoginComponentFile, AddLoginToAppTsx, AddUseLoginToLoginComponent, AddLogoutMethodToAuthProvider, CreateHeaderComponentFile, AddHeaderToAppTsx, AddUseLogoutToHeaderComponent } from "./sandpack.tsx";
 
 <Sandpack>
 
-In the previous step, we've added the `<Authenticated />` component to our `src/App.tsx` file to protect our content from unauthenticated users. Now, we'll be implementing the `login` and `logout` methods in our auth provider to enable our users to login and logout.
+В прошлой секции мы добавили компонент `<Authenticated />` в `src/App.tsx` для ограничения доступа для неавторизованных пользователей. Следующая задача - реализовать методы `login` и `logout` в ауз-провайдере.
 
-## Implementing the `login` Method
+## Реализация метода `login`
 
-The `login` method will be used to authenticate the user and other related operations such as storing the token etc. It should return a `Promise` which resolves to an object. The object should contain `success` property to indicate whether the login operation was successful or not.
+Метод `login` отвечает за аутентификацию пользователя и сопутствующие операции вроде сохранения токенов. Он должен возаращать `Promise`, разрешающийся в объект со статусом операции в поле `success`.
 
-Our fake REST API requires us to send a `POST` request to `/auth/login` endpoint with the `email` and `password` parameters in the request body. It will return a `token` in the response body.
+Наш фейковый REST API ожидает от нас `POST` запрос к эндпоинту `/auth/login` с параметрами `email` и `password` в теле запроса, и вернет нам `token` в теле ответа. Мы сохраним `token` в `localStorage` для дальнейшего использования.
 
-We'll also be storing the `token` in the `localStorage` for later use.
+Обнови `src/providers/auth-provider.js` следующим образом:
 
-Update your `src/providers/auth-provider.ts` file by adding the following lines:
-
-```ts title="src/providers/auth-provider.ts"
-import { AuthProvider } from "@refinedev/core";
-
-export const authProvider: AuthProvider = {
+```js title="src/providers/auth-provider.js"
+export const authProvider = {
   // highlight-start
-  // login method receives an object with all the values you've provided to the useLogin hook.
+  // метод login принимает на вход объект со всеми значениями, требуемыми в хуке useLogin.
   login: async ({ email, password }) => {
     const response = await fetch(
       "https://api.fake-rest.refine.dev/auth/login",
@@ -63,17 +59,15 @@ export const authProvider: AuthProvider = {
 
 <AddLoginMethodToAuthProvider />
 
-## Using the `useLogin` Hook
+## Использование хука `useLogin`
 
-After implementing the `login` method, we'll be able to call `useLogin` hook and login our users. Let's create a component called `Login` and mount it inside our `<Refine />` component.
+Создадим компонент `Login` в `./pages/login.jsx`.
 
 <CreateLoginComponentFile />
 
-Then, we'll mount our `<Login />` component and pass it to the `<Authenticated />` component as the `fallback` prop in our `src/App.tsx` file.
+Импортируем его в `src/App.jsx` и передадим в качестве значения для свойства `fallback` компонента `<Authenticated />`:
 
-Update your `src/App.tsx` file by adding the following lines:
-
-```tsx title="src/App.tsx"
+```jsx title="src/App.jsx"
 import { Refine, Authenticated } from "@refinedev/core";
 
 import { dataProvider } from "./providers/data-provider";
@@ -87,7 +81,7 @@ import { CreateProduct } from "./pages/products/create";
 // highlight-next-line
 import { Login } from "./pages/login";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine dataProvider={dataProvider} authProvider={authProvider}>
       <Authenticated
@@ -107,11 +101,9 @@ export default function App(): JSX.Element {
 
 <AddLoginToAppTsx />
 
-Finally, we'll import `useLogin` hook and use it inside our `Login` component to login our users.
+Наконец, применим `useLogin`:
 
-Update your `src/pages/login.tsx` file by adding the following lines:
-
-```tsx title="src/pages/login.tsx"
+```jsx title="src/pages/login.jsx"
 import React from "react";
 // highlight-next-line
 import { useLogin } from "@refinedev/core";
@@ -120,11 +112,9 @@ export const Login = () => {
   // highlight-next-line
   const { mutate, isLoading } = useLogin();
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    // Using FormData to get the form values and convert it to an object.
     const data = Object.fromEntries(new FormData(event.target).entries());
-    // Calling mutate to submit with the data we've collected from the form.
     // highlight-next-line
     mutate(data);
   };
@@ -138,7 +128,6 @@ export const Login = () => {
           type="email"
           id="email"
           name="email"
-          // We're providing default values for demo purposes.
           defaultValue="demo@demo.com"
         />
 
@@ -147,7 +136,6 @@ export const Login = () => {
           type="password"
           id="password"
           name="password"
-          // We're providing default values for demo purposes.
           defaultValue="demodemo"
         />
 
@@ -163,18 +151,16 @@ export const Login = () => {
 
 <AddUseLoginToLoginComponent />
 
-## Implementing the `logout` Method
+## Имплементация метода `logout`
 
-The `logout` method will be used to logout the user and other related operations such as removing the token etc. It should return a `Promise` which resolves to an object. The object should contain `success` property to indicate whether the logout operation was successful or not.
+Метод `logout` служит для реализации выхода из приложения и сопутствующих операций, таких как удаление токена. Он должен возвращать `Promise`, разрешающийся в объект с полем `success` со статусом действия.
 
-Our fake REST API doesn't require us to send any request to logout the user. We'll just be removing the `token` from the `localStorage`.
+Наш фейковый REST API не требует отправки каких-либо запросов, так что требуется лишь удалить `token` из `localStorage`.
 
-Update your `src/providers/auth-provider.ts` file by adding the following lines:
+Обнови `src/providers/auth-provider.js`:
 
-```ts title="src/providers/auth-provider.ts"
-import { AuthProvider } from "@refinedev/core";
-
-export const authProvider: AuthProvider = {
+```js title="src/providers/auth-provider.js"
+export const authProvider = {
   // highlight-start
   logout: async () => {
     localStorage.removeItem("my_access_token");
@@ -182,7 +168,7 @@ export const authProvider: AuthProvider = {
     return { success: true };
   },
   // highlight-end
-  // login method receives an object with all the values you've provided to the useLogin hook.
+
   login: async ({ email, password }) => {
     const response = await fetch(
       "https://api.fake-rest.refine.dev/auth/login",
@@ -218,17 +204,15 @@ export const authProvider: AuthProvider = {
 
 <AddLogoutMethodToAuthProvider />
 
-## Using the `useLogout` Hook
+## Использование хука `useLogout`
 
-After implementing the `logout` method, we'll be able to call `useLogout` hook and logout our users. Let's create a component called `Header` to add a logout button and mount it inside our `<Refine />` component.
+Теперь создадим компонент `Header` в `./components/header.jsx` и разместим в нем кнопку логаута.
 
 <CreateHeaderComponentFile />
 
-Then, we'll mount our `<Header />` component and pass it to the `<Authenticated />` component as children in our `src/App.tsx` file.
+Импортируй `<Header />` в `src/App.tsx` и передай его в `<Authenticated />` в качестве дочернего:
 
-Update your `src/App.tsx` file by adding the following lines:
-
-```tsx title="src/App.tsx"
+```jsx title="src/App.jsx"
 import { Refine, Authenticated } from "@refinedev/core";
 
 import { dataProvider } from "./providers/data-provider";
@@ -243,7 +227,7 @@ import { Login } from "./pages/login";
 // highlight-next-line
 import { Header } from "./components/header";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine dataProvider={dataProvider} authProvider={authProvider}>
       <Authenticated key="protected" fallback={<Login />}>
@@ -261,11 +245,9 @@ export default function App(): JSX.Element {
 
 <AddHeaderToAppTsx />
 
-Finally, we'll import `useLogout` hook and use it inside our `Header` component to logout our users.
+Импортируем `useLogout` и используем в компоненте `Header`:
 
-Update your `src/components/header.tsx` file by adding the following lines:
-
-```tsx title="src/components/header.tsx"
+```jsx title="src/components/header.jsx"
 import React from "react";
 // highlight-next-line
 import { useLogout } from "@refinedev/core";
@@ -292,10 +274,6 @@ export const Header = () => {
 
 <AddUseLogoutToHeaderComponent />
 
-Now, we'll be able to login and logout our users.
-
-Notice that after logging in, the `<Authenticated />` component will render our content instead of the `fallback` prop. Same also applies to logging out. Refine will handle the invalidation of the `check` method for us, so we don't need to worry about it.
-
-In the next step, we'll be learning about the user identity and how to use it in our application.
+Теперь вход и выход из системы реализованы. Заметим, что после логина компонент `<Authenticated />` отрисовывает защищенный контент, а после логаута - ориентируется на свойство `fallback`. Refine отслеживает статус аутентификации за нас.
 
 </Sandpack>

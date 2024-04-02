@@ -22,11 +22,8 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const AuthProviderTsxWithLoginMethod = /* tsx */ `
-import { AuthProvider } from "@refinedev/core";
-
-export const authProvider: AuthProvider = {
-    // login method receives an object with all the values you've provided to the useLogin hook.
+const AuthProviderTsxWithLoginMethod = /* jsx */ `
+export const authProvider = {
     login: async ({ email, password }) => {
         const response = await fetch("https://api.fake-rest.refine.dev/auth/login", {
             method: "POST",
@@ -52,7 +49,6 @@ export const authProvider: AuthProvider = {
     },
     logout: async () => { throw new Error("Not implemented"); },
     onError: async (error) => { throw new Error("Not implemented"); },
-    // optional methods
     register: async (params) => { throw new Error("Not implemented"); },
     forgotPassword: async (params) => { throw new Error("Not implemented"); },
     updatePassword: async (params) => { throw new Error("Not implemented"); },
@@ -61,7 +57,7 @@ export const authProvider: AuthProvider = {
 };
 `.trim();
 
-const LoginComponentBase = /* tsx */ `
+const LoginComponentBase = /* jsx */ `
 import React from "react";
 
 export const Login = () => {
@@ -73,7 +69,7 @@ export const Login = () => {
 };
 `.trim();
 
-const AppTsxWithLoginComponent = /* tsx */ `
+const AppTsxWithLoginComponent = /* jsx */ `
 import { Refine, Authenticated } from "@refinedev/core";
 
 import { dataProvider } from "./providers/data-provider";
@@ -86,7 +82,7 @@ import { CreateProduct } from "./pages/products/create";
 
 import { Login } from "./pages/login";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine
         dataProvider={dataProvider}
@@ -106,18 +102,16 @@ export default function App(): JSX.Element {
 }
 `.trim();
 
-const LoginComponentWithUseLogin = /* tsx */ `
+const LoginComponentWithUseLogin = /* jsx */ `
 import React from "react";
 import { useLogin } from "@refinedev/core";
 
 export const Login = () => {
     const { mutate, isLoading } = useLogin();
 
-    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = (event) => {
       event.preventDefault();
-      // Using FormData to get the form values and convert it to an object.
       const data = Object.fromEntries(new FormData(event.target).entries());
-      // Calling mutate to submit with the data we've collected from the form.
       mutate(data);
     };
 
@@ -152,15 +146,12 @@ export const Login = () => {
 };
 `.trim();
 
-const AuthProviderTsxWithLogoutMethod = /* tsx */ `
-import { AuthProvider } from "@refinedev/core";
-
-export const authProvider: AuthProvider = {
+const AuthProviderTsxWithLogoutMethod = /* jsx */ `
+export const authProvider = {
     logout: async () => {
         localStorage.removeItem("my_access_token");
         return { success: true };
     },
-    // login method receives an object with all the values you've provided to the useLogin hook.
     login: async ({ email, password }) => {
         const response = await fetch("https://api.fake-rest.refine.dev/auth/login", {
             method: "POST",
@@ -185,7 +176,6 @@ export const authProvider: AuthProvider = {
         return { authenticated: Boolean(token) };
     },
     onError: async (error) => { throw new Error("Not implemented"); },
-    // optional methods
     register: async (params) => { throw new Error("Not implemented"); },
     forgotPassword: async (params) => { throw new Error("Not implemented"); },
     updatePassword: async (params) => { throw new Error("Not implemented"); },
@@ -194,7 +184,7 @@ export const authProvider: AuthProvider = {
 };
 `.trim();
 
-const HeaderComponentBase = /* tsx */ `
+const HeaderComponentBase = /* jsx */ `
 import React from "react";
 
 export const Header = () => {
@@ -209,7 +199,7 @@ export const Header = () => {
 };
 `.trim();
 
-const AppTsxWithHeaderComponent = /* tsx */ `
+const AppTsxWithHeaderComponent = /* jsx */ `
 import { Refine, Authenticated } from "@refinedev/core";
 
 import { dataProvider } from "./providers/data-provider";
@@ -223,7 +213,7 @@ import { CreateProduct } from "./pages/products/create";
 import { Login } from "./pages/login";
 import { Header } from "./components/header";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine
         dataProvider={dataProvider}
@@ -244,7 +234,7 @@ export default function App(): JSX.Element {
 }
 `.trim();
 
-const HeaderComponentWithUseLogout = /* tsx */ `
+const HeaderComponentWithUseLogout = /* jsx */ `
 import React from "react";
 import { useLogout } from "@refinedev/core";
 
@@ -277,10 +267,10 @@ export const AddLoginMethodToAuthProvider = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/auth-provider.ts",
+          "/src/providers/auth-provider.js",
           AuthProviderTsxWithLoginMethod,
         );
-        sandpack.setActiveFile("/src/providers/auth-provider.ts");
+        sandpack.setActiveFile("/src/providers/auth-provider.js");
       }}
     />
   );
@@ -293,14 +283,14 @@ export const CreateLoginComponentFile = () => {
     <TutorialCreateFileButton
       onClick={() => {
         sandpack.addFile({
-          "src/pages/login.tsx": {
+          "src/pages/login.jsx": {
             code: LoginComponentBase,
           },
         });
-        sandpack.openFile("/src/pages/login.tsx");
-        sandpack.setActiveFile("/src/pages/login.tsx");
+        sandpack.openFile("/src/pages/login.jsx");
+        sandpack.setActiveFile("/src/pages/login.jsx");
       }}
-      name="src/pages/login.tsx"
+      name="src/pages/login.jsx"
     />
   );
 };
@@ -311,8 +301,8 @@ export const AddLoginToAppTsx = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", AppTsxWithLoginComponent);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", AppTsxWithLoginComponent);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -324,8 +314,8 @@ export const AddUseLoginToLoginComponent = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("src/pages/login.tsx", LoginComponentWithUseLogin);
-        sandpack.setActiveFile("/src/pages/login.tsx");
+        sandpack.updateFile("src/pages/login.jsx", LoginComponentWithUseLogin);
+        sandpack.setActiveFile("/src/pages/login.jsx");
       }}
     />
   );
@@ -338,10 +328,10 @@ export const AddLogoutMethodToAuthProvider = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/auth-provider.ts",
+          "/src/providers/auth-provider.js",
           AuthProviderTsxWithLogoutMethod,
         );
-        sandpack.setActiveFile("/src/providers/auth-provider.ts");
+        sandpack.setActiveFile("/src/providers/auth-provider.js");
       }}
     />
   );
@@ -354,14 +344,14 @@ export const CreateHeaderComponentFile = () => {
     <TutorialCreateFileButton
       onClick={() => {
         sandpack.addFile({
-          "src/components/header.tsx": {
+          "src/components/header.jsx": {
             code: HeaderComponentBase,
           },
         });
-        sandpack.openFile("/src/components/header.tsx");
-        sandpack.setActiveFile("/src/components/header.tsx");
+        sandpack.openFile("/src/components/header.jsx");
+        sandpack.setActiveFile("/src/components/header.jsx");
       }}
-      name="src/components/header.tsx"
+      name="src/components/header.jsx"
     />
   );
 };
@@ -372,8 +362,8 @@ export const AddHeaderToAppTsx = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", AppTsxWithHeaderComponent);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", AppTsxWithHeaderComponent);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -386,10 +376,10 @@ export const AddUseLogoutToHeaderComponent = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/components/header.tsx",
+          "src/components/header.jsx",
           HeaderComponentWithUseLogout,
         );
-        sandpack.setActiveFile("/src/components/header.tsx");
+        sandpack.setActiveFile("/src/components/header.jsx");
       }}
     />
   );
@@ -399,16 +389,16 @@ export const AddUseLogoutToHeaderComponent = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: AppTsxWithHeaderComponent,
   },
-  "src/providers/auth-provider.ts": {
+  "src/providers/auth-provider.js": {
     code: AuthProviderTsxWithLogoutMethod,
   },
-  "src/pages/login.tsx": {
+  "src/pages/login.jsx": {
     code: LoginComponentWithUseLogin,
   },
-  "src/components/header.tsx": {
+  "src/components/header.jsx": {
     code: HeaderComponentWithUseLogout,
     active: true,
   },

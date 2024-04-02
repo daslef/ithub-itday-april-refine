@@ -24,7 +24,7 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const AppTsxWithAuthentication = /* tsx */ `
+const AppTsxWithAuthentication = /* jsx */ `
 import { Refine, Authenticated } from "@refinedev/core";
 import routerProvider from "@refinedev/react-router-v6";
 
@@ -47,7 +47,7 @@ import { CreateProduct } from "./pages/products/create";
 import { Login } from "./pages/login";
 import { Header } from "./components/header";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <BrowserRouter>
       <Refine
@@ -58,9 +58,6 @@ export default function App(): JSX.Element {
         <Routes>
           <Route
             element={
-              // We're wrapping our routes with the \`<Authenticated />\` component
-              // We're omitting the \`fallback\` prop to redirect users to the login page if they are not authenticated.
-              // If the user is authenticated, we'll render the \`<Header />\` component and the \`<Outlet />\` component to render the inner routes.
               <Authenticated key="authenticated-routes" redirectOnFail="/login">
                 <Header />
                 <Outlet />
@@ -72,7 +69,6 @@ export default function App(): JSX.Element {
           <Route
             element={
               <Authenticated key="auth-pages" fallback={<Outlet />}>
-                {/* We're redirecting the user to "/" if they are authenticated and trying to access the "/login" route */}
                 <Navigate to="/" />
               </Authenticated>
             }
@@ -94,8 +90,8 @@ export const AddAuthenticationToApp = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", AppTsxWithAuthentication);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", AppTsxWithAuthentication);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -105,7 +101,7 @@ export const AddAuthenticationToApp = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: AppTsxWithAuthentication,
     active: true,
   },

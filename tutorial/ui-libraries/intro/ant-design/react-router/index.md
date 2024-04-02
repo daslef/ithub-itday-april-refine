@@ -1,41 +1,40 @@
 ---
-title: Introduction
+title: Введение
 ---
 
 import { Sandpack, AddAntDesignToApp, AddLayoutToApp } from "./sandpack.tsx";
 
 <Sandpack>
 
-In the previous unit, we learned about the router integrations of Refine. Now, we'll dive into its UI integrations, layouts, CRUD view components, and hooks to build a CRUD application with Refine and Ant Design.
+Пришло время навести красоту и погрузиться в интеграцию приложения с Ant Design.
 
-Refine provides integrations for the popular UI libraries including [Ant Design](/docs/ui-integrations/ant-design/introduction), [Material UI](/docs/ui-integrations/material-ui/introduction), [Chakra UI](/docs/ui-integrations/chakra-ui/introduction) and [Mantine](/docs/ui-integrations/mantine/introduction), offering set of components and hooks that simplify using Refine for form and table management, layouts, views, buttons, and more.
+Refine предоставляет интеграционные решения для популярных UI-библиотек, таких как Ant Design, Material UI, Chakra UI и Mantine, предлагая набор компонентов и хуков.
 
-This unit will cover the following topics:
+В этой секции мы будем:
 
-- Using layout components to add menus, headers, breadcrumbs and authentication management to your app,
-- Using CRUD view components to create action pages with consistent design and common features,
-- Using hooks to integrate form elements and tables with Refine's `useTable` and `useForm` hooks,
-- Integrating Refine's notifications with Ant Design's notification system,
-- Using `<AuthPage />` components to easily manage authentication pages.
+- Использовать layout-компоненты для меню, заголовков, хлебных крошек и управления аутентификацией,
+- Использовать CRUD-компоненты,
+- Использовать хуки для интеграции форм и таблиц,
+- Интегрировать уведомления Refine с системой нотификаций Ant Design,
+- Использовать компоненты `<AuthPage />` для аутентификационных страниц.
 
-## Adding Ant Design Dependencies
+## Установка зависимостей для Ant Design
 
-Let's get started with adding our dependencies. To use Ant Design components and access Refine's integrated hooks and components, we need to install the `@refinedev/antd package`.
+Для использования компонентов Ant Design в связке с Refine нужно установить пакеты `antd` и `@refinedev/antd`.
 
 <InstallPackagesCommand args="antd @refinedev/antd"/>
 
-We'll wrap our app with Ant Design's `ConfigProvider` to set the theme and `App` component to use the theme properly. We'll also import a `reset.css` file to reset the default styles of the browser.
+Чтобы использовать темы оформления, нам нужно обернуть приложение компонентами `ConfigProvider` и `App`. Также, мы импортируем файл `reset.css` для сброса стандартных стилей браузера.
 
-Update your `src/App.tsx` file by adding the following lines:
+Обнови `src/App.jsx` следующим образом:
 
-```tsx title="src/App.tsx"
+```jsx title="src/App.jsx"
 import { Refine, Authenticated } from "@refinedev/core";
 import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
 
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 
 // highlight-start
-// We'll wrap our app with Ant Design's ConfigProvider to set the theme and App component to use the theme properly.
 import { ConfigProvider, App as AntdApp } from "antd";
 // highlight-end
 
@@ -51,11 +50,10 @@ import { Login } from "./pages/login";
 import { Header } from "./components/header";
 
 // highlight-start
-// We're importing a reset.css file to reset the default styles of the browser.
 import "antd/dist/reset.css";
 // highlight-end
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <BrowserRouter>
       {/* highlight-start */}
@@ -122,15 +120,13 @@ export default function App(): JSX.Element {
 
 <AddAntDesignToApp />
 
-With our dependencies now in place, let's proceed by adding a layout into our app.
+## Добавление Layout-компонента
 
-## Adding a Layout
+Refine предоставляет компонент [`<ThemedLayoutV2 />`](/docs/ui-integrations/ant-design/components/themed-layout).
 
-Refine provides a [`<ThemedLayoutV2 />`](/docs/ui-integrations/ant-design/components/themed-layout) component has out of the box features, which we'll delve into in the next step. Now to see it in action, let's wrap our authenticated routes with it.
+Обнови `src/App.jsx`:
 
-Update your `src/App.tsx` file by adding the following lines:
-
-```tsx title="src/App.tsx"
+```jsx title="src/App.jsx"
 import { Refine, Authenticated } from "@refinedev/core";
 import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
 // highlight-next-line
@@ -152,7 +148,7 @@ import { Login } from "./pages/login";
 
 import "antd/dist/reset.css";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <BrowserRouter>
       <ConfigProvider>
@@ -218,8 +214,6 @@ export default function App(): JSX.Element {
 
 <AddLayoutToApp />
 
-Now our app is wrapped with a nice layout including a sidebar and a header.
-
-In the next step, we'll learn about the features of the layout components and how to use them.
+Теперь наше приложение обернуто в layout с боковой панелью и хедером. В следующем шаге мы познакомимся с остальными его преимуществами поближе.
 
 </Sandpack>

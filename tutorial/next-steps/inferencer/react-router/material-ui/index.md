@@ -83,7 +83,7 @@ import { ListCategories } from "./pages/categories/list";
 
 import { Login } from "./pages/login";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={RefineThemes.Blue}>

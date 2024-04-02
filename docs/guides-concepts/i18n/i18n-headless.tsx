@@ -12,7 +12,6 @@ export default function I18nExample() {
         "@refinedev/simple-rest": "latest",
         "react-i18next": "^11.8.11",
         i18next: "^20.1.0",
-        "i18next-browser-languagedetector": "^6.1.1",
         "i18next-xhr-backend": "^3.2.2",
       }}
       startRoute="/"
@@ -48,14 +47,14 @@ import { HomePage } from "./home-page";
 
 import "./i18n";
 
-const App: React.FC = () => {
+const App = () => {
   const { t, i18n } = useTranslation();
 
-  const i18nProvider: I18nProvider = {
-      translate: (key: string, params: object) => {
+  const i18nProvider = {
+      translate: (key, params) => {
           return t(key, params);
       },
-      changeLocale: (lang: string) => i18n.changeLanguage(lang),
+      changeLocale: (lang) => i18n.changeLanguage(lang),
       getLocale: () => i18n.language,
   };
 

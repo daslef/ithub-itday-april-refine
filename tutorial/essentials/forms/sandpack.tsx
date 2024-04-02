@@ -49,12 +49,10 @@ form select {
 }
 `.trim();
 
-const DataProviderWithCreateMethodTsCode = /* ts */ `
-import type { DataProvider } from "@refinedev/core";
-
+const DataProviderWithCreateMethodTsCode = /* js */ `
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   create: async ({ resource, variables }) => {
     const response = await fetch(\`\${API_URL}/\${resource}\`, {
       method: "POST",
@@ -101,7 +99,6 @@ export const dataProvider: DataProvider = {
     if (filters && filters.length > 0) {
       filters.forEach((filter) => {
         if ("field" in filter && filter.operator === "eq") {
-          // Our fake API supports "eq" operator by simply appending the field name and value to the query string.
           params.append(filter.field, filter.value);
         }
       });
@@ -115,7 +112,7 @@ export const dataProvider: DataProvider = {
 
     return {
       data,
-      total: 0, // We'll cover this in the next steps.
+      total: 0,
     };
   },
   getOne: async ({ resource, id, meta }) => {
@@ -133,13 +130,13 @@ export const dataProvider: DataProvider = {
 };
 `.trim();
 
-const BaseCreateProductFormTsxCode = /* tsx */ `
+const BaseCreateProductFormTsxCode = /* jsx */ `
 export const CreateProduct = () => {
     return <h1>hello world!</h1>;
 };
 `.trim();
 
-const AppTsxWithCreateProductCode = /* tsx */ `
+const AppTsxWithCreateProductCode = /* jsx */ `
 import { Refine } from "@refinedev/core";
 
 import { dataProvider } from "./providers/data-provider";
@@ -149,7 +146,7 @@ import { EditProduct } from "./pages/products/edit";
 import { ListProducts } from "./pages/products/list";
 import { CreateProduct } from "./pages/products/create";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine dataProvider={dataProvider}>
       {/* <ShowProduct /> */}
@@ -161,17 +158,15 @@ export default function App(): JSX.Element {
 }
 `.trim();
 
-const CreateProductFormWithFieldsTsxCode = /* tsx */ `
+const CreateProductFormWithFieldsTsxCode = /* jsx */ `
 import { useForm } from "@refinedev/core";
 
 export const CreateProduct = () => {
   const { onFinish, mutationResult } = useForm({ action: "create", resource: "products" });
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    // Using FormData to get the form values and convert it to an object.
     const data = Object.fromEntries(new FormData(event.target).entries());
-    // Calling onFinish to submit with the data we've collected from the form.
     onFinish(data);
   };
 
@@ -199,17 +194,15 @@ export const CreateProduct = () => {
 };
 `.trim();
 
-const CreateProductFormWithPriceUpdateTsxCode = /* tsx */ `
+const CreateProductFormWithPriceUpdateTsxCode = /* jsx */ `
 import { useForm } from "@refinedev/core";
 
 export const CreateProduct = () => {
   const { onFinish, mutationResult } = useForm({ action: "create", resource: "products" });
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    // Using FormData to get the form values and convert it to an object.
     const data = Object.fromEntries(new FormData(event.target).entries());
-    // Calling onFinish to submit with the data we've collected from the form.
     onFinish({
         ...data,
         price: Number(data.price).toFixed(2),
@@ -241,7 +234,7 @@ export const CreateProduct = () => {
 };
 `.trim();
 
-const CreateProductFormWithCategoryRelationTsxCode = /* tsx */ `
+const CreateProductFormWithCategoryRelationTsxCode = /* jsx */ `
 import { useForm, useSelect } from "@refinedev/core";
 
 export const CreateProduct = () => {
@@ -252,15 +245,11 @@ export const CreateProduct = () => {
 
   const { options } = useSelect({
     resource: "categories",
-    // optionLabel: "title", // Default value is "title" so we don't need to provide it.
-    // optionValue: "id", // Default value is "id" so we don't need to provide it.
   });
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    // Using FormData to get the form values and convert it to an object.
     const data = Object.fromEntries(new FormData(event.target).entries());
-    // Calling onFinish to submit with the data we've collected from the form.
     onFinish({
       ...data,
       price: Number(data.price).toFixed(2),
@@ -298,7 +287,7 @@ export const CreateProduct = () => {
 };
 `.trim();
 
-const AppTsxWithEditProductCode = /* tsx */ `
+const AppTsxWithEditProductCode = /* jsx */ `
 import { Refine } from "@refinedev/core";
 
 import { dataProvider } from "./providers/data-provider";
@@ -308,7 +297,7 @@ import { EditProduct } from "./pages/products/edit";
 import { ListProducts } from "./pages/products/list";
 import { CreateProduct } from "./pages/products/create";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine dataProvider={dataProvider}>
       {/* <ShowProduct /> */}
@@ -320,7 +309,7 @@ export default function App(): JSX.Element {
 }
 `.trim();
 
-const RefactorEditProductTsxWithFormCode = /* tsx */ `
+const RefactorEditProductTsxWithFormCode = /* jsx */ `
 import { useForm, useSelect } from "@refinedev/core";
 
 export const EditProduct = () => {
@@ -336,11 +325,9 @@ export const EditProduct = () => {
     resource: "categories",
   });
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    // Using FormData to get the form values and convert it to an object.
     const data = Object.fromEntries(new FormData(event.target).entries());
-    // Calling onFinish to submit with the data we've collected from the form.
     onFinish({
       ...data,
       price: Number(data.price).toFixed(2),
@@ -404,10 +391,10 @@ export const AddCreateMethod = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/data-provider.ts",
+          "/src/providers/data-provider.js",
           DataProviderWithCreateMethodTsCode,
         );
-        sandpack.setActiveFile("/src/providers/data-provider.ts");
+        sandpack.setActiveFile("/src/providers/data-provider.js");
       }}
     />
   );
@@ -418,15 +405,15 @@ export const CreateCreateProductFile = () => {
 
   return (
     <TutorialCreateFileButton
-      name="src/pages/products/create.tsx"
+      name="src/pages/products/create.jsx"
       onClick={() => {
         sandpack.addFile({
-          "src/pages/products/create.tsx": {
+          "src/pages/products/create.jsx": {
             code: BaseCreateProductFormTsxCode,
           },
         });
-        sandpack.openFile("/src/pages/products/create.tsx");
-        sandpack.setActiveFile("/src/pages/products/create.tsx");
+        sandpack.openFile("/src/pages/products/create.jsx");
+        sandpack.setActiveFile("/src/pages/products/create.jsx");
       }}
     />
   );
@@ -438,8 +425,8 @@ export const AddCreateProductToAppTsx = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", AppTsxWithCreateProductCode);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", AppTsxWithCreateProductCode);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -452,10 +439,10 @@ export const AddUseFormToCreateProduct = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/create.tsx",
+          "src/pages/products/create.jsx",
           CreateProductFormWithFieldsTsxCode,
         );
-        sandpack.setActiveFile("/src/pages/products/create.tsx");
+        sandpack.setActiveFile("/src/pages/products/create.jsx");
       }}
     />
   );
@@ -468,10 +455,10 @@ export const AddPriceUpdateToCreateProduct = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/create.tsx",
+          "src/pages/products/create.jsx",
           CreateProductFormWithPriceUpdateTsxCode,
         );
-        sandpack.setActiveFile("/src/pages/products/create.tsx");
+        sandpack.setActiveFile("/src/pages/products/create.jsx");
       }}
     />
   );
@@ -484,10 +471,10 @@ export const AddCategoryRelationToCreateProduct = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/create.tsx",
+          "src/pages/products/create.jsx",
           CreateProductFormWithCategoryRelationTsxCode,
         );
-        sandpack.setActiveFile("/src/pages/products/create.tsx");
+        sandpack.setActiveFile("/src/pages/products/create.jsx");
       }}
     />
   );
@@ -499,8 +486,8 @@ export const MountEditProductInAppTsx = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", AppTsxWithEditProductCode);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", AppTsxWithEditProductCode);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -513,10 +500,10 @@ export const RefactorToUseFormInEditProduct = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/edit.tsx",
+          "src/pages/products/edit.jsx",
           RefactorEditProductTsxWithFormCode,
         );
-        sandpack.setActiveFile("/src/pages/products/edit.tsx");
+        sandpack.setActiveFile("/src/pages/products/edit.jsx");
       }}
     />
   );
@@ -534,17 +521,17 @@ export const files = {
 
 export const finalFiles = {
   ...removeActiveFromFiles(files),
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: AppTsxWithEditProductCode,
   },
-  "src/providers/data-provider.ts": {
+  "src/providers/data-provider.js": {
     code: DataProviderWithCreateMethodTsCode,
   },
-  "src/pages/products/edit.tsx": {
+  "src/pages/products/edit.jsx": {
     code: RefactorEditProductTsxWithFormCode,
     active: true,
   },
-  "src/pages/products/create.tsx": {
+  "src/pages/products/create.jsx": {
     code: CreateProductFormWithCategoryRelationTsxCode,
   },
 };

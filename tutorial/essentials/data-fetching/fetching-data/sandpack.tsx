@@ -22,12 +22,10 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const DataProviderWithGetOneMethodTsCode = /* ts */ `
-import type { DataProvider } from "@refinedev/core";
-
+const DataProviderWithGetOneMethodTsCode = /* js */ `
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   getOne: async ({ resource, id, meta }) => {
     const response = await fetch(\`\${API_URL}/\${resource}/\${id}\`);
 
@@ -46,13 +44,13 @@ export const dataProvider: DataProvider = {
 };
 `.trim();
 
-const BaseShowProductTsxCode = /* tsx */ `
+const BaseShowProductTsxCode = /* jsx */ `
 export const ShowProduct = () => {
     return <h1>Hello world!</h1>;
 };
 `.trim();
 
-const ShowProductWithUseOneTsxCode = /* tsx */ `
+const ShowProductWithUseOneTsxCode = /* jsx */ `
 import { useOne } from "@refinedev/core";
 
 export const ShowProduct = () => {
@@ -66,13 +64,13 @@ export const ShowProduct = () => {
 };
 `.trim();
 
-const AppTsxWithShowProductCode = /* tsx */ `
+const AppTsxWithShowProductCode = /* jsx */ `
 import { Refine } from "@refinedev/core";
 
 import { dataProvider } from "./providers/data-provider";
 import { ShowProduct } from "./pages/products/show";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine dataProvider={dataProvider}>
         <ShowProduct />
@@ -90,10 +88,10 @@ export const AddGetOneMethod = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/data-provider.ts",
+          "/src/providers/data-provider.js",
           DataProviderWithGetOneMethodTsCode,
         );
-        sandpack.setActiveFile("/src/providers/data-provider.ts");
+        sandpack.setActiveFile("/src/providers/data-provider.js");
       }}
     />
   );
@@ -106,14 +104,14 @@ export const CreateShowProductFile = () => {
     <TutorialCreateFileButton
       onClick={() => {
         sandpack.addFile({
-          "/src/pages/products/show.tsx": {
+          "/src/pages/products/show.jsx": {
             code: BaseShowProductTsxCode,
           },
         });
-        sandpack.openFile("/src/pages/products/show.tsx");
-        sandpack.setActiveFile("/src/pages/products/show.tsx");
+        sandpack.openFile("/src/pages/products/show.jsx");
+        sandpack.setActiveFile("/src/pages/products/show.jsx");
       }}
-      name="src/pages/products/show.tsx"
+      name="src/pages/products/show.jsx"
     />
   );
 };
@@ -125,10 +123,10 @@ export const AddUseOneToShowProduct = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/pages/products/show.tsx",
+          "/src/pages/products/show.jsx",
           ShowProductWithUseOneTsxCode,
         );
-        sandpack.setActiveFile("/src/pages/products/show.tsx");
+        sandpack.setActiveFile("/src/pages/products/show.jsx");
       }}
     />
   );
@@ -140,8 +138,8 @@ export const AddShowProductToAppTsx = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", AppTsxWithShowProductCode);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", AppTsxWithShowProductCode);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -151,13 +149,13 @@ export const AddShowProductToAppTsx = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: AppTsxWithShowProductCode,
   },
-  "src/providers/data-provider.ts": {
+  "src/providers/data-provider.js": {
     code: DataProviderWithGetOneMethodTsCode,
   },
-  "src/pages/products/show.tsx": {
+  "src/pages/products/show.jsx": {
     code: ShowProductWithUseOneTsxCode,
     active: true,
   },

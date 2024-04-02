@@ -23,7 +23,7 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const LoginTsxWithAuthPage = /* tsx */ `
+const LoginTsxWithAuthPage = /* jsx */ `
 import React from "react";
 import { AuthPage } from "@refinedev/antd";
 
@@ -50,8 +50,8 @@ export const UseAuthPageInLogin = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("src/pages/login.tsx", LoginTsxWithAuthPage);
-        sandpack.setActiveFile("/src/pages/login.tsx");
+        sandpack.updateFile("src/pages/login.jsx", LoginTsxWithAuthPage);
+        sandpack.setActiveFile("/src/pages/login.jsx");
       }}
     />
   );
@@ -61,7 +61,7 @@ export const UseAuthPageInLogin = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/pages/login.tsx": {
+  "src/pages/login.jsx": {
     code: LoginTsxWithAuthPage,
     active: true,
   },

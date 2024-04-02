@@ -23,7 +23,7 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const AppTsxWithNotificationProvider = /* tsx */ `
+const AppTsxWithNotificationProvider = /* jsx */ `
 import { Refine, Authenticated } from "@refinedev/core";
 import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
 import {
@@ -48,7 +48,7 @@ import { Login } from "./pages/login";
 
 import "antd/dist/reset.css";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <BrowserRouter>
       <ConfigProvider>
@@ -123,8 +123,8 @@ export const AddNotificationProviderToApp = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("src/App.tsx", AppTsxWithNotificationProvider);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("src/App.jsx", AppTsxWithNotificationProvider);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -134,7 +134,7 @@ export const AddNotificationProviderToApp = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: AppTsxWithNotificationProvider,
     active: true,
   },

@@ -80,7 +80,7 @@ import { Login } from "./pages/login";
 
 import "antd/dist/reset.css";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <BrowserRouter>
       <ConfigProvider>

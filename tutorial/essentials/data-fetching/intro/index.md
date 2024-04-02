@@ -1,34 +1,28 @@
 ---
-title: Data Fetching
+title: Работа с данными
 ---
 
 import { Sandpack, FocusOnDataProviderFile, AddDataProviderToRefine } from "./sandpack.tsx";
 
 <Sandpack>
 
-In this step, we'll be learning about the basics of data fetching in Refine. `<Refine />` component accepts a [`dataProvider`](/docs/core/refine-component/#dataprovider-) prop which is used to handle all the data fetching and mutation operations with a simple interface. While Refine supports many data providers out of the box, for sake of this tutorial, we'll be creating our own data provider and connecting it to a [fake REST API](https://api.fake-rest.refine.dev/).
+В этой секции мы изучим основы дата-фетчинга, иначе - работы с данными. В компонент `<Refine />` можно передать свойство `dataProvider`. Провайдер данных обслуживает все возможные операции получения и мутации данных. Refine предоставляет множество официальных интеграций с провайдерами данных, но для лучшего понимания мы реализуем собственный и подключим его к [fake REST API](https://api.fake-rest.refine.dev/).
 
-To learn more about the supported data providers, refer to the [Supported Data Providers](/docs/guides-concepts/data-fetching/#supported-data-providers) section in the Data Fetching guide.
+## Создание провайдера данных
 
-## Creating a Data Provider
+Во-первых, создадим файл `src/providers/data-provider.js`, который будет содержать в себе все необходимые методы работы с данными.
 
-We'll be implementing each method one-by-one, ensuring thorough coverage of all details. We'll use `fetch` for API requests, but you're free to choose any library.
+Ты можешь увидеть <FocusOnDataProviderFile>пустой провайдер данных `src/providers/data-provider.ts`</FocusOnDataProviderFile> на панели справа.
 
-First, we'll create a `src/providers/data-provider.ts` file in our project, which will contain all the methods we need to implement for our data provider.
+Далее, передадим наш провайдер данных в компонент `<Refine />` в файле `src/App.jsx`, конкретно - в свойство `dataProvider`.
 
-To see an empty data provider, <FocusOnDataProviderFile>check out the `src/providers/data-provider.ts`</FocusOnDataProviderFile> in the right panel.
-
-Then, we'll pass our data provider to `<Refine />` component in `src/App.tsx` file with the `dataProvider` prop.
-
-Update your `src/App.tsx` file by adding the following lines:
-
-```tsx
+```jsx
 import { Refine, WelcomePage } from "@refinedev/core";
 
 // highlight-next-line
 import { dataProvider } from "./providers/data-provider";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     // highlight-next-line
     <Refine dataProvider={dataProvider}>
@@ -39,13 +33,5 @@ export default function App(): JSX.Element {
 ```
 
 <AddDataProviderToRefine />
-
-:::tip
-
-It's also possible to use multiple data providers with Refine. You can learn more about it in the [Multiple Data Providers](/docs/guides-concepts/data-fetching/#multiple-data-providers) section of the Data Fetching guide.
-
-:::
-
-In the next step, we'll be learning about the fetching a record using Refine's `useOne` hook, and also about implementing the `getOne` method in our data provider.
 
 </Sandpack>

@@ -21,18 +21,18 @@ export default function App() {
 };
 `.trim();
 
-const BaseAppTsxCode = /* tsx */ `
+const BaseAppTsxCode = /* jsx */ `
 import App from "./src/App";
 
 export default App;
 `.trim();
 
 export const files = {
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: AppTsxCode,
     active: true,
   },
-  "App.tsx": {
+  "App.jsx": {
     code: BaseAppTsxCode,
     hidden: true,
   },

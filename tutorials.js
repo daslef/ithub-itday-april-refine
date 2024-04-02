@@ -12,26 +12,17 @@ module.exports = {
           label: "React Router",
           value: "react-router",
         },
-        {
-          label: "Next.js",
-          value: "next-js",
-          status: "coming-soon",
-        },
       ],
       uiSelection: [
         {
           label: "Ant Design",
           value: "ant-design",
         },
-        {
-          label: "Material UI",
-          value: "material-ui",
-        },
       ],
     },
     units: [
       {
-        title: "Essentials",
+        title: "Основы",
         id: "essentials",
         items: [
           "essentials/intro/index",
@@ -45,7 +36,7 @@ module.exports = {
         ],
       },
       {
-        title: "Authentication",
+        title: "Аутентификация",
         id: "authentication",
         items: [
           "authentication/intro/index", // intro
@@ -56,7 +47,7 @@ module.exports = {
         ],
       },
       {
-        title: "Routing",
+        title: "Роутинг",
         id: "routing",
         items: [
           "routing/intro/:routerSelection/index",
@@ -69,7 +60,7 @@ module.exports = {
         ],
       },
       {
-        title: "UI Libraries",
+        title: "UI Библиотеки",
         id: "ui-libraries",
         items: [
           "ui-libraries/intro/:uiSelection/:routerSelection/index", // introduction, installation, wrapping if necessary
@@ -81,7 +72,7 @@ module.exports = {
         ],
       },
       {
-        title: "Next Steps",
+        title: "Что дальше",
         id: "next-steps",
         items: [
           "next-steps/intro/:uiSelection/index",
@@ -99,21 +90,11 @@ module.exports = {
         label: "React Router",
         value: "react-router",
       },
-      {
-        label: "Next.js",
-        value: "next-js",
-        status: "coming-soon",
-      },
     ],
     uiSelection: [
       {
         label: "Ant Design",
         value: "ant-design",
-      },
-      {
-        label: "Material UI",
-        value: "material-ui",
-        status: "coming-soon",
       },
     ],
   },

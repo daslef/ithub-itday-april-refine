@@ -22,7 +22,7 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const HeaderWithLinks = /* tsx */ `
+const HeaderWithLinks = /* jsx */ `
 import React from "react";
 import { useLogout, useGetIdentity, useNavigation } from "@refinedev/core";
 
@@ -32,8 +32,6 @@ export const Header = () => {
   const { mutate, isLoading } = useLogout();
   const { data: identity } = useGetIdentity();
 
-  // You can also use methods like list or create to trigger navigation.
-  // We're using url methods to provide more semantically correct html.
   const { listUrl, createUrl } = useNavigation();
 
   return (
@@ -52,7 +50,7 @@ export const Header = () => {
 };
 `.trim();
 
-const ListProductsWithNavigation = /* tsx */ `
+const ListProductsWithNavigation = /* jsx */ `
 import { useTable, useMany, useNavigation } from "@refinedev/core";
 
 import { Link } from "react-router-dom";
@@ -71,8 +69,6 @@ export const ListProducts = () => {
     sorters: { initial: [{ field: "id", order: "asc" }] },
   });
 
-  // You can also use methods like show or list to trigger navigation.
-  // We're using url methods to provide more semantically correct html.
   const { showUrl, editUrl } = useNavigation();
 
   const { data: categories } = useMany({
@@ -96,11 +92,11 @@ export const ListProducts = () => {
     }
   };
 
-  const onPage = (page: number) => {
+  const onPage = (page) => {
     setCurrent(page);
   };
 
-  const getSorter = (field: string) => {
+  const getSorter = (field) => {
     const sorter = sorters?.find((sorter) => sorter.field === field);
 
     if (sorter) {
@@ -108,7 +104,7 @@ export const ListProducts = () => {
     }
   };
 
-  const onSort = (field: string) => {
+  const onSort = (field) => {
     const sorter = getSorter(field);
     setSorters(
       sorter === "desc"
@@ -198,8 +194,8 @@ export const AddLinksToHeader = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("src/components/header.tsx", HeaderWithLinks);
-        sandpack.setActiveFile("/src/components/header.tsx");
+        sandpack.updateFile("src/components/header.jsx", HeaderWithLinks);
+        sandpack.setActiveFile("/src/components/header.jsx");
       }}
     />
   );
@@ -212,10 +208,10 @@ export const AddShowAndEditButtonsToListProducts = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/list.tsx",
+          "src/pages/products/list.jsx",
           ListProductsWithNavigation,
         );
-        sandpack.setActiveFile("/src/pages/products/list.tsx");
+        sandpack.setActiveFile("/src/pages/products/list.jsx");
       }}
     />
   );
@@ -225,11 +221,11 @@ export const AddShowAndEditButtonsToListProducts = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/pages/products/list.tsx": {
+  "src/pages/products/list.jsx": {
     code: ListProductsWithNavigation,
     active: true,
   },
-  "src/components/header.tsx": {
+  "src/components/header.jsx": {
     code: HeaderWithLinks,
   },
 };

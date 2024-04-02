@@ -22,12 +22,11 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const DataProviderWithUpdateMethodTsCode = /* ts */ `
-import type { DataProvider } from "@refinedev/core";
+const DataProviderWithUpdateMethodTsCode = /* js */ `
 
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   getOne: async ({ resource, id, meta }) => {
     const response = await fetch(\`\${API_URL}/\${resource}/\${id}\`);
 
@@ -60,7 +59,7 @@ export const dataProvider: DataProvider = {
 };
 `.trim();
 
-const BaseEditProductTsxCode = /* tsx */ `
+const BaseEditProductTsxCode = /* jsx */ `
 import { useOne } from "@refinedev/core";
 
 export const EditProduct = () => {
@@ -79,7 +78,7 @@ export const EditProduct = () => {
 };
 `.trim();
 
-const EditProductWithUseUpdateTsxCode = /* tsx */ `
+const EditProductWithUseUpdateTsxCode = /* jsx */ `
 import { useOne, useUpdate } from "@refinedev/core";
 
 export const EditProduct = () => {
@@ -119,7 +118,7 @@ import { ShowProduct } from "./pages/products/show";
 // highlight-next-line
 import { EditProduct } from "./pages/products/edit";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine dataProvider={dataProvider}>
       {/* <ShowProduct /> */}
@@ -139,10 +138,10 @@ export const AddUpdateMethod = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/data-provider.ts",
+          "/src/providers/data-provider.js",
           DataProviderWithUpdateMethodTsCode,
         );
-        sandpack.setActiveFile("/src/providers/data-provider.ts");
+        sandpack.setActiveFile("/src/providers/data-provider.js");
       }}
     />
   );
@@ -155,14 +154,14 @@ export const CreateEditProductFile = () => {
     <TutorialCreateFileButton
       onClick={() => {
         sandpack.addFile({
-          "src/pages/products/edit.tsx": {
+          "src/pages/products/edit.jsx": {
             code: BaseEditProductTsxCode,
           },
         });
-        sandpack.openFile("/src/pages/products/edit.tsx");
-        sandpack.setActiveFile("/src/pages/products/edit.tsx");
+        sandpack.openFile("/src/pages/products/edit.jsx");
+        sandpack.setActiveFile("/src/pages/products/edit.jsx");
       }}
-      name="src/pages/products/edit.tsx"
+      name="src/pages/products/edit.jsx"
     />
   );
 };
@@ -174,10 +173,10 @@ export const AddUseUpdateToEditProduct = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/edit.tsx",
+          "src/pages/products/edit.jsx",
           EditProductWithUseUpdateTsxCode,
         );
-        sandpack.setActiveFile("/src/pages/products/edit.tsx");
+        sandpack.setActiveFile("/src/pages/products/edit.jsx");
       }}
     />
   );
@@ -189,8 +188,8 @@ export const AddEditProductToAppTsx = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", AppTsxWithEditProductCode);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", AppTsxWithEditProductCode);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -200,13 +199,13 @@ export const AddEditProductToAppTsx = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: AppTsxWithEditProductCode,
   },
-  "src/providers/data-provider.ts": {
+  "src/providers/data-provider.js": {
     code: DataProviderWithUpdateMethodTsCode,
   },
-  "src/pages/products/edit.tsx": {
+  "src/pages/products/edit.jsx": {
     code: EditProductWithUseUpdateTsxCode,
     active: true,
   },

@@ -22,7 +22,7 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const ListProductsWithInference = /* tsx */ `
+const ListProductsWithInference = /* jsx */ `
 import { useTable, useMany, useNavigation } from "@refinedev/core";
 
 import { Link } from "react-router-dom";
@@ -63,11 +63,11 @@ export const ListProducts = () => {
     }
   };
 
-  const onPage = (page: number) => {
+  const onPage = (page) => {
     setCurrent(page);
   };
 
-  const getSorter = (field: string) => {
+  const getSorter = (field) => {
     const sorter = sorters?.find((sorter) => sorter.field === field);
 
     if (sorter) {
@@ -75,7 +75,7 @@ export const ListProducts = () => {
     }
   };
 
-  const onSort = (field: string) => {
+  const onSort = (field) => {
     const sorter = getSorter(field);
     setSorters(
       sorter === "desc"
@@ -157,7 +157,7 @@ export const ListProducts = () => {
 };
 `.trim();
 
-const ShowProductWithInference = /* tsx */ `
+const ShowProductWithInference = /* jsx */ `
 import { useShow } from "@refinedev/core";
 
 export const ShowProduct = () => {
@@ -173,7 +173,7 @@ export const ShowProduct = () => {
 };
 `.trim();
 
-const CreateProductWithInference = /* tsx */ `
+const CreateProductWithInference = /* jsx */ `
 import { useForm, useSelect } from "@refinedev/core";
 
 export const CreateProduct = () => {
@@ -181,15 +181,11 @@ export const CreateProduct = () => {
 
   const { options } = useSelect({
     resource: "categories",
-    // optionLabel: "title", // Default value is "title" so we don't need to provide it.
-    // optionValue: "id", // Default value is "id" so we don't need to provide it.
   });
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    // Using FormData to get the form values and convert it to an object.
     const data = Object.fromEntries(new FormData(event.target).entries());
-    // Calling onFinish to submit with the data we've collected from the form.
     onFinish({
       ...data,
       price: Number(data.price).toFixed(2),
@@ -227,7 +223,7 @@ export const CreateProduct = () => {
 };
 `.trim();
 
-const EditProductWithInference = /* tsx */ `
+const EditProductWithInference = /* jsx */ `
 import { useForm, useSelect } from "@refinedev/core";
 
 export const EditProduct = () => {
@@ -239,11 +235,9 @@ export const EditProduct = () => {
     resource: "categories",
   });
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    // Using FormData to get the form values and convert it to an object.
     const data = Object.fromEntries(new FormData(event.target).entries());
-    // Calling onFinish to submit with the data we've collected from the form.
     onFinish({
       ...data,
       price: Number(data.price).toFixed(2),
@@ -309,10 +303,10 @@ export const AddInferenceToListProducts = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/list.tsx",
+          "src/pages/products/list.jsx",
           ListProductsWithInference,
         );
-        sandpack.setActiveFile("/src/pages/products/list.tsx");
+        sandpack.setActiveFile("/src/pages/products/list.jsx");
       }}
     />
   );
@@ -325,10 +319,10 @@ export const AddInferenceToShowProduct = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/show.tsx",
+          "src/pages/products/show.jsx",
           ShowProductWithInference,
         );
-        sandpack.setActiveFile("/src/pages/products/show.tsx");
+        sandpack.setActiveFile("/src/pages/products/show.jsx");
       }}
     />
   );
@@ -341,10 +335,10 @@ export const AddInferenceToCreateProduct = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/create.tsx",
+          "src/pages/products/create.jsx",
           CreateProductWithInference,
         );
-        sandpack.setActiveFile("/src/pages/products/create.tsx");
+        sandpack.setActiveFile("/src/pages/products/create.jsx");
       }}
     />
   );
@@ -357,10 +351,10 @@ export const AddInferenceToEditProduct = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/edit.tsx",
+          "src/pages/products/edit.jsx",
           EditProductWithInference,
         );
-        sandpack.setActiveFile("/src/pages/products/edit.tsx");
+        sandpack.setActiveFile("/src/pages/products/edit.jsx");
       }}
     />
   );
@@ -370,16 +364,16 @@ export const AddInferenceToEditProduct = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/pages/products/show.tsx": {
+  "src/pages/products/show.jsx": {
     code: ShowProductWithInference,
   },
-  "src/pages/products/edit.tsx": {
+  "src/pages/products/edit.jsx": {
     code: EditProductWithInference,
   },
-  "src/pages/products/create.tsx": {
+  "src/pages/products/create.jsx": {
     code: CreateProductWithInference,
   },
-  "src/pages/products/list.tsx": {
+  "src/pages/products/list.jsx": {
     code: ListProductsWithInference,
     active: true,
   },

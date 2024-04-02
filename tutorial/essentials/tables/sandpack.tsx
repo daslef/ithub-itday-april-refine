@@ -90,7 +90,7 @@ table tr:nth-child(even) {
 
 `.trim();
 
-const AppTsxWithListProductsTsxCode = /* tsx */ `
+const AppTsxWithListProductsTsxCode = /* jsx */ `
 import { Refine } from "@refinedev/core";
 
 import { dataProvider } from "./providers/data-provider";
@@ -100,7 +100,7 @@ import { EditProduct } from "./pages/products/edit";
 import { ListProducts } from "./pages/products/list";
 import { CreateProduct } from "./pages/products/create";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine dataProvider={dataProvider}>
       {/* <ShowProduct /> */}
@@ -112,7 +112,7 @@ export default function App(): JSX.Element {
 }
 `.trim();
 
-const ListProductsWithUseTableTsxCode = /* tsx */ `
+const ListProductsWithUseTableTsxCode = /* jsx */ `
 import { useTable } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -156,7 +156,7 @@ export const ListProducts = () => {
 };
 `.trim();
 
-const ListProductsWithUseTableAndUseManyTsxCode = /* tsx */ `
+const ListProductsWithUseTableAndUseManyTsxCode = /* jsx */ `
 import { useTable, useMany } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -213,12 +213,11 @@ export const ListProducts = () => {
 };
 `.trim();
 
-const DataProviderWithGetManyMethodTsCode = /* ts */ `
-import type { DataProvider } from "@refinedev/core";
+const DataProviderWithGetManyMethodTsCode = /* js */ `
 
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   getMany: async ({ resource, ids, meta }) => {
     const params = new URLSearchParams();
 
@@ -314,12 +313,11 @@ export const dataProvider: DataProvider = {
 };
 `.trim();
 
-const DataProviderWithTotalInGetListMethodTsCode = /* ts */ `
-import type { DataProvider } from "@refinedev/core";
+const DataProviderWithTotalInGetListMethodTsCode = /* js */ `
 
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
     const params = new URLSearchParams();
 
@@ -417,7 +415,7 @@ export const dataProvider: DataProvider = {
 };
 `.trim();
 
-const ListProductsWithPaginationTsxCode = /* tsx */ `
+const ListProductsWithPaginationTsxCode = /* jsx */ `
 import { useTable, useMany } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -453,7 +451,7 @@ export const ListProducts = () => {
     }
   };
 
-  const onPage = (page: number) => {
+  const onPage = (page) => {
     setCurrent(page);
   };
 
@@ -506,7 +504,7 @@ export const ListProducts = () => {
 };
 `.trim();
 
-const ListProductsWithHeaderSortersTsxCode = /* tsx */ `
+const ListProductsWithHeaderSortersTsxCode = /* jsx */ `
 import { useTable, useMany } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -544,11 +542,11 @@ export const ListProducts = () => {
     }
   };
 
-  const onPage = (page: number) => {
+  const onPage = (page) => {
     setCurrent(page);
   };
 
-  const getSorter = (field: string) => {
+  const getSorter = (field) => {
     const sorter = sorters?.find((sorter) => sorter.field === field);
 
     if (sorter) {
@@ -556,7 +554,7 @@ export const ListProducts = () => {
     }
   }
 
-  const onSort = (field: string) => {
+  const onSort = (field) => {
     const sorter = getSorter(field);
     setSorters(
         sorter === "desc" ? [] : [
@@ -637,8 +635,8 @@ export const MountListProductsInAppTsx = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("src/App.tsx", AppTsxWithListProductsTsxCode);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("src/App.jsx", AppTsxWithListProductsTsxCode);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -651,10 +649,10 @@ export const RefactorToUseTableInListProducts = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/list.tsx",
+          "src/pages/products/list.jsx",
           ListProductsWithUseTableTsxCode,
         );
-        sandpack.setActiveFile("/src/pages/products/list.tsx");
+        sandpack.setActiveFile("/src/pages/products/list.jsx");
       }}
     />
   );
@@ -667,10 +665,10 @@ export const AddRelationHandlingToUseTableInListProducts = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/list.tsx",
+          "src/pages/products/list.jsx",
           ListProductsWithUseTableAndUseManyTsxCode,
         );
-        sandpack.setActiveFile("/src/pages/products/list.tsx");
+        sandpack.setActiveFile("/src/pages/products/list.jsx");
       }}
     />
   );
@@ -683,10 +681,10 @@ export const AddGetManyMethodToDataProvider = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/data-provider.ts",
+          "/src/providers/data-provider.js",
           DataProviderWithGetManyMethodTsCode,
         );
-        sandpack.setActiveFile("/src/providers/data-provider.ts");
+        sandpack.setActiveFile("/src/providers/data-provider.js");
       }}
     />
   );
@@ -699,10 +697,10 @@ export const AddTotalToGetListMethodInDataProvider = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/data-provider.ts",
+          "/src/providers/data-provider.js",
           DataProviderWithTotalInGetListMethodTsCode,
         );
-        sandpack.setActiveFile("/src/providers/data-provider.ts");
+        sandpack.setActiveFile("/src/providers/data-provider.js");
       }}
     />
   );
@@ -715,10 +713,10 @@ export const AddPaginationToUseTableInListProducts = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/list.tsx",
+          "src/pages/products/list.jsx",
           ListProductsWithPaginationTsxCode,
         );
-        sandpack.setActiveFile("/src/pages/products/list.tsx");
+        sandpack.setActiveFile("/src/pages/products/list.jsx");
       }}
     />
   );
@@ -731,10 +729,10 @@ export const AddHeaderSortersToUseTableInListProducts = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/list.tsx",
+          "src/pages/products/list.jsx",
           ListProductsWithHeaderSortersTsxCode,
         );
-        sandpack.setActiveFile("/src/pages/products/list.tsx");
+        sandpack.setActiveFile("/src/pages/products/list.jsx");
       }}
     />
   );
@@ -752,13 +750,13 @@ export const files = {
 
 export const finalFiles = {
   ...removeActiveFromFiles(files),
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: AppTsxWithListProductsTsxCode,
   },
-  "src/providers/data-provider.ts": {
+  "src/providers/data-provider.js": {
     code: DataProviderWithTotalInGetListMethodTsCode,
   },
-  "src/pages/products/list.tsx": {
+  "src/pages/products/list.jsx": {
     code: ListProductsWithHeaderSortersTsxCode,
     active: true,
   },

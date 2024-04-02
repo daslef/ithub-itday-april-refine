@@ -1,37 +1,35 @@
 ---
-title: Listing Records
+title: Список записей
 ---
 
 import { Sandpack, AddGetListMethod, CreateListProductsFile, AddUseListToListProducts, AddListProductsToAppTsx, AddPaginationToGetList, AddPaginationToListProducts, AddSortingToGetList, AddSortingToListProducts, AddFiltersToGetList, AddFiltersToListProducts } from "./sandpack.tsx";
 
 <Sandpack>
 
-In this step, we'll be learning about the Refine's `useList` hook to fetch a list of records from our API. We'll also learn about pagination, sorting and filtering through the `useList` hook.
+Цель этого шага - научиться пользоваться хуком `useList` для получения уже не одной записи, а списка записей. Мы также поговорим о пагинации, сортировке и фильтрации.
 
-## Implementing the `getList` Method
+## Имплементация метода `getList`
 
-To list records using Refine's hooks, first we need to implement the [`getList`](/docs/data/data-provider/#getlist-) method in our data provider. This method will be called when we use the [`useList`](/docs/data/hooks/use-list) hook or its extensions in our components.
+Аналогично прошлому шагу, для использования хука первично необходимо реализовать соответствующий метод в провайдере данных. Теперь это метод [`getList`](/docs/data/data-provider/#getlist-). Этот метод используется хуком [`useList`](/docs/data/hooks/use-list) и его модификациями для получения списка данных.
 
-The `getList` method accepts `resource`, `pagination`, `sorters`, `filters` and `meta` properties.
+Метод `getList` принимает свойства `resource`, `pagination`, `sorters`, `filters` и `meta`.
 
-- `resource` refers to the entity we're fetching.
-- `pagination` is an object containing the `current` and `pageSize` properties.
-- `sorters` is an array containing the sorters we're using.
-- `filters` is an array containing the filters we're using.
-- `meta` is an object containing any additional data passed to the hook.
+- `resource` обозначает сущность, которую мы запрашиваем.
+- `pagination` - это объект, содержащий свойства `current` и `pageSize`.
+- `sorters` - массив, содержащий правила сортировки.
+- `filters` - массив, содержащий правила фильтрации.
+- `meta` - объект, в который можно передать дополнительную информацию о запросе.
 
-Our fake API has `products` entity and expects us to list records using the `/products` endpoint. So, we'll be using the `resource`, `pagination`, `sorters` and `filters` properties to make our request.
+Напомним, наш фейковый API содержит сущность `products`, и ожидает что для получения списка продуктов мы обратимся к эндпоинту `/products`.
 
-To make the implementation process easier, we'll start by implementing the `getList` method without pagination, sorting, or filtering, and then gradually add these features to our implementation.
+Чтобы упростить процесс реализации, в первой итерации обойдемся без пагинации, сортировки и фильтрации, и будем дополнять ими последовательно.
 
-Update your `src/providers/data-provider.ts` file by adding the following lines:
+Обнови файл `src/providers/data-provider.js` следующим образом:
 
-```ts title="src/providers/data-provider.ts"
-import type { DataProvider } from "@refinedev/core";
-
+```js title="src/providers/data-provider.js"
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   // highlight-start
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
     const response = await fetch(`${API_URL}/${resource}`);
@@ -42,7 +40,7 @@ export const dataProvider: DataProvider = {
 
     return {
       data,
-      total: 0, // We'll cover this in the next steps.
+      total: 0, // Разберем далее
     };
   },
   // highlight-end
@@ -52,17 +50,15 @@ export const dataProvider: DataProvider = {
 
 <AddGetListMethod />
 
-## Using the `useList` Hook
+## Применение хука `useList`
 
-After implementing the `getList` method, we'll be able to call `useList` hook and fetch a list of records from our API. Let's create a component called `ListProducts` and mount it inside our `<Refine />` component.
+Создадим компонент `ListProducts` в файле `src/pages/products/list.jsx`.
 
 <CreateListProductsFile />
 
-Then, we'll use the `useList` hook inside our `ListProducts` to fetch a list of records of `products` entity from our API.
+Импортируй и задействуй хук `useList` в компоненте `ListProducts` для получения списка всех продуктов:
 
-Update your `src/pages/products/list.tsx` file by adding the following lines:
-
-```tsx title="src/pages/products/list.tsx"
+```jsx title="src/pages/products/list.jsx"
 // highlight-next-line
 import { useList } from "@refinedev/core";
 
@@ -99,9 +95,7 @@ export const ListProducts = () => {
 
 <AddUseListToListProducts />
 
-Finally, we'll mount our `ListProducts` component inside our `<Refine />` component.
-
-Update your `src/App.tsx` file by adding the following lines:
+Наконец, добавь компонент `ListProducts` внутрь компонента `<Refine />`.
 
 ```tsx title="src/App.tsx"
 import { Refine } from "@refinedev/core";
@@ -113,7 +107,7 @@ import { EditProduct } from "./pages/products/edit";
 // highlight-next-line
 import { ListProducts } from "./pages/products/list";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine dataProvider={dataProvider}>
       {/* <ShowProduct /> */}
@@ -127,22 +121,25 @@ export default function App(): JSX.Element {
 
 <AddListProductsToAppTsx />
 
-We should be able to see the list of products on our screen now.
+По окончанию этого шага мы ожидаем увидеть на экране полный список продуктов.
 
-## Adding Pagination
+## Добавление пагинации
 
-At this point, we've listed all the products in our API, but we're not able to paginate the list. Let's add pagination logic to our `getList` method.
+В случае, когда записей становится слишком много, становится нецелесообразным загружать их все разом, потому дополним метод `getList` пагинацией.
 
-Our fake API supports pagination through the `_start` and `_end` query parameters. `_start` is the index of the first record we want to fetch and `_end` is the index of the last record we want to fetch. So, we'll be using the `pagination` property to calculate the `_start` and `_end` query parameters.
+Наш фейковый API поддерживает пагинацию через квери-параметры `_start` и `_end`.
 
-Update your `src/providers/data-provider.ts` file by adding the following lines:
+- `_start` обозначает порядковый номер первой записи, начиная с которой мы хотим получить данные,
+- `_end` напротив, порядковый номер последней записи.
 
-```ts title="src/providers/data-provider.ts"
-import type { DataProvider } from "@refinedev/core";
+Следовательно, нам нужно адаптировать свойство `pagination` под работу с квери-параметрами `_start` и `_end`.
 
+Дополни файл `src/providers/data-provider.js` следующими строками:
+
+```js title="src/providers/data-provider.js"
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
     // highlight-start
     const params = new URLSearchParams();
@@ -161,7 +158,7 @@ export const dataProvider: DataProvider = {
 
     return {
       data,
-      total: 0, // We'll cover this in the next steps.
+      total: 0,
     };
   },
   /* ... */
@@ -170,9 +167,9 @@ export const dataProvider: DataProvider = {
 
 <AddPaginationToGetList />
 
-Now, we'll be able to paginate the list of products. Let's add pagination to our `ListProducts` component.
+Осталось добавить пагинацию в компонент `ListProducts`.
 
-Update your `src/pages/products/list.tsx` file by adding the following lines:
+Обнови файл `src/pages/products/list.jsx`:
 
 ```tsx title="src/pages/products/list.tsx"
 import { useList } from "@refinedev/core";
@@ -194,30 +191,31 @@ export const ListProducts = () => {
 
 <AddPaginationToListProducts />
 
-We should be able to see the first 10 products on our screen now.
+Теперь на экране должны остаться только первые 10 продуктов.
 
-## Adding Sorting
+## Добавление сортировки
 
-We've added pagination to our `getList` method, but we're not able to sort the list. Let's add sorting logic to our `getList` method.
+Сортировку можно производить как на бэкенде, так и на фронте. В данном случае мы делегируем сортировку на бэкенд, так как он поддерживает данную функциональность через квери-параметры `_sort` и `_order`:
 
-Our fake API supports sorting through the `_sort` and `_order` query parameters. `_sort` is the name of the field we want to sort and `_order` is the order we want to sort. So, we'll be using the `sorters` property to calculate the `_sort` and `_order` query parameters.
+- `_sort` содержит имя поля, по которому мы сортируем,
+- `_order` содержит порядок сортировки.
+
+Наша задача, опять же, написать адаптер между свойством `sorters` и указанными выше квери-параметрами.
 
 :::simple Implementation Details
 
-Refine supports multiple sorters to be passed to the `useList` hook. Fortunately, our fake API also supports multiple sorters. But, if your API doesn't support multiple sorters, you can simply use the first sorter in the `sorters` array.
-
-Our fake API requires multiple sorters and orders to be passed with a comma separated string. So, we'll be mapping the `sorters` array to a comma separated string.
+Refine поддерживает множественные сортировщики переданные массивом, и используемый нами фейковый API тоже поддерживает их в формате указания через запятую. Но так бывает не всегда.
 
 :::
 
-Update your `src/providers/data-provider.ts` file by adding the following lines:
+Добавь в `src/providers/data-provider.js` следующие строки:
 
-```ts title="src/providers/data-provider.ts"
+```js title="src/providers/data-provider.js"
 import type { DataProvider } from "@refinedev/core";
 
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
     const params = new URLSearchParams();
 
@@ -241,7 +239,7 @@ export const dataProvider: DataProvider = {
 
     return {
       data,
-      total: 0, // We'll cover this in the next steps.
+      total: 0,
     };
   },
   /* ... */
@@ -250,11 +248,9 @@ export const dataProvider: DataProvider = {
 
 <AddSortingToGetList />
 
-Now, we'll be able to sort the list of products. Let's add sorting to our `ListProducts` component.
+Проверим работоспособность! Обнови файл `src/pages/products/list.jsx` следующим образом:
 
-Update your `src/pages/products/list.tsx` file by adding the following lines:
-
-```tsx title="src/pages/products/list.tsx"
+```jsx title="src/pages/products/list.jsx"
 import { useList } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -275,34 +271,30 @@ export const ListProducts = () => {
 
 <AddSortingToListProducts />
 
-We should be able to see the first 10 products sorted by name on our screen now.
+Теперь первые 10 записей должны быть отсортированы по названию, по алфавиту.
 
-## Adding Filtering
+## Добавление фильтрации
 
-We've added sorting to our `getList` method. But, we're not able to filter the list. Let's add filtering logic to our `getList` method.
+Наконец, добавим в `getList` логику фильтрации.
 
-`useList`'s `filters` property implements the [`CrudFilters`](/docs/core/interface-references/#crudfilters) interface which accepts various operators for fields. To learn more about the operators, you can check the [Filters](/docs/guides-concepts/data-fetching/#filters-sorters-and-pagination) section of the Data Fetching guide.
+За это отвечает свойство `filters`. Оно реализует интерфейс [`CrudFilters`](https://refine.dev/docs/core/interface-references/#crudfilters) и подробнее описано в [документации о фильтрах](/docs/guides-concepts/data-fetching/#filters-sorters-and-pagination).
 
 :::simple Implementation Details
 
-- Refine supports multiple filters to be passed to the `useList` hook. Fortunately, our fake API also supports multiple filters. But, if your API doesn't support multiple filters, you can simply use the first filter in the `filters` array.
+- Refine поддерживает множественные фильтры, как и наш фейковый API, но так бывает не всегда.
 
-- Our fake API supports filtering with various operators but for sake of simplicity, we'll be implementing filtering through with `"eq"` operator.
-
-- `URLSearchParams`'s `append` method accepts duplicate keys and appends them to the query string. So, we'll be mapping through the `filters` array and appending the field name and value to the query string.
-
-- Refine also supports conditional filtering operators `"and"` and `"or"`. But, our fake API doesn't support these operators. So, we'll be ignoring these operators in our implementation.
+- Фейковый API поддерживает фильтрацию через множество различных операторов, в том числе через логические И и ИЛИ, но в целях упрощения здесь мы будем фильтровать только через оператор равенства `"eq"`.
 
 :::
 
-Update your `src/providers/data-provider.ts` file by adding the following lines:
+Обнови `src/providers/data-provider.js`:
 
-```ts title="src/providers/data-provider.ts"
+```js title="src/providers/data-provider.js"
 import type { DataProvider } from "@refinedev/core";
 
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
     const params = new URLSearchParams();
 
@@ -320,7 +312,7 @@ export const dataProvider: DataProvider = {
     if (filters && filters.length > 0) {
       filters.forEach((filter) => {
         if ("field" in filter && filter.operator === "eq") {
-          // Our fake API supports "eq" operator by simply appending the field name and value to the query string.
+          // наш фейковый API поддерживает оператор "eq" через квери-параметры
           params.append(filter.field, filter.value);
         }
       });
@@ -335,7 +327,7 @@ export const dataProvider: DataProvider = {
 
     return {
       data,
-      total: 0, // We'll cover this in the next steps.
+      total: 0,
     };
   },
   /* ... */
@@ -344,11 +336,9 @@ export const dataProvider: DataProvider = {
 
 <AddFiltersToGetList />
 
-Now, we'll be able to filter the list of products. Let's add filtering to our `ListProducts` component.
+Теперь мы можем фильтровать список продуктов:
 
-Update your `src/pages/products/list.tsx` file by adding the following lines:
-
-```tsx title="src/pages/products/list.tsx"
+```jsx title="src/pages/products/list.jsx"
 import { useList } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -370,18 +360,12 @@ export const ListProducts = () => {
 
 <AddFiltersToListProducts />
 
-## Summary
-
-In this step, we've learned about the Refine's `useList` hook to fetch a list of records from our API. We've also learned about pagination, sorting and filtering through the `useList` hook.
-
-Refine also offers `useInfiniteList` hook to fetch a list of records with infinite scrolling and `useTable` hook to fetch a list of records with additional features on top of `useList` hook. You can check the [Hooks](/docs/guides-concepts/data-fetching/#data-hooks) section of the Data Fetching guide and [Tables](/docs/guides-concepts/tables) guide to learn more about these hooks and their usages.
-
 :::simple Implementation Tips
 
-To see the full implementation of a REST data provider, please check the [source code of `@refinedev/simple-rest`](https://github.com/refinedev/refine/tree/master/packages/simple-rest).
+- Refine также поддерживает хук `useInfiniteList` для ленивого получения записей через бесконечный скроллинг и хук `useTable`, чуть более продвинутый в плане функционала. С ними мы познакомим позднее.
+
+- Полноценную реализацию провайдера данных для протокола REST ты можешь осмотреть [в исходном коде адаптера `@refinedev/simple-rest`](https://github.com/refinedev/refine/tree/master/packages/simple-rest).
 
 :::
-
-In the next steps, we'll learn about how to handle forms and tables with Refine.
 
 </Sandpack>

@@ -21,10 +21,8 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const AuthProviderTsxWithGetIdentityMethod = /* tsx */ `
-import { AuthProvider } from "@refinedev/core";
-
-export const authProvider: AuthProvider = {
+const AuthProviderTsxWithGetIdentityMethod = /* jsx */ `
+export const authProvider = {
   getIdentity: async () => {
     const response = await fetch("https://api.fake-rest.refine.dev/auth/me", {
       headers: {
@@ -44,7 +42,6 @@ export const authProvider: AuthProvider = {
     localStorage.removeItem("my_access_token");
     return { success: true };
   },
-  // login method receives an object with all the values you've provided to the useLogin hook.
   login: async ({ email, password }) => {
     const response = await fetch(
       "https://api.fake-rest.refine.dev/auth/login",
@@ -90,7 +87,7 @@ export const authProvider: AuthProvider = {
 };
 `.trim();
 
-const HeaderComponentWithUseGetIdentity = /* tsx */ `
+const HeaderComponentWithUseGetIdentity = /* jsx */ `
 import React from "react";
 import { useLogout, useGetIdentity } from "@refinedev/core";
 
@@ -121,10 +118,10 @@ export const AddGetIdentityMethodToAuthProvider = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/auth-provider.ts",
+          "/src/providers/auth-provider.js",
           AuthProviderTsxWithGetIdentityMethod,
         );
-        sandpack.setActiveFile("/src/providers/auth-provider.ts");
+        sandpack.setActiveFile("/src/providers/auth-provider.js");
       }}
     />
   );
@@ -137,10 +134,10 @@ export const AddUseGetIdentityToHeaderComponent = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/components/header.tsx",
+          "src/components/header.jsx",
           HeaderComponentWithUseGetIdentity,
         );
-        sandpack.setActiveFile("/src/components/header.tsx");
+        sandpack.setActiveFile("/src/components/header.jsx");
       }}
     />
   );
@@ -150,10 +147,10 @@ export const AddUseGetIdentityToHeaderComponent = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/providers/auth-provider.ts": {
+  "src/providers/auth-provider.js": {
     code: AuthProviderTsxWithGetIdentityMethod,
   },
-  "src/components/header.tsx": {
+  "src/components/header.jsx": {
     code: HeaderComponentWithUseGetIdentity,
     active: true,
   },

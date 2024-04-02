@@ -1,30 +1,24 @@
 ---
-title: Protecting Content
+title: Ограничение доступа
 ---
 
 import { Sandpack, CreateAuthProviderFile, AddAuthProviderToAppTsx, AddCheckMethodToAuthProvider, AddAuthenticatedComponentToAppTsx } from "./sandpack.tsx";
 
 <Sandpack>
 
-In this step, we'll be implementing a basic `authProvider` with `check` method to validate the user's authentication status, allowing us to protect our content from unauthenticated users.
+В этой секции мы реализуем `authProvider` с методом `check` для для валидации статуса аутентификации пользователя, что позволит защитить некоторые блоки приложения от анонимных посетителей.
 
-Refine can work with any authentication solution with its easy to implement `authProvider` interface. We'll set up an implementation for our fake REST API, which also provides a simple authentication endpoints.
+Refine поддерживает интеграцию с любым решением для аутентификации. В целях обучения мы реализуем свой адаптер для использования с фейковым REST API.
 
-To learn more about the supported auth providers, refer to the [Supported Authentication Providers](/docs/guides-concepts/authentication/#supported-auth-providers) section in the Authentication guide.
+## Создание провайдера аутентификации
 
-## Creating an Auth Provider
-
-We'll be implementing each method one-by-one, ensuring thorough coverage of all details.
-
-First, we'll create a `src/providers/auth-provider.ts` file in our project, which will contain all the methods we need to implement for our auth provider.
+Создай файл `src/providers/auth-provider.js`, в котором мы последовательно реализуем все необходимые методы.
 
 <CreateAuthProviderFile />
 
-Then, we'll pass our auth provider to `<Refine />` component in `src/App.tsx` file with the `authProvider` prop.
+Далее, передай провайдер в компонент `<Refine />` в `src/App.jsx`:
 
-Update your `src/App.tsx` file by adding the following lines:
-
-```tsx title="src/App.tsx"
+```jsx title="src/App.jsx"
 import { Refine } from "@refinedev/core";
 
 import { dataProvider } from "./providers/data-provider";
@@ -36,7 +30,7 @@ import { EditProduct } from "./pages/products/edit";
 import { ListProducts } from "./pages/products/list";
 import { CreateProduct } from "./pages/products/create";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine
       dataProvider={dataProvider}
@@ -54,25 +48,22 @@ export default function App(): JSX.Element {
 
 <AddAuthProviderToAppTsx />
 
-## Implementing the `check` Method
+## Имплементация метода `check`
 
-The `check` method is used by `useIsAuthenticated` hook and the `<Authenticated />` component to check the user's authentication status. It should return a `Promise` which resolves to an object.
+Метод `check` используется хуком `useIsAuthenticated` и компонентом `<Authenticated />` для проверки статуса аутентификации, и должен отдавать `Promise`, разрешающийся в объект.
 
-If the user is authenticated, the object should contain `authenticated: true` property. Otherwise, it should contain `authenticated: false` property.
+Если пользователь аутентифицирован, этот объект должен содержать пару `authenticated: true`, иначе - `authenticated: false`.
 
-We'll obtain an access token through the `login` method from our API and store it inside the local storage. Now let's check if the token exists in the local storage or not.
+Если мы получаем токен доступа через метод `login` и сохраняем его в локальном хранилище, то в методе `check` мы можем просто проверить его наличие.
 
-Update your `src/providers/auth-provider.ts` file by adding the following lines:
+Обнови `src/providers/auth-provider.js`:
 
-```ts title="src/providers/auth-provider.ts"
-import { AuthProvider } from "@refinedev/core";
-
-export const authProvider: AuthProvider = {
+```js title="src/providers/auth-provider.js"
+export const authProvider = {
   // highlight-start
   check: async () => {
-    // When logging in, we'll obtain an access token from our API and store it in the local storage.
-    // Now let's check if the token exists in the local storage.
-    // In the later steps, we'll be implementing the `login` and `logout` methods.
+    // При логине мы получим ключ доступа от нашего фейкового  API и сохраним его в локальном хранилище. А в этом методе мы проверяем его наличие.
+    // Методы `login` и `logout` мы реализуем в последующих секциях.
     const token = localStorage.getItem("my_access_token");
 
     return { authenticated: Boolean(token) };
@@ -93,15 +84,13 @@ export const authProvider: AuthProvider = {
 
 <AddCheckMethodToAuthProvider />
 
-## Using the `<Authenticated />` Component
+## Использование компонента `<Authenticated />`
 
-After implementing the `check` method, we'll be able to use the `<Authenticated />` component to protect our content from unauthenticated users.
+Теперь, когда мы реализовали метод `check`, мы способны ограничить права доступа ко всему контенту или его части через компонент `<Authenticated />`.
 
-Let's add the `<Authenticated />` component to our `src/App.tsx` file and wrap it around our content inside the `<Refine />` component.
+Импортируем `<Authenticated />` в `src/App.jsx` и обернем им весь контент:
 
-Update your `src/App.tsx` file by adding the following lines:
-
-```tsx title="src/App.tsx"
+```jsx title="src/App.jsx"
 // highlight-next-line
 import { Refine, Authenticated } from "@refinedev/core";
 
@@ -113,7 +102,7 @@ import { EditProduct } from "./pages/products/edit";
 import { ListProducts } from "./pages/products/list";
 import { CreateProduct } from "./pages/products/create";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine dataProvider={dataProvider} authProvider={authProvider}>
       {/* highlight-start */}
@@ -133,18 +122,16 @@ export default function App(): JSX.Element {
 
 :::note
 
-Notice that we've added `key` prop to our `<Authenticated />` component. This is required for the component to work properly especially when it's used multiple times in the same render tree.
+Обрати внимание, что мы добавили свойство `key` к компоненту `<Authenticated />`. Это необходимо, чтобы компонент работал корректно даже при условии множественного использования в разных частях дерева отрисовки.
 
 :::
 
-Now you should be able to see the `<Authenticated />` component in action. Our content will not be rendered and the `fallback` prop will be rendered instead.
+Мы должны увидеть, что `<Authenticated />` работает, так как вместо контента теперь отрисовывается `fallback`.
 
 :::tip
 
-You can also use the `useIsAuthenticated` hook instead, which the `<Authenticated />` component uses under the hood. You can learn more about it in the [useIsAuthenticated](/docs/authentication/hooks/use-is-authenticated/) hook documentation.
+В некоторых случаях вместо компонента `<Authenticated />` удобнее использовать хук `useIsAuthenticated`, лежащий в его основе. Больше информации можно найти в документации по [useIsAuthenticated](/docs/authentication/hooks/use-is-authenticated/).
 
 :::
-
-In the next step, we'll be implementing the login and logout functionality and make our `check` method work properly.
 
 </Sandpack>

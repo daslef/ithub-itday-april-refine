@@ -34,11 +34,9 @@ export default function App() {
 `.trim();
 
 const DataProviderTsCode = /* ts */ `
-import type { DataProvider } from "@refinedev/core";
-
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   getOne: () => {
     throw new Error("Not implemented");
   },
@@ -74,7 +72,7 @@ export const FocusOnDataProviderFile = ({
   return (
     <span
       onClick={() => {
-        sandpack.openFile("/src/providers/data-provider.ts");
+        sandpack.openFile("/src/providers/data-provider.js");
       }}
       className={clsx(
         "cursor-pointer",
@@ -94,8 +92,8 @@ export const AddDataProviderToRefine = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", UpdatedAppTsxCode);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", UpdatedAppTsxCode);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -103,18 +101,18 @@ export const AddDataProviderToRefine = () => {
 
 export const files = {
   ...initialFiles,
-  "src/providers/data-provider.ts": {
+  "src/providers/data-provider.js": {
     code: DataProviderTsCode,
   },
 };
 
 export const finalFiles = {
   ...removeActiveFromFiles(files),
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: UpdatedAppTsxCode,
     active: true,
   },
-  "src/providers/data-provider.ts": {
+  "src/providers/data-provider.js": {
     code: DataProviderTsCode,
   },
 };

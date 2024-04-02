@@ -1,28 +1,22 @@
 ---
-title: Navigation
+title: Навигация
 ---
 
 import { Sandpack, AddLinksToHeader, AddShowAndEditButtonsToListProducts } from "./sandpack.tsx";
 
 <Sandpack>
 
-Now we've set up our routes and resources. In this step, we'll be learning about Refine's navigation helpers and how to use them in our app.
+Познакомимся с возможностями Refine связанными с навигацией.
 
-:::tip
+Мы будем использовать хук [`useNavigation`](/docs/routing/hooks/use-navigation) и создадим кнопки для перехода к страницам для создания, редактирования и показа продуктов. Помимо этого, мы реализуем ссылку на список всех продуктов в компоненте `<Header />`.
 
-You can always use the preferred methods of your routing library to navigate between pages. Refine's navigation hooks are helpers to make it easier to navigate between any action of any resource.
+## Добавление ссылок на список продуктов и создание продукта
 
-:::
+Используем хук `useNavigation` из `@refinedev/core` и компонент `<Link />` из библиотеки `react-router-dom`.
 
-We'll use the [`useNavigation`](/docs/routing/hooks/use-navigation) hook and create buttons to navigate to the create, edit and show pages of the products. Additionally we'll provide a link to the list page of the products in the `<Header />` component.
+Обнови компонент `<Header />` и добавь ссылку на список продуктов:
 
-## Adding a Link to the List Page and to the Create Page
-
-We'll be using the `useNavigation` hook from `@refinedev/core` and the `<Link />` component of the `react-router-dom` library to create links to the list page and the create page of the products.
-
-Let's update our `<Header />` component and add a link to the list page of the products:
-
-```tsx title="src/components/header.tsx"
+```jsx title="src/components/header.jsx"
 import React from "react";
 // highlight-next-line
 import { useLogout, useGetIdentity, useNavigation } from "@refinedev/core";
@@ -34,8 +28,8 @@ export const Header = () => {
   const { mutate, isLoading } = useLogout();
   const { data: identity } = useGetIdentity();
 
-  // You can also use methods like list or create to trigger navigation.
-  // We're using url methods to provide more semantically correct html.
+  // Также, можно использовать методы list или create.
+  // Мы используем url-методы для более семантичного html.
   // highlight-next-line
   const { listUrl, createUrl } = useNavigation();
 
@@ -59,11 +53,11 @@ export const Header = () => {
 
 <AddLinksToHeader />
 
-## Adding Show and Edit Buttons to the List Page
+## Добавление кнопок на страницу списка продуктов
 
-Similarly, we'll update the `<ListProducts />` component and add links for showing and editing the products.
+Аналогично, добавим к компоненту `<ListProducts />` ссылки для отображения и редактирования продукта.
 
-```tsx title="src/pages/products/list.tsx"
+```jsx title="src/pages/products/list.jsx"
 // highlight-next-line
 import { useTable, useMany, useNavigation } from "@refinedev/core";
 
@@ -84,9 +78,6 @@ export const ListProducts = () => {
     sorters: { initial: [{ field: "id", order: "asc" }] },
   });
 
-  // You can also use methods like show or list to trigger navigation.
-  // We're using url methods to provide more semantically correct html.
-  // highlight-next-line
   const { showUrl, editUrl } = useNavigation();
 
   /* ... */
@@ -149,10 +140,8 @@ export const ListProducts = () => {
 
 :::info
 
-You can also use anchors and any other navigation methods provided by your routing library to move between pages, without being limited to the `useNavigation` hook.
+Помимо хука `useNavigation` можно использовать любые иные методы навигации, существующие в выбранной библиотеке роутинга.
 
 :::
-
-Now we've learned about the navigating between pages with Refine's `useNavigation` hook. In the next step, we'll be updating our components to benefit from the parameter inference of Refine.
 
 </Sandpack>

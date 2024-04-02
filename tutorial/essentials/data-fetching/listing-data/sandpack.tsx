@@ -22,12 +22,11 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const DataProviderWithGetListMethodTsCode = /* ts */ `
-import type { DataProvider } from "@refinedev/core";
+const DataProviderWithGetListMethodTsCode = /* js */ `
 
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
     const response = await fetch(\`\${API_URL}/\${resource}\`);
 
@@ -37,7 +36,7 @@ export const dataProvider: DataProvider = {
 
     return {
       data,
-      total: 0, // We'll cover this in the next steps.
+      total: 0,
     };
   },
   getOne: async ({ resource, id, meta }) => {
@@ -70,12 +69,11 @@ export const dataProvider: DataProvider = {
 };
 `.trim();
 
-const DataProviderWithPaginationTsCode = /* ts */ `
-import type { DataProvider } from "@refinedev/core";
+const DataProviderWithPaginationTsCode = /* js */ `
 
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
     const params = new URLSearchParams();
 
@@ -92,7 +90,7 @@ export const dataProvider: DataProvider = {
 
     return {
       data,
-      total: 0, // We'll cover this in the next steps.
+      total: 0,
     };
   },
   getOne: async ({ resource, id, meta }) => {
@@ -126,11 +124,10 @@ export const dataProvider: DataProvider = {
 `.trim();
 
 const DataProviderWithSortingTsCode = /* ts */ `
-import type { DataProvider } from "@refinedev/core";
 
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
     const params = new URLSearchParams();
 
@@ -152,7 +149,7 @@ export const dataProvider: DataProvider = {
 
     return {
       data,
-      total: 0, // We'll cover this in the next steps.
+      total: 0,
     };
   },
   getOne: async ({ resource, id, meta }) => {
@@ -185,12 +182,11 @@ export const dataProvider: DataProvider = {
 };
 `.trim();
 
-const DataProviderWithFilteringTsCode = /* ts */ `
-import type { DataProvider } from "@refinedev/core";
+const DataProviderWithFilteringTsCode = /* js */ `
 
 const API_URL = "https://api.fake-rest.refine.dev";
 
-export const dataProvider: DataProvider = {
+export const dataProvider = {
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
     const params = new URLSearchParams();
 
@@ -221,7 +217,7 @@ export const dataProvider: DataProvider = {
 
     return {
       data,
-      total: 0, // We'll cover this in the next steps.
+      total: 0,
     };
   },
   getOne: async ({ resource, id, meta }) => {
@@ -254,7 +250,7 @@ export const dataProvider: DataProvider = {
 };
 `.trim();
 
-const BaseListProductsTsxCode = /* tsx */ `
+const BaseListProductsTsxCode = /* jsx */ `
 export const ListProducts = () => {
   return (
     <div>
@@ -264,7 +260,7 @@ export const ListProducts = () => {
 };
 `.trim();
 
-const ListProductsWithUseListTsxCode = /* tsx */ `
+const ListProductsWithUseListTsxCode = /* jsx */ `
 import { useList } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -295,7 +291,7 @@ export const ListProducts = () => {
 };
 `.trim();
 
-const ListProductsWithPaginationTsxCode = /* tsx */ `
+const ListProductsWithPaginationTsxCode = /* jsx */ `
 import { useList } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -329,7 +325,7 @@ export const ListProducts = () => {
 };
 `.trim();
 
-const ListProductsWithSortingTsxCode = /* tsx */ `
+const ListProductsWithSortingTsxCode = /* jsx */ `
 import { useList } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -364,7 +360,7 @@ export const ListProducts = () => {
 };
 `.trim();
 
-const ListProductsWithFilteringTsxCode = /* tsx */ `
+const ListProductsWithFilteringTsxCode = /* jsx */ `
 import { useList } from "@refinedev/core";
 
 export const ListProducts = () => {
@@ -400,7 +396,7 @@ export const ListProducts = () => {
 };
 `.trim();
 
-const AppTsxWithListProductsCode = /* tsx */ `
+const AppTsxWithListProductsCode = /* jsx */ `
 import { Refine } from "@refinedev/core";
 
 import { dataProvider } from "./providers/data-provider";
@@ -409,7 +405,7 @@ import { ShowProduct } from "./pages/products/show";
 import { EditProduct } from "./pages/products/edit";
 import { ListProducts } from "./pages/products/list";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <Refine dataProvider={dataProvider}>
       {/* <ShowProduct /> */}
@@ -429,10 +425,10 @@ export const AddGetListMethod = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/data-provider.ts",
+          "/src/providers/data-provider.js",
           DataProviderWithGetListMethodTsCode,
         );
-        sandpack.setActiveFile("/src/providers/data-provider.ts");
+        sandpack.setActiveFile("/src/providers/data-provider.js");
       }}
     />
   );
@@ -445,14 +441,14 @@ export const CreateListProductsFile = () => {
     <TutorialCreateFileButton
       onClick={() => {
         sandpack.addFile({
-          "src/pages/products/list.tsx": {
+          "src/pages/products/list.jsx": {
             code: BaseListProductsTsxCode,
           },
         });
-        sandpack.openFile("/src/pages/products/list.tsx");
-        sandpack.setActiveFile("/src/pages/products/list.tsx");
+        sandpack.openFile("/src/pages/products/list.jsx");
+        sandpack.setActiveFile("/src/pages/products/list.jsx");
       }}
-      name="src/pages/products/list.tsx"
+      name="src/pages/products/list.jsx"
     />
   );
 };
@@ -464,10 +460,10 @@ export const AddUseListToListProducts = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/list.tsx",
+          "src/pages/products/list.jsx",
           ListProductsWithUseListTsxCode,
         );
-        sandpack.setActiveFile("/src/pages/products/list.tsx");
+        sandpack.setActiveFile("/src/pages/products/list.jsx");
       }}
     />
   );
@@ -479,8 +475,8 @@ export const AddListProductsToAppTsx = () => {
   return (
     <TutorialUpdateFileButton
       onClick={() => {
-        sandpack.updateFile("/src/App.tsx", AppTsxWithListProductsCode);
-        sandpack.setActiveFile("/src/App.tsx");
+        sandpack.updateFile("/src/App.jsx", AppTsxWithListProductsCode);
+        sandpack.setActiveFile("/src/App.jsx");
       }}
     />
   );
@@ -493,10 +489,10 @@ export const AddPaginationToGetList = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/data-provider.ts",
+          "/src/providers/data-provider.js",
           DataProviderWithPaginationTsCode,
         );
-        sandpack.setActiveFile("/src/providers/data-provider.ts");
+        sandpack.setActiveFile("/src/providers/data-provider.js");
       }}
     />
   );
@@ -509,10 +505,10 @@ export const AddPaginationToListProducts = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/list.tsx",
+          "src/pages/products/list.jsx",
           ListProductsWithPaginationTsxCode,
         );
-        sandpack.setActiveFile("/src/pages/products/list.tsx");
+        sandpack.setActiveFile("/src/pages/products/list.jsx");
       }}
     />
   );
@@ -525,10 +521,10 @@ export const AddSortingToGetList = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/data-provider.ts",
+          "/src/providers/data-provider.js",
           DataProviderWithSortingTsCode,
         );
-        sandpack.setActiveFile("/src/providers/data-provider.ts");
+        sandpack.setActiveFile("/src/providers/data-provider.js");
       }}
     />
   );
@@ -541,10 +537,10 @@ export const AddSortingToListProducts = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/list.tsx",
+          "src/pages/products/list.jsx",
           ListProductsWithSortingTsxCode,
         );
-        sandpack.setActiveFile("/src/pages/products/list.tsx");
+        sandpack.setActiveFile("/src/pages/products/list.jsx");
       }}
     />
   );
@@ -557,10 +553,10 @@ export const AddFiltersToGetList = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/data-provider.ts",
+          "/src/providers/data-provider.js",
           DataProviderWithFilteringTsCode,
         );
-        sandpack.setActiveFile("/src/providers/data-provider.ts");
+        sandpack.setActiveFile("/src/providers/data-provider.js");
       }}
     />
   );
@@ -573,10 +569,10 @@ export const AddFiltersToListProducts = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/list.tsx",
+          "src/pages/products/list.jsx",
           ListProductsWithFilteringTsxCode,
         );
-        sandpack.setActiveFile("/src/pages/products/list.tsx");
+        sandpack.setActiveFile("/src/pages/products/list.jsx");
       }}
     />
   );
@@ -586,13 +582,13 @@ export const AddFiltersToListProducts = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/App.tsx": {
+  "src/App.jsx": {
     code: AppTsxWithListProductsCode,
   },
-  "src/providers/data-provider.ts": {
+  "src/providers/data-provider.js": {
     code: DataProviderWithFilteringTsCode,
   },
-  "src/pages/products/list.tsx": {
+  "src/pages/products/list.jsx": {
     code: ListProductsWithFilteringTsxCode,
     active: true,
   },

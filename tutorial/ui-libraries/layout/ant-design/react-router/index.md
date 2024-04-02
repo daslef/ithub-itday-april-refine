@@ -1,35 +1,35 @@
 ---
-title: Using Layouts
+title: Layout-компоненты
 ---
 
 import { Sandpack, AddCustomTitleToLayout } from "./sandpack.tsx";
 
 <Sandpack>
 
-Having wrapped our app with the necessary styling components, we're now ready to add our layout into the application. Refine provides default layouts for its supported UI libraries through [`<ThemedLayoutV2 />`](/docs/ui-integrations/ant-design/components/themed-layout) components, delivering a two-column layout with a sidebar and a main content area.
+Refine предоставляет компоненты [`<ThemedLayoutV2 />`](/docs/ui-integrations/ant-design/components/themed-layout) для всех UI-интеграций.
 
-`<ThemedLayoutV2 />` components includes an header with user information (if an `authProvider` is provided), a sidebar with navigation links based on your resource definitions, a logout button (if an `authProvider` is provided), and a main content area where your content will be rendered.
+`<ThemedLayoutV2 />` состоит из хедера с информацией о пользователе (если настроен `authProvider`), боковой панели с ссылками навигации на основе объявленных ресурсов и кнопкой логаута (если настроен `authProvider`), и зоны основного контента.
 
 :::tip
 
-Notice that we've removed the `<Header />` component from our app since the layout already includes the same features.
+Заметим, что мы удалили предыдущую реализацию компонента `<Header />`, так как теперь этот функционал будет обеспечен `<ThemedLayoutV2 />`.
 
 :::
 
-## Adding a Custom Title
+## Кастомизация названия
 
-Layout components are a composition of smaller components and they can be customized by providing respective props. The `<ThemedLayoutV2 />` component consists of the following components:
+Layout-компоненты это композиция меньших компонентов, которые могут быть настроены через соответствующие свойства. Компонент `<ThemedLayoutV2 />` состоит из следующих компонентов:
 
-- `<ThemedHeaderV2 />` for the header and can be customized via `Header` prop.
-- `<ThemedSiderV2 />` for the sidebar and can be customized via `Sider` prop.
-- `<ThemedTitleV2 />` for the logo and the title of the app and can be customized via `Title` prop.
-- There are also `Footer` and `OffLayoutArea` props for the footer and off-layout area respectively but they don't have default components for the layout.
+- `<ThemedHeaderV2 />` для хедера, может быть настроен через свойство `Header`.
+- `<ThemedSiderV2 />` для боковой панели, может быть настроен через свойство `Sider`.
+- `<ThemedTitleV2 />` для лого и названия приложения, может быть настроен через свойство `Title`.
+- Есть также свойства `Footer` и `OffLayoutArea`, через которые можно настроить футер и зону вне макета, которые не имеют компонентов по умолчанию.
 
-Let's change the title of our app with using the `Title` prop of the `<ThemedLayoutV2 />` component and the `<ThemedTitleV2 />` component.
+Предлагаем изменить название приложения используя свойство `Title` компонента `<ThemedLayoutV2 />` и компонент `<ThemedTitleV2 />`.
 
-Update your `src/App.tsx` file by adding the following lines:
+Обнови `src/App.tsx`:
 
-```tsx title="src/App.tsx"
+```jsx title="src/App.jsx"
 import { Refine, Authenticated } from "@refinedev/core";
 import routerProvider, { NavigateToResource } from "@refinedev/react-router-v6";
 // highlight-next-line
@@ -51,7 +51,7 @@ import { Login } from "./pages/login";
 
 import "antd/dist/reset.css";
 
-export default function App(): JSX.Element {
+export default function App() {
   return (
     <BrowserRouter>
       <ConfigProvider>
@@ -104,14 +104,12 @@ export default function App(): JSX.Element {
 
 <AddCustomTitleToLayout />
 
-Our app is now wrapped with a customized layout that includes a sidebar and a main content area. We've updated our app's name with a single line of code, rest of the props works in the same manner.
+Теперь наше приложение обернуто в кастомизированный layout с боковой панелью и областью основного контента.
 
 :::tip
 
-Notice that our `protected-products` resource is listed in the sidebar with `"Products"` label. This is because we've provided a custom label for our resource in the `meta.label` field of our resource definition.
+Заметим, что ресурс `protected-products` отображается на боковой панели под именем `"Products"`. Всё потому, что мы передали кастомное именование в `meta.label` при объявлении ресурса.
 
 :::
-
-In the next step, we'll be refactoring our action components to use forms and tables from Ant Design.
 
 </Sandpack>

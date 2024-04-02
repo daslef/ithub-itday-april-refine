@@ -22,12 +22,11 @@ export const Sandpack = ({ children }: { children: React.ReactNode }) => {
 
 // updates
 
-const EditProductWithCustomRedirect = /* tsx */ `
+const EditProductWithCustomRedirect = /* jsx */ `
 import { useForm, useSelect } from "@refinedev/core";
 
 export const EditProduct = () => {
   const { onFinish, mutationResult, queryResult } = useForm({
-    // This will redirect to the show page after the mutation is successful.
     redirect: "show",
   });
 
@@ -37,11 +36,9 @@ export const EditProduct = () => {
     resource: "categories",
   });
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    // Using FormData to get the form values and convert it to an object.
     const data = Object.fromEntries(new FormData(event.target).entries());
-    // Calling onFinish to submit with the data we've collected from the form.
     onFinish({
       ...data,
       price: Number(data.price).toFixed(2),
@@ -98,7 +95,7 @@ export const EditProduct = () => {
 };
 `.trim();
 
-const CreateProductWithCustomRedirect = /* tsx */ `
+const CreateProductWithCustomRedirect = /* jsx */ `
 import { useForm, useSelect } from "@refinedev/core";
 
 export const CreateProduct = () => {
@@ -108,15 +105,11 @@ export const CreateProduct = () => {
 
   const { options } = useSelect({
     resource: "categories",
-    // optionLabel: "title", // Default value is "title" so we don't need to provide it.
-    // optionValue: "id", // Default value is "id" so we don't need to provide it.
   });
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event) => {
     event.preventDefault();
-    // Using FormData to get the form values and convert it to an object.
     const data = Object.fromEntries(new FormData(event.target).entries());
-    // Calling onFinish to submit with the data we've collected from the form.
     onFinish({
       ...data,
       price: Number(data.price).toFixed(2),
@@ -154,10 +147,8 @@ export const CreateProduct = () => {
 };
 `.trim();
 
-const AuthProviderWithRedirects = /* tsx */ `
-import { AuthProvider } from "@refinedev/core";
-
-export const authProvider: AuthProvider = {
+const AuthProviderWithRedirects = /* jsx */ `
+export const authProvider = {
   onError: async (error) => {
     if (error?.status === 401) {
       return {
@@ -187,7 +178,6 @@ export const authProvider: AuthProvider = {
     localStorage.removeItem("my_access_token");
     return { success: true, redirectTo: "/login" };
   },
-  // login method receives an object with all the values you've provided to the useLogin hook.
   login: async ({ email, password }) => {
     const response = await fetch(
       "https://api.fake-rest.refine.dev/auth/login",
@@ -239,10 +229,10 @@ export const AddCustomRedirectToEdit = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/edit.tsx",
+          "src/pages/products/edit.jsx",
           EditProductWithCustomRedirect,
         );
-        sandpack.setActiveFile("/src/pages/products/edit.tsx");
+        sandpack.setActiveFile("/src/pages/products/edit.jsx");
       }}
     />
   );
@@ -255,10 +245,10 @@ export const AddCustomRedirectToCreate = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "src/pages/products/create.tsx",
+          "src/pages/products/create.jsx",
           CreateProductWithCustomRedirect,
         );
-        sandpack.setActiveFile("/src/pages/products/create.tsx");
+        sandpack.setActiveFile("/src/pages/products/create.jsx");
       }}
     />
   );
@@ -271,10 +261,10 @@ export const AddRedirectsToAuthProvider = () => {
     <TutorialUpdateFileButton
       onClick={() => {
         sandpack.updateFile(
-          "/src/providers/auth-provider.ts",
+          "/src/providers/auth-provider.js",
           AuthProviderWithRedirects,
         );
-        sandpack.setActiveFile("/src/providers/auth-provider.ts");
+        sandpack.setActiveFile("/src/providers/auth-provider.js");
       }}
     />
   );
@@ -284,13 +274,13 @@ export const AddRedirectsToAuthProvider = () => {
 
 export const finalFiles = {
   ...removeActiveFromFiles(initialFiles),
-  "src/pages/products/edit.tsx": {
+  "src/pages/products/edit.jsx": {
     code: EditProductWithCustomRedirect,
   },
-  "src/pages/products/create.tsx": {
+  "src/pages/products/create.jsx": {
     code: CreateProductWithCustomRedirect,
   },
-  "src/providers/auth-provider.ts": {
+  "src/providers/auth-provider.js": {
     code: AuthProviderWithRedirects,
     active: true,
   },
