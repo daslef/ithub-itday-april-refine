@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[53412],{53412:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/nextjs-router/src/index.ts","description":"","displayName":"parseTableParams","props":{},"generatedAt":1711477340750}')}}]);

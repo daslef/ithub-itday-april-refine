@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[80178],{80178:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/devtools-internal/src/use-query-subscription.tsx","description":"","displayName":"useQuerySubscription","props":{},"generatedAt":1711477324871}')}}]);

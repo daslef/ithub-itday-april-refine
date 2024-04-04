@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[4733],{4733:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/devtools-internal/src/get-package-name-from-filename.ts","description":"","displayName":"getPackageNameFromFilename","props":{},"generatedAt":1711477324871}')}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[67270],{67270:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/chakra-ui/src/index.tsx","description":"","displayName":"AutoSaveIndicator","props":{},"generatedAt":1711477318223}')}}]);

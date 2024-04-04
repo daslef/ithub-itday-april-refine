@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[13480],{13480:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/core/src/index.tsx","description":"","displayName":"parseTableParams","props":{},"generatedAt":1711477352700}')}}]);

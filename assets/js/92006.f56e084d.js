@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[92006],{92006:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/antd/src/index.tsx","description":"","displayName":"LoginPage","props":{},"generatedAt":1711477315836}')}}]);

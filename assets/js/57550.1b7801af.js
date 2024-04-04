@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[57550],{57550:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/cli/src/index.ts","description":"","displayName":"getFileContent","props":{},"generatedAt":1711477319828}')}}]);

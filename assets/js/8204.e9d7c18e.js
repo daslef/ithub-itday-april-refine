@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[8204],{8204:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/ui-tests/src/index.tsx","description":"","displayName":"buttonCreateTests","props":{},"generatedAt":1711477349914}')}}]);

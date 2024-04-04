@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[65023],{65023:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/mui/src/index.tsx","description":"","displayName":"ThemedTitle","props":{},"generatedAt":1711477334568}')}}]);

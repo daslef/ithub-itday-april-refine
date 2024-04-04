@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[97554],{97554:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/airtable/src/index.ts","description":"","displayName":"isSimpleOperator","props":{},"generatedAt":1711477314322}')}}]);

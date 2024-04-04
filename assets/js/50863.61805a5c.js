@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[50863],{50863:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/devtools-internal/src/clean-stack.ts","description":"","displayName":"cleanStack","props":{},"generatedAt":1711477324871}')}}]);

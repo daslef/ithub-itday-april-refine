@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[76011],{76011:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/remix/src/refine-routes.tsx","description":"","displayName":"RefineRoutes","props":{},"generatedAt":1711477344064}')}}]);

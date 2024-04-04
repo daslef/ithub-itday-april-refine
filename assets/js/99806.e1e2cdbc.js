@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[99806],{99806:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/graphql/src/index.ts","description":"","displayName":"__function","props":{},"generatedAt":1711477327420}')}}]);

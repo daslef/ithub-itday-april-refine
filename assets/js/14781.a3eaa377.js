@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[14781],{14781:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/ably/src/index.ts","description":"","displayName":"liveProvider","props":{},"generatedAt":1711477312938}')}}]);

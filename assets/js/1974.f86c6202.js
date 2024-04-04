@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[1974],{1974:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/antd/src/index.tsx","description":"","displayName":"ThemedSiderV2","props":{},"generatedAt":1711477315835}')}}]);

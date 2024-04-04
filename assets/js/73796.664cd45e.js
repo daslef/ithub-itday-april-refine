@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[73796],{73796:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/medusa/src/index.ts","description":"","displayName":"authProvider","props":{},"generatedAt":1711477335745}')}}]);

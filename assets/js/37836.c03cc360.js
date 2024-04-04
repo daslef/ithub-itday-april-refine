@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[37836],{37836:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/supabase/src/index.ts","description":"","displayName":"liveProvider","props":{},"generatedAt":1711477348550}')}}]);

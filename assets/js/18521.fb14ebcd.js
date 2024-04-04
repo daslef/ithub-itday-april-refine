@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[18521],{18521:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/antd/src/index.tsx","description":"","displayName":"AutoSaveIndicator","props":{},"generatedAt":1711477315836}')}}]);

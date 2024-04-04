@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[95055],{95055:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/devtools-ui/src/index.ts","description":"","displayName":"renderDevTools","props":{},"generatedAt":1711477331012}')}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[55874],{55874:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/chakra-ui/src/index.tsx","description":"","displayName":"List","props":{},"generatedAt":1711477318223}')}}]);

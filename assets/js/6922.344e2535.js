@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[6922],{6922:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/mantine/src/index.tsx","description":"","displayName":"AutoSaveIndicator","props":{},"generatedAt":1711477333132}')}}]);

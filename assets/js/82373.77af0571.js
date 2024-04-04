@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[82373],{82373:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/devtools-internal/src/is-refine-stack.ts","description":"","displayName":"isRefineStack","props":{},"generatedAt":1711477324871}')}}]);

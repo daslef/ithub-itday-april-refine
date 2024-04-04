@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[57137],{57137:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/devtools-server/src/serve-client.ts","description":"","displayName":"serveClient","props":{},"generatedAt":1711477325570}')}}]);

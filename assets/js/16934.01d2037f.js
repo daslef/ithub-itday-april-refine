@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[16934],{16934:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/codemod/src/index.ts","description":"","displayName":"checkGitStatus","props":{},"generatedAt":1711477320932}')}}]);

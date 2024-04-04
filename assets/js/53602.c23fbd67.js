@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocumentation=self.webpackChunkdocumentation||[]).push([[53602],{53602:e=>{e.exports=JSON.parse('{"filePath":"/home/daslef/Downloads/refine/packages/simple-rest/src/index.ts","description":"","displayName":"generateSort","props":{},"generatedAt":1711477345097}')}}]);
