@@ -15,14 +15,6 @@ module.exports = {
         },
         {
           type: "link",
-          href: "https://s.refine.dev/examples",
-          label: "Examples",
-          customProps: {
-            external: true,
-          },
-        },
-        {
-          type: "link",
           href: "https://refine.dev/templates",
           label: "Templates",
           customProps: {
